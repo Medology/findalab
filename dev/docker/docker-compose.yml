@@ -1,13 +1,19 @@
 version: '2'
 
 services:
-  web:
-    image: php:7.0.10-apache
+  app:
+    image: chekote/php:7.0.8
     volumes:
-      - ..:/var/www
-      - ../../dist:/var/www/html/dist
-      - ../../js:/var/www/html/js
-      - ../../template:/var/www/html/template
+      - ..:/data
+    entrypoint:
+      - php-fpm7.0
+  web:
+    build: nginx
+    volumes:
+      - ..:/data
+      - ../../dist:/data/html/dist
+      - ../../js:/data/html/js
+      - ../../template:/data/html/template
     ports:
       - 80:80
 
