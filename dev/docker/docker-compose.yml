@@ -4,13 +4,10 @@ services:
   web:
     image: php:7.0.10-apache
     volumes:
-      - ..:/data
-      - ../web:/var/www/html
-      - ../src:/var/www/html/src
-      - ../css:/var/www/html/css
-      - ../vendor:/var/www/html/vendor
-      - ../features:/var/www/html/features
-      - ../config:/var/www/html/config
+      - ..:/var/www
+      - ../../dist:/var/www/html/dist
+      - ../../js:/var/www/html/js
+      - ../../template:/var/www/html/template
     ports:
       - 80:80
 
