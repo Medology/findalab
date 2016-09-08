@@ -28,5 +28,5 @@ echo "Installing bower dependencies..."
 exitCheck $?
 
 echo "Compiling Gulp resources..."
-"$DIR"/bin/gulp
+"$DIR"/bin/gulp stylesheet
 exitCheck $?
