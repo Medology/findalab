@@ -5,9 +5,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 . "${DIR}"/bin/lib/exitCheck.sh
 
 echo "Checking .env file..."
-if [ ! -e "$DIR"/web/.env ]; then
+if [ ! -e "$DIR"/.env ]; then
   echo "No .env file found. Creating from .env.example..."
-  cp "$DIR"/web/.env.example "$DIR"/web/.env
+  cp "$DIR"/.env.example "$DIR"/.env
   exitCheck $?
   echo "NOTE: Please review the .env file and configure any required parameters."
 else
