@@ -36,7 +36,7 @@
           onlyNetwork: undefined
         },
         lab: {
-          buttonEnabled: true,
+          hasButton: true,
           buttonClass: null,
           buttonText: 'Choose This Location'
         },
@@ -602,7 +602,7 @@
               lab.center_city + ', ' + lab.center_state + ' ' + lab.center_zip +
               '</p>';
 
-        if (self.settings.lab.buttonEnabled) {
+        if (self.settings.lab.hasButton) {
           infoWindowContent +=
             '<a ' +
             'data-findalab-result-button ' +
@@ -692,7 +692,7 @@
             '<strong>Distance:</strong> ' + this._parseDistance(lab)
           );
 
-          if (self.settings.lab.buttonEnabled) {
+          if (self.settings.lab.hasButton) {
             $result.find('[data-findalab-result-button]')
               .attr('data-id', lab.center_id)
               .attr('data-address', lab.center_address)

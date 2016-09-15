@@ -27,7 +27,7 @@
     var findalab = $(this).find('.findalab').findalab({
       baseURL: 'http://findalab.local/simple-mockups',
       lab: {
-        buttonEnabled: false,
+        hasButton: false,
       },
       search: {
         buttonText: 'Find Simple',
