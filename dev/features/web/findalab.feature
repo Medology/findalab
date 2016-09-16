@@ -4,9 +4,9 @@ Feature: Find Collection Centers
   I have to be able to search for collection centers
 
   Scenario: Find a select collection center
-   Given I am on "/simple.php"
-     And I fill in "Fill in the zippaty codes" with "77057"
-     And I press "Find Simple"
+    When I am on "/simple.php"
+     And I fill in "Enter your zip" with "77057"
+     And I press "Search"
     Then I should see "23816 Hwy 59 North"
 
   Scenario: Buttons are disabled

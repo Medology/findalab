@@ -29,16 +29,9 @@
       searchURL: {
         labs: 'manage/phlebotomists'
       },
-      lab: {
-        buttonText: 'Choose this place, yo!',
-      },
       inHomeCollection: {
         showComponent: false
-      },
-      search: {
-        buttonText: 'Find Simple',
-        placeholder: 'Fill in the zippaty codes',
-      },
+      }
     });
   });
   </script>

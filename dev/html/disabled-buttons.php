@@ -28,11 +28,7 @@
       baseURL: 'http://findalab.local/simple-mockups',
       lab: {
         hasButton: false,
-      },
-      search: {
-        buttonText: 'Find Simple',
-        placeholder: 'Your zip code'
-      },
+      }
     });
   });
   </script>
