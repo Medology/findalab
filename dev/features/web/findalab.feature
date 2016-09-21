@@ -9,8 +9,8 @@ Feature: Find Collection Centers
      And I press "Search"
     Then I should see "23816 Hwy 59 North"
 
-  Scenario: Buttons are disabled
-   Given I am on "/disabled-buttons.php"
+  Scenario: Lab Result Button Removed
+   Given I am on "/has-button-false.php"
      And I fill in "Enter your zip" with "77057"
      And I press "Search"
     Then I should see "23816 Hwy 59 North"
