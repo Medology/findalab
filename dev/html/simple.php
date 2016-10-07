@@ -17,7 +17,7 @@
 <body>
 
   <h1>Find A Lab - Simple Mockups</h1>
-  <div id="simple-findalab"></div>
+  <div id="simple-findalab">Loading Test Centers...</div>
   <button class="findalab-reset" type="button">Reset findalab</button>
 
   <script src="/bower_components/jquery/dist/jquery.js"></script>

@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 echo "Checking .env file..."
 if [ ! -e "$DIR"/.env ]; then
   echo "No .env file found. Creating from .env.example..."
-  cp "$DIR"/.env.example "$DIR"/.env
+  cp "$DIR"/dev/.env.example "$DIR"/.env
   exitCheck $?
   echo "NOTE: Please review the .env file and configure any required parameters."
 else
