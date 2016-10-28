@@ -84,6 +84,8 @@
                         'place your order and submit payment over the phone or online before visiting any of the ' +
                         this.settings.search.title + '.';
 
+      this.labs = [];
+
       /**
        * Initializes the map and sets the default viewport lat / long.
        *
@@ -106,6 +108,7 @@
 
         // Capture lab selection events
         this.on('click', '[data-findalab-result-button]', $.proxy(onLabSelectClick, this));
+        this.on('mouseenter','[data-findalab-result]', $.proxy(onLabHover, this));
 
         /**
          * Prevents submission of the form on key down.
@@ -151,6 +154,32 @@
 
           return false;
         }
+
+        /**
+         * Is called when user hovers on a result and causes the corresponding map pin to animate
+         * @param  {event} event the hover event
+         * @returns {boolean} Always false to prevent bubbling.
+         */
+        function onLabHover(event) {
+          var id;
+
+          if (event.target.tagName == 'LI') {
+            id = $(event.target).data('id');
+          } else {
+            id = $(event.target).parents('li').data('id');
+          }
+
+          var lab = this.labs[id];
+          console.log(lab);
+
+          lab.marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){
+            lab.marker.setAnimation(null);
+          }, 1000);
+
+          return false;
+        }
+
       };
 
       /**
@@ -637,6 +666,8 @@
           // noinspection JSUnresolvedFunction
           self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
         }, this));
+
+        lab.marker = vMarker;
       };
 
       /**
@@ -686,7 +717,7 @@
          */
         $.each(labs, $.proxy(function(index, lab) {
           var $result = $resultTemplate.clone().removeAttr('data-template');
-
+          $result.data('id', index);
           if (lab.lab_title) {
             $result.find('[data-findalab-result-title]').html(lab.lab_title);
           } else {
@@ -740,7 +771,7 @@
         if (labs[0]) {
           this.centerMap(labs[0].center_latitude, labs[0].center_longitude);
           self.settings.googleMaps.map.setZoom(self.settings.googleMaps.resultsZoom);
-
+          self.labs = labs;
           return true;
         }
 
