@@ -12,12 +12,16 @@
       max-width: 900px;
       padding: 10px;
     }
-    .loading-state {
+    .loading-state-box {
       height: 644px;
       text-align: center;
       align-items: center;
       display: flex;
       justify-content: space-around;
+      border-radius: 6px;
+      border: 1px solid #e2e2e2;
+      box-sizing: border-box;
+      background: #f9f9f9;
     }
   </style>
 </head>
@@ -25,8 +29,11 @@
 
   <h1>Find A Lab - Simple Mockups</h1>
   <div id="simple-findalab">
-    <div class="loading-state">
-      <img class="loading-state-icon" src="/loading-gif.gif" alt="loading">
+    <div class="loading-state-box">
+      <div>
+        <h2>Loading Test Centers</h2>
+        <img class="loading-state-icon" src="/loading-gif.gif" alt="loading">
+      </div>
     </div>
 
   </div>
