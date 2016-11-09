@@ -23,6 +23,9 @@
       box-sizing: border-box;
       background: #f9f9f9;
     }
+    .loading-state-content {
+      margin-top: -3rem;
+    }
   </style>
 </head>
 <body>
@@ -30,12 +33,11 @@
   <h1>Find A Lab - Simple Mockups</h1>
   <div id="simple-findalab">
     <div class="loading-state-box">
-      <div>
+      <div class="loading-state-content">
         <h2>Loading Test Centers</h2>
-        <img class="loading-state-icon" src="/loading-gif.gif" alt="loading">
+        <img src="/svg-loaders/spinning-circles.svg" alt="loading" onerror="this.src='/loading-gif.gif';this.onerror=null;"/>
       </div>
     </div>
-
   </div>
   <button class="findalab-reset" type="button">Reset findalab</button>
 
