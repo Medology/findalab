@@ -35,7 +35,7 @@
     <div class="loading-state-box">
       <div class="loading-state-content">
         <h2>Loading Test Centers</h2>
-        <img src="/svg-loaders/spinning-circles.svg" alt="loading" onerror="this.src='/loading-gif.gif';this.onerror=null;"/>
+        <img src="/svg-loaders/spinning-circles.svg" alt="loading" onerror="this.src='/loading-gif.gif';this.onerror=null;" width="30" />
       </div>
     </div>
   </div>
