@@ -12,19 +12,10 @@
       max-width: 900px;
       padding: 10px;
     }
-    .loading-state-box {
+
+    .findalab-loading {
+      /*override the default height to match the component*/
       height: 644px;
-      text-align: center;
-      align-items: center;
-      display: flex;
-      justify-content: space-around;
-      border-radius: 6px;
-      border: 1px solid #e2e2e2;
-      box-sizing: border-box;
-      background: #f9f9f9;
-    }
-    .loading-state-content {
-      margin-top: -3rem;
     }
   </style>
 </head>
@@ -32,10 +23,14 @@
 
   <h1>Find A Lab - Simple Mockups</h1>
   <div id="simple-findalab">
-    <div class="loading-state-box">
-      <div class="loading-state-content">
+    <div class="findalab-loading">
+      <div class="findalab-loading__content">
         <h2>Loading Test Centers</h2>
-        <img src="/svg-loaders/spinning-circles.svg" alt="loading" onerror="this.src='/loading-gif.gif';this.onerror=null;" width="30" />
+        <img
+          src="/three-dots.svg"
+          alt="loading"
+          width="50"
+          onerror="this.src='/loading-gif.gif';this.onerror=null;" />
       </div>
     </div>
   </div>
@@ -46,6 +41,7 @@
   <script src="/js/findalab.js"></script>
   <script>
 
+  // the timeout can be activated for the purpose of viewing the loading state with  delay
   setTimeout(function(){
 
     $('#simple-findalab').load('/template/findalab.html', function() {
@@ -59,6 +55,7 @@
     });
 
   }, 3000);
+
   </script>
 </body>
 </html>

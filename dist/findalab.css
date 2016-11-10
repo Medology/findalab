@@ -4,13 +4,30 @@
 .findalab__text-right {
   text-align: right; }
 
-.findalab {
+.findalab, .findalab-loading {
   border-radius: 6px;
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
-  position: relative; }
-  .findalab * {
+  position: relative;
+  transition: opacity 1s ease; }
+  .findalab *, .findalab-loading * {
     box-sizing: border-box; }
+
+.findalab {
+  opacity: 0; }
+  .findalab.findalab-visible {
+    opacity: 1; }
+
+.findalab-loading {
+  align-items: center;
+  background: #f9f9f9;
+  display: flex;
+  height: 644px;
+  justify-content: space-around;
+  text-align: center; }
+
+.findalab-loading__content {
+  margin-top: -3rem; }
 
 .findalab__search {
   background: #f9f9f9;

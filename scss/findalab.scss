@@ -56,6 +56,10 @@ $findalab-total-background: #f9f9f9 !default;
 /// @type Box Shadow
 $findalab-total-shadow: 0 -2px 15px 0 rgba(#111, 0.07) !default;
 
+/// Height for the loading placholder.
+/// @type Number
+$findalab-loading-height: 644px !default;
+
 // Styles
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -67,15 +71,40 @@ $findalab-total-shadow: 0 -2px 15px 0 rgba(#111, 0.07) !default;
   text-align: right;
 }
 
-.findalab {
+%findalab-box {
   border-radius: $findalab-radius;
   border: $findalab-border;
   box-sizing: border-box;
   position: relative;
+  transition: opacity 1s ease;
 
   & * {
     box-sizing: border-box;
   }
+}
+
+.findalab {
+  @extend %findalab-box;
+  // display: none;
+  opacity: 0;
+
+  &.findalab-visible {
+    opacity: 1;
+  }
+}
+
+.findalab-loading {
+  @extend %findalab-box;
+  align-items: center;
+  background: $findalab-total-background;
+  display: flex;
+  height: $findalab-loading-height;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.findalab-loading__content {
+  margin-top: -3rem;
 }
 
 .findalab__search {
