@@ -86,11 +86,6 @@ $findalab-loading-height: 644px !default;
 .findalab {
   @extend %findalab-box;
   display: none;
-  // opacity: 0;
-
-  // &.findalab-visible {
-  //   opacity: 1;
-  // }
 }
 
 .findalab-loading {
