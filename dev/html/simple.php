@@ -12,11 +12,6 @@
       max-width: 900px;
       padding: 10px;
     }
-
-    .findalab-loading {
-      /*override the default height to match the component*/
-      height: 644px;
-    }
   </style>
 </head>
 <body>
