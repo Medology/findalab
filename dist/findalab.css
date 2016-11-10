@@ -19,9 +19,12 @@
   align-items: center;
   background: #f9f9f9;
   display: flex;
-  height: 644px;
+  height: 356px;
   justify-content: space-around;
   text-align: center; }
+  @media only screen and (min-width: 1024px) {
+    .findalab-loading {
+      height: 644px; } }
 
 .findalab-loading__content {
   margin-top: -3rem; }

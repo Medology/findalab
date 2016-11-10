@@ -60,6 +60,10 @@ $findalab-total-shadow: 0 -2px 15px 0 rgba(#111, 0.07) !default;
 /// @type Number
 $findalab-loading-height: 644px !default;
 
+/// Mobile Height for the loading placholder.
+/// @type Number
+$findalab-loading-height-mobile: 356px !default;
+
 // Styles
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -76,7 +80,6 @@ $findalab-loading-height: 644px !default;
   border: $findalab-border;
   box-sizing: border-box;
   position: relative;
-  // transition: opacity 1s ease;
 
   & * {
     box-sizing: border-box;
@@ -93,9 +96,13 @@ $findalab-loading-height: 644px !default;
   align-items: center;
   background: $findalab-total-background;
   display: flex;
-  height: $findalab-loading-height;
+  height: $findalab-loading-height-mobile;
   justify-content: space-around;
   text-align: center;
+
+  @media only screen and (min-width: $findalab-breakpoint) {
+    height: $findalab-loading-height;
+  }
 }
 
 .findalab-loading__content {
