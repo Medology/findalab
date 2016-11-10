@@ -455,9 +455,7 @@
       };
 
       this.fadeIntoView = function() {
-        // console.log(this);
-        $(this).addClass('findalab-visible');
-        //$(this).fadeIn(500);
+        $(this).fadeIn(500);
       }
 
       /**

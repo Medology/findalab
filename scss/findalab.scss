@@ -76,7 +76,7 @@ $findalab-loading-height: 644px !default;
   border: $findalab-border;
   box-sizing: border-box;
   position: relative;
-  transition: opacity 1s ease;
+  // transition: opacity 1s ease;
 
   & * {
     box-sizing: border-box;
@@ -85,12 +85,12 @@ $findalab-loading-height: 644px !default;
 
 .findalab {
   @extend %findalab-box;
-  // display: none;
-  opacity: 0;
+  display: none;
+  // opacity: 0;
 
-  &.findalab-visible {
-    opacity: 1;
-  }
+  // &.findalab-visible {
+  //   opacity: 1;
+  // }
 }
 
 .findalab-loading {
