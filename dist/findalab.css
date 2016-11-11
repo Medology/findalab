@@ -5,8 +5,8 @@
   text-align: right; }
 
 .findalab, .findalab-loading {
-  animation-fill-mode: forwards;
   animation: fadeInOpacity 0.5s ease-in-out;
+  animation-fill-mode: forwards;
   background: #f9f9f9;
   border-radius: 6px;
   border: 1px solid #e2e2e2;
@@ -32,6 +32,8 @@
   margin-top: -3rem; }
 
 .findalab__search {
+  animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
   background: #f9f9f9;
   border-bottom: 1px solid #e2e2e2;
   border-radius: 6px 0 0;
@@ -50,6 +52,8 @@
   margin-bottom: 0.5rem; }
 
 .findalab__total {
+  animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
   background: #f9f9f9;
   border-radius: 0 0 0 6px;
   border-top: 1px solid #e2e2e2;
@@ -91,8 +95,8 @@
       width: 100%; } }
 
 .findalab__results {
-  animation-fill-mode: forwards;
   animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
   background-color: #fff;
   display: none;
   list-style-type: none;

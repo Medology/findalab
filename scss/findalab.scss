@@ -32,6 +32,10 @@ $findalab-list-width: 310px !default;
 /// @type Number
 $findalab-radius: 6px !default;
 
+/// Background for search area.
+/// @type Color
+$findalab-search-background: #f9f9f9 !default;
+
 /// Color for nav
 /// @type Color
 $findalab-nav-color: #3398db !default;
@@ -40,13 +44,17 @@ $findalab-nav-color: #3398db !default;
 /// @type Color
 $findalab-ihc-color: lighten(#3398db, 20%) !default;
 
+/// Background color for initial findalab loading box.
+/// @type Color
+$findalab-background: #f9f9f9 !default;
+
 /// Background for results.
 /// @type Color
 $findalab-results-background: #fff !default;
 
-/// Default background color.
+/// Background color for total area.
 /// @type Color
-$findalab-background: #f9f9f9 !default;
+$findalab-total-background: #f9f9f9 !default;
 
 /// Box shadow for total area.
 /// @type Box Shadow
@@ -72,8 +80,8 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 %findalab-box {
-  animation-fill-mode: forwards;
   animation: fadeInOpacity 0.5s ease-in-out;
+  animation-fill-mode: forwards;
   background: $findalab-background;
   border-radius: $findalab-radius;
   border: $findalab-border;
@@ -108,7 +116,9 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__search {
-  background: $findalab-background;
+  animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
+  background: $findalab-search-background;
   border-bottom: $findalab-border;
   border-radius: $findalab-radius 0 0;
   padding: $findalab-padding;
@@ -132,7 +142,9 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__total {
-  background: $findalab-background;
+  animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
+  background: $findalab-total-background;
   border-radius: 0 0 0 $findalab-radius;
   border-top: $findalab-border;
   box-shadow: $findalab-total-shadow;
@@ -181,8 +193,8 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__results {
-  animation-fill-mode: forwards;
   animation: fadeInOpacity 1s ease-in-out;
+  animation-fill-mode: forwards;
   background-color: $findalab-results-background;
   display: none;
   list-style-type: none;
