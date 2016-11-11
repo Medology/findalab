@@ -5,6 +5,8 @@
   text-align: right; }
 
 .findalab, .findalab-loading {
+  animation-fill-mode: forwards;
+  animation: fadeInOpacity 0.5s ease-in-out;
   background: #f9f9f9;
   border-radius: 6px;
   border: 1px solid #e2e2e2;

@@ -72,6 +72,8 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 %findalab-box {
+  animation-fill-mode: forwards;
+  animation: fadeInOpacity 0.5s ease-in-out;
   background: $findalab-background;
   border-radius: $findalab-radius;
   border: $findalab-border;
