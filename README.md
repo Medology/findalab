@@ -30,19 +30,9 @@ $('#your-selector').load('../path/from/bower/findalab.html', function() {
 ```
 
 To include default pre-loader styles use the following markup (include class names and copy the images into the project folder).
-Make sure to override the height of `.findalab-loading` to match that of the loaded component for visual effect.
 everything inside the findalab-selector will be removed when the component is loaded.
 
 ```
-<style>
-  /*override the default height to match the component*/
-  .findalab-loading {
-    height: $mobile-loading-height;
-  }
-  @media (min-width: $breakpoint) {
-    height: $loading-height;
-  }
-</style>
 <div id="findalab-selector">
   <div class="findalab-loading">
     <div class="findalab-loading__content">
@@ -55,6 +45,23 @@ everything inside the findalab-selector will be removed when the component is lo
     </div>
   </div>
 </div>
+```
+
+Make sure to override the height of `.findalab-loading` to match that of the loaded component for visual effect.
+Design tip: It's best to be pixel perfect in this case.
+
+```scss
+  //override the default height to match the component
+  $mobile-loading-height: 461px;
+  $findalab-loading: 729px;
+
+  .findalab-loading {
+    height: $mobile-loading-height;
+
+    @media (min-width: $breakpoint) {
+      height: $loading-height;
+    }
+  }
 ```
 
 ## Custom Settings
