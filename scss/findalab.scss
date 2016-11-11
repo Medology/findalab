@@ -32,10 +32,6 @@ $findalab-list-width: 310px !default;
 /// @type Number
 $findalab-radius: 6px !default;
 
-/// Background for search area.
-/// @type Color
-$findalab-search-background: #f9f9f9 !default;
-
 /// Color for nav
 /// @type Color
 $findalab-nav-color: #3398db !default;
@@ -48,9 +44,9 @@ $findalab-ihc-color: lighten(#3398db, 20%) !default;
 /// @type Color
 $findalab-results-background: #fff !default;
 
-/// Background color for total area.
+/// Default background color.
 /// @type Color
-$findalab-total-background: #f9f9f9 !default;
+$findalab-background: #f9f9f9 !default;
 
 /// Box shadow for total area.
 /// @type Box Shadow
@@ -76,6 +72,7 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 %findalab-box {
+  background: $findalab-background;
   border-radius: $findalab-radius;
   border: $findalab-border;
   box-sizing: border-box;
@@ -94,7 +91,6 @@ $findalab-loading-height-mobile: 356px !default;
 .findalab-loading {
   @extend %findalab-box;
   align-items: center;
-  background: $findalab-total-background;
   display: flex;
   height: $findalab-loading-height-mobile;
   justify-content: space-around;
@@ -110,7 +106,7 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__search {
-  background: $findalab-search-background;
+  background: $findalab-background;
   border-bottom: $findalab-border;
   border-radius: $findalab-radius 0 0;
   padding: $findalab-padding;
@@ -134,7 +130,7 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__total {
-  background: $findalab-total-background;
+  background: $findalab-background;
   border-radius: 0 0 0 $findalab-radius;
   border-top: $findalab-border;
   box-shadow: $findalab-total-shadow;
@@ -183,11 +179,13 @@ $findalab-loading-height-mobile: 356px !default;
 }
 
 .findalab__results {
+  animation-fill-mode: forwards;
+  animation: fadeInOpacity 1s ease-in-out;
   background-color: $findalab-results-background;
   display: none;
-  max-height: $findalab-height;
   list-style-type: none;
   margin: 0;
+  max-height: $findalab-height;
   overflow: auto;
   padding: 0;
   width: 100%;
@@ -289,4 +287,14 @@ $findalab-loading-height-mobile: 356px !default;
 
 .findalab__hours__wrap {
   display: none;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
