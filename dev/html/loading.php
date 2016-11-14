@@ -17,7 +17,7 @@
 <body>
 
   <h1>Find A Lab - Simple Mockup with Loading State</h1>
-  <div id="simple-findalab">
+  <div id="loading-example-findalab">
     <div class="findalab-loading">
       <div class="findalab-loading__content">
         <h2>Loading Test Centers</h2>
@@ -38,7 +38,7 @@
   // the timeout is for the purpose of viewing the loading state with  delay
   setTimeout(function(){
 
-    $('#simple-findalab').load('/template/findalab.html', function() {
+    $('#loading-example-findalab').load('/template/findalab.html', function() {
       var findalab = $(this).find('.findalab').findalab({
         baseURL: 'http://findalab.local/fixtures/simple-mockups'
       });
