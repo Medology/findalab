@@ -7,9 +7,9 @@
 .findalab, .findalab-loading {
   animation: fadeInOpacity 0.5s ease-in-out;
   animation-fill-mode: forwards;
-  background: #f9f9f9;
-  border-radius: 6px;
+  background-color: #f9f9f9;
   border: 1px solid #e2e2e2;
+  border-radius: 6px;
   box-sizing: border-box;
   position: relative; }
   .findalab *, .findalab-loading * {
@@ -34,7 +34,7 @@
 .findalab__search {
   animation: fadeInOpacity 1s ease-in-out;
   animation-fill-mode: forwards;
-  background: #f9f9f9;
+  background-color: #f9f9f9;
   border-bottom: 1px solid #e2e2e2;
   border-radius: 6px 0 0;
   padding: 16px; }
@@ -54,7 +54,7 @@
 .findalab__total {
   animation: fadeInOpacity 1s ease-in-out;
   animation-fill-mode: forwards;
-  background: #f9f9f9;
+  background-color: #f9f9f9;
   border-radius: 0 0 0 6px;
   border-top: 1px solid #e2e2e2;
   box-shadow: 0 -2px 15px 0 rgba(17, 17, 17, 0.07);

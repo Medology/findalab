@@ -47,21 +47,13 @@ everything inside the findalab-selector will be removed when the component is lo
 </div>
 ```
 
-Make sure to override the height of `.findalab-loading` to match that of the loaded component for visual effect.
-Design tip: It's best to be pixel perfect in this case.
+Make sure to override the height of `.findalab-loading` in each project's `settings.scss` file.
+Design tip: It's best to be pixel perfect in this case and match the height of the loaded component for visual effect.
 
 ```scss
   //override the default height to match the component
   $mobile-loading-height: 461px;
   $findalab-loading: 729px;
-
-  .findalab-loading {
-    height: $mobile-loading-height;
-
-    @media (min-width: $breakpoint) {
-      height: $loading-height;
-    }
-  }
 ```
 
 ## Custom Settings

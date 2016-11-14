@@ -82,9 +82,9 @@ $findalab-loading-height-mobile: 356px !default;
 %findalab-box {
   animation: fadeInOpacity 0.5s ease-in-out;
   animation-fill-mode: forwards;
-  background: $findalab-background;
-  border-radius: $findalab-radius;
+  background-color: $findalab-background;
   border: $findalab-border;
+  border-radius: $findalab-radius;
   box-sizing: border-box;
   position: relative;
 
@@ -118,7 +118,7 @@ $findalab-loading-height-mobile: 356px !default;
 .findalab__search {
   animation: fadeInOpacity 1s ease-in-out;
   animation-fill-mode: forwards;
-  background: $findalab-search-background;
+  background-color: $findalab-search-background;
   border-bottom: $findalab-border;
   border-radius: $findalab-radius 0 0;
   padding: $findalab-padding;
@@ -144,7 +144,7 @@ $findalab-loading-height-mobile: 356px !default;
 .findalab__total {
   animation: fadeInOpacity 1s ease-in-out;
   animation-fill-mode: forwards;
-  background: $findalab-total-background;
+  background-color: $findalab-total-background;
   border-radius: 0 0 0 $findalab-radius;
   border-top: $findalab-border;
   box-shadow: $findalab-total-shadow;
