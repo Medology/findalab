@@ -24,8 +24,26 @@ Make sure to load the scripts and stylesheets when using the plugin.
 Include the following code to initialize the plugin on the page:
 
 ```js
-$('#your-selector').load('../path/from/bower/findalab.html', function() {
-  $(this).find('.findalab').findalab();
+  <script src="/jquery.js"></script>
+  <script src="/findalab.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAP_API_KEY&amp;callback=initMap" async></script>
+
+  <script>
+   function initMap() {
+       $('#findalab-selector').loadFindalab();
+   }
+  </script>
+
+```
+### Custom Settings
+
+If the template path isn't located in `/bower_components/findalab/template/findalab.html` you can overwrite it in the jQuery call:
+
+```js
+$('#findalab-selector').loadFindalab({
+  templatePath: '/path/to/template/findalab.html',
+  baseURL: '/path/to/base/url'
+  ...
 });
 ```
 
