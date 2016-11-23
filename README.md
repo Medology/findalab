@@ -29,23 +29,14 @@ Include the following code to initialize the plugin on the page:
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAP_API_KEY&amp;callback=initMap" async></script>
 
   <script>
-   function initMap() {
-       $('#findalab-selector').loadFindalab();
-   }
+    function initMap() {
+      $('#findalab').load('/template/findalab.html', function() {
+        $(this).find('.findalab').findalab();
+      }
   </script>
 
 ```
-### Custom Settings
-
-If the template path isn't located in `/bower_components/findalab/template/findalab.html` you can overwrite it in the jQuery call:
-
-```js
-$('#findalab-selector').loadFindalab({
-  templatePath: '/path/to/template/findalab.html',
-  baseURL: '/path/to/base/url'
-  ...
-});
-```
+### Pre-loader
 
 To include default pre-loader styles use the following markup (include class names and copy the images into the project folder).
 everything inside the findalab-selector will be removed when the component is loaded.
