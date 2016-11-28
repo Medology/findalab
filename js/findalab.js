@@ -946,53 +946,42 @@
 
         $('[data-findalab-user-location]').html(this.settings.userLocation.buttonLoadingText);
 
-        // var searchValue = this.find('[data-findalab-search-field]').val();
-
-        // if (!searchValue.length) {
-        //   self._setMessage('Please do not leave the search field blank. Enter a value and try searching again.');
-        // } else {
-        //   this.search(searchValue);
-        // }
-
         if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(a) {
             // console.log(a);
             var lat, long, zip;
-            // lat = position.coords.latitude;
-            // long = position.coords.longitude;
+            lat = a.coords.latitude;
+            long = a.coords.longitude;
 
 
-            $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+a.coords.latitude+','+a.coords.longitude)
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
             .success(function(data) {
               //console.log(data.results);
 
-
-
               if(data.results && data.results.length) {
-                var zip;
+
                 for(i=0; i < data.results.length; i++) {
                   if(typeof data.results[i].address_components != 'undefined')
+                    //console.log(typeof data.results[i].address_components);
+
                     for(x=0; i < data.results[i].address_components.length; x++) {
-                      console.log(data.results[i].address_components[x].types);
                       if(
                         typeof data.results[i].address_components[x].types != 'undefined'
                         && data.results[i].address_components[x].types == 'postal_code'
                         ) {
-                          //console.log(data.results[i].address_components[x].long_name);
                           zip = data.results[i].address_components[x].long_name;
                           break;
                       }
                     }
+
                     if(typeof zip != 'undefined') {
-                      // $('#cs_locateError, #cs_locateWait').hide();
-                      $('.std-findalab__input').val(zip);
-                      // $('.std-findalab__button').click();
-                      // window.optimizely.push(["trackEvent", "cs_geolocate_success"]);
-                      // break;
+                      $('[data-findalab-search-field]').val(zip);
+                      $('[data-findalab-search-button]').click();
+                      break;
                     }
+
                   }
                 }
-
 
               })
             .fail(function() {

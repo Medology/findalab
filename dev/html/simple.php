@@ -43,7 +43,7 @@
          var findalab;
          $('#findalab').load('/template/findalab.html', function() {
              findalab = $(this).find('.findalab').findalab({
-                 baseURL: 'http://findalab.local/fixtures/simple-mockups'
+                 baseURL: 'https://findalab.local/fixtures/simple-mockups'
              });
          });
          $('#findalab-reset').on('click', function() {
