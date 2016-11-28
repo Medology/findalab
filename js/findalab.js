@@ -66,6 +66,12 @@
           button: 'Select &amp; Continue',
           notice: 'You will schedule your appointment during checkout.'
         },
+        userLocation: {
+          showOption: true,
+          icon: 'fa fa-map-marker',
+          msg: 'Or use current location'
+
+        },
         emptyResultsMessage: '',
         noResultsMessage: '',
         invalidPostalCodeMessage: ''
@@ -124,6 +130,7 @@
         self._setMessage(this.emptyResultsMessage);
 
         self._constructInHomeCollection(settings.inHomeCollection);
+        self._constructUserLocation(settings.userLocation);
         self._constructSearch(settings.search, settings.inputGroup);
 
         this.find('[data-findalab-search-field]')
@@ -419,6 +426,24 @@
         this.find('[data-findalab-ihc-button]').html(inHomeCollectionObject.button);
         this.find('[data-findalab-ihc-notice]').html(inHomeCollectionObject.notice);
       };
+
+      /**
+       * Construct the use current location option.
+       *
+       * @param  {object} userLocationObject user location settings
+       */
+      this._constructUserLocation = function(userLocationObject) {
+        this.find('[data-findalab-user-location]').html('<i aria-hidden="true"></i> ' + userLocationObject.msg);
+        this.find('[data-findalab-user-location] i').addClass(userLocationObject.icon);
+        this.find('[data-findalab-user-location]').on('click', $.proxy(this._onFindLocationSubmit, this));
+
+        // this.find('[data-findalab-ihc-description]').html(inHomeCollectionObject.description);
+        // this.find('[data-findalab-ihc-time-title]').html(inHomeCollectionObject.timeTitle);
+        // this.find('[data-findalab-ihc-time-details]').html(inHomeCollectionObject.timeDetails);
+        // this.find('[data-findalab-ihc-button]').html(inHomeCollectionObject.button);
+        // this.find('[data-findalab-ihc-notice]').html(inHomeCollectionObject.notice);
+      };
+
 
       /**
        * Construct search button, fields and text.
@@ -908,6 +933,79 @@
         } else {
           this.search(searchValue);
         }
+      };
+
+       /**
+       * Private event handler for a finding user location.
+       *
+       * @param {event} event
+       * @private
+       */
+      this._onFindLocationSubmit = function(event) {
+        event.preventDefault();
+
+        $('[data-findalab-user-location]').html(this.settings.userLocation.buttonLoadingText);
+
+        // var searchValue = this.find('[data-findalab-search-field]').val();
+
+        // if (!searchValue.length) {
+        //   self._setMessage('Please do not leave the search field blank. Enter a value and try searching again.');
+        // } else {
+        //   this.search(searchValue);
+        // }
+
+        if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(a) {
+            // console.log(a);
+            var lat, long, zip;
+            // lat = position.coords.latitude;
+            // long = position.coords.longitude;
+
+
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+a.coords.latitude+','+a.coords.longitude)
+            .success(function(data) {
+              //console.log(data.results);
+
+
+
+              if(data.results && data.results.length) {
+                var zip;
+                for(i=0; i < data.results.length; i++) {
+                  if(typeof data.results[i].address_components != 'undefined')
+                    for(x=0; i < data.results[i].address_components.length; x++) {
+                      console.log(data.results[i].address_components[x].types);
+                      if(
+                        typeof data.results[i].address_components[x].types != 'undefined'
+                        && data.results[i].address_components[x].types == 'postal_code'
+                        ) {
+                          //console.log(data.results[i].address_components[x].long_name);
+                          zip = data.results[i].address_components[x].long_name;
+                          break;
+                      }
+                    }
+                    if(typeof zip != 'undefined') {
+                      // $('#cs_locateError, #cs_locateWait').hide();
+                      $('.std-findalab__input').val(zip);
+                      // $('.std-findalab__button').click();
+                      // window.optimizely.push(["trackEvent", "cs_geolocate_success"]);
+                      // break;
+                    }
+                  }
+                }
+
+
+              })
+            .fail(function() {
+              // $('#cs_locateWait').hide();
+              // $('#cs_locateError').show();
+            });
+
+
+
+          });
+        }
+        else
+        {alert('navigator.geolocation not supported.');}
       };
 
       /**
