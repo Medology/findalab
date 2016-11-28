@@ -70,10 +70,10 @@
           showOption: true,
           icon: 'fa fa-map-marker',
           msg: 'Or use current location'
-
         },
         emptyResultsMessage: '',
         noResultsMessage: '',
+        cannotGeolocateMessage: '',
         invalidPostalCodeMessage: ''
       };
 
@@ -84,6 +84,8 @@
 
       this.noResultsMessage = 'Oops! Sorry, we could not find any testing centers near that location. ' +
       'Please try your search again with a different or less specific address.';
+
+      this.cannotGeolocateMessage = 'Oops! Sorry, we could not detect your location. ' + this.emptyResultsMessage;
 
       this.invalidPostalCodeMessage = 'Oops! Invalid postal code: please enter a valid postal code and search again.';
 
@@ -948,21 +950,18 @@
 
         if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(a) {
-            // console.log(a);
+
             var lat, long, zip;
             lat = a.coords.latitude;
             long = a.coords.longitude;
 
-
             $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
             .success(function(data) {
-              //console.log(data.results);
 
               if(data.results && data.results.length) {
 
                 for(i=0; i < data.results.length; i++) {
                   if(typeof data.results[i].address_components != 'undefined')
-                    //console.log(typeof data.results[i].address_components);
 
                     for(x=0; i < data.results[i].address_components.length; x++) {
                       if(
@@ -985,16 +984,14 @@
 
               })
             .fail(function() {
-              // $('#cs_locateWait').hide();
-              // $('#cs_locateError').show();
+              self._setMessage(self.cannotGeolocateMessage);
             });
-
-
 
           });
         }
-        else
-        {alert('navigator.geolocation not supported.');}
+        else {
+          self._setMessage(self.cannotGeolocateMessage);
+        }
       };
 
       /**
