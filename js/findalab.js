@@ -67,7 +67,7 @@
           notice: 'You will schedule your appointment during checkout.'
         },
         userLocation: {
-          showOption: true,
+          showOption: false,
           icon: 'fa fa-map-marker',
           msg: 'Or use current location'
         },
@@ -132,7 +132,7 @@
         self._setMessage(this.emptyResultsMessage);
 
         self._constructInHomeCollection(settings.inHomeCollection);
-        self._constructUserLocation(settings.userLocation);
+
         self._constructSearch(settings.search, settings.inputGroup);
 
         this.find('[data-findalab-search-field]')
@@ -142,6 +142,12 @@
         self._constructGoogleMaps(settings.googleMaps);
 
         this._contentNav();
+
+        if (settings.userLocation.showOption) {
+          self._constructUserLocation(settings.userLocation);
+        } else {
+          $('[data-findalab-user-location]').remove();
+        }
 
         this.fadeIntoView();
 
@@ -438,12 +444,6 @@
         this.find('[data-findalab-user-location]').html('<i aria-hidden="true"></i> ' + userLocationObject.msg);
         this.find('[data-findalab-user-location] i').addClass(userLocationObject.icon);
         this.find('[data-findalab-user-location]').on('click', $.proxy(this._onFindLocationSubmit, this));
-
-        // this.find('[data-findalab-ihc-description]').html(inHomeCollectionObject.description);
-        // this.find('[data-findalab-ihc-time-title]').html(inHomeCollectionObject.timeTitle);
-        // this.find('[data-findalab-ihc-time-details]').html(inHomeCollectionObject.timeDetails);
-        // this.find('[data-findalab-ihc-button]').html(inHomeCollectionObject.button);
-        // this.find('[data-findalab-ihc-notice]').html(inHomeCollectionObject.notice);
       };
 
 
