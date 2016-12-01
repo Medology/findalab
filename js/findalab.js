@@ -545,7 +545,9 @@
 
         $.when(searchLabs, searchPhlebotomists).done(
             function(resultsLabs, resultsPhlebotomists) {
-              if (!self._renderLabs(resultsLabs[0].labs) && !self._renderPhlebotomists(resultsPhlebotomists[0])) {
+              var noLabs = !self._renderLabs(resultsLabs[0].labs);
+              var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0]);
+              if (noLabs && noPhlebotomists) {
                 self._setMessage(self.noResultsMessage);
               }
             }
