@@ -148,6 +148,7 @@
 
 .findalab__nav__item {
   border: none;
+  border-radius: 0;
   color: #3398db;
   background-color: transparent;
   display: inline-block;
