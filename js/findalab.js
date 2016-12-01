@@ -937,26 +937,6 @@
         }
       };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
        /**
        * Private event handler for a finding user location.
        *
@@ -975,7 +955,13 @@
           navigator.geolocation.getCurrentPosition(searchByZipcode);
         }
 
-        //called after getcurrentposition
+        /**
+         * called after getcurrentposition
+         * @param  {object} a the geolocation object
+         * @param  {string} a.coords.latitude
+         * @param  {string} a.coords.longitude
+         * @private
+         */
         function searchByZipcode(a){
 
           var lat = a.coords.latitude;
@@ -986,7 +972,11 @@
           .fail(displayGeolocateError);
         }
 
-        //called on ajax success
+        /**
+         * called on ajax success, submits zipcode into input field
+         * @param  {object} data ajax results from google api
+         * @private
+         */
         function geolocateSuccess(data) {
 
           var addresses = data.results.filter(hasPostalCode);
@@ -999,15 +989,29 @@
           }
         }
 
-        function hasPostalCode(address) {
-          //uses the same checks as getPostalCode but returns true if it has a postal code
-          return getPostalCode(address) !== null;
+        /**
+         * uses the same checks as getPostalCode but returns a boolean
+         * @param  {array}  addresses the array of addresses
+         * @return {Boolean} returns true if it has a postal code
+         */
+        function hasPostalCode(addresses) {
+          return getPostalCode(addresses) !== null;
         }
 
+        /**
+         * check if an address component is a postal code
+         * @param  {array}  component.types address components
+         * @return {Boolean} return true is component array contains type 'postal_code'
+         */
         function isPostalCode(component) {
           return component.types.indexOf('postal_code') !== -1;
         }
 
+        /**
+         * get the zipcode
+         * @param  {array} address all the addresses that have a postal code
+         * @return {string} return zipcode as a string
+         */
         function getPostalCode (address) {
           if (!Array.isArray(address.address_components)) {
             return null;
@@ -1024,30 +1028,15 @@
           return postalCodeComponent.long_name;
         }
 
-        //called on fail and also if geolocation unavailable
+        /**
+         * called on fail and also if geolocation unavailable
+         * @private
+         */
         function displayGeolocateError() {
           self._setMessage(self.cannotGeolocateMessage);
         }
 
       };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       /**
        * Private event handler for when a search is successful.
