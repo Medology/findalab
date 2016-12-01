@@ -991,13 +991,12 @@
 
           var addresses = data.results.filter(hasPostalCode);
           var address = addresses[0];
-          console.log(getPostalCode(address));
+          var zip = getPostalCode(address);
 
-
-          // if (address) {
-          //   $('[data-findalab-search-field]').val(zip);
-          //   $('[data-findalab-search-button]').click();
-          // }
+          if (zip) {
+            $('[data-findalab-search-field]').val(zip);
+            $('[data-findalab-search-button]').click();
+          }
         }
 
         function hasPostalCode(address) {
