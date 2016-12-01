@@ -975,50 +975,88 @@
           navigator.geolocation.getCurrentPosition(searchByZipcode);
         }
 
-      };
+        //called after getcurrentposition
+        function searchByZipcode(a){
 
-      //called after getcurrentposition
-      function searchByZipcode(a){
-        var lat, long, zip;
-        lat = a.coords.latitude;
-        long = a.coords.longitude;
+          var lat = a.coords.latitude;
+          var long = a.coords.longitude;
 
-        $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
-        .success(geolocateSuccess)
-        .fail(displayGeolocateError);
-      }
-
-      //called on ajax success
-      function geolocateSuccess(data) {
-        if(data.results && data.results.length) {
-
-          for(i=0; i < data.results.length; i++) {
-            if(typeof data.results[i].address_components != 'undefined')
-
-              for(x=0; i < data.results[i].address_components.length; x++) {
-                if(
-                  typeof data.results[i].address_components[x].types != 'undefined'
-                  && data.results[i].address_components[x].types == 'postal_code'
-                  ) {
-                  zip = data.results[i].address_components[x].long_name;
-                break;
-              }
-            }
-
-            if(typeof zip != 'undefined') {
-              $('[data-findalab-search-field]').val(zip);
-              $('[data-findalab-search-button]').click();
-              break;
-            }
-
-          }
+          $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
+          .success(geolocateSuccess)
+          .fail(displayGeolocateError);
         }
-      }
 
-      //called on fail and also if geolocation unavailable
-      function displayGeolocateError() {
-        self._setMessage(self.cannotGeolocateMessage);
-      }
+        //called on ajax success
+        function geolocateSuccess(data) {
+
+          var addresses = data.results.filter(hasPostalCode);
+          // console.log(data.results);
+          // console.log(addresses);
+          var address = addresses[0];
+          console.log(getPostalCode(address));
+
+
+          // if (address) {
+          //   $('[data-findalab-search-field]').val(zip);
+          //   $('[data-findalab-search-button]').click();
+          // }
+        }
+
+        function hasPostalCode(address) {
+          // console.log('filtering address');
+          // console.dir(address);
+          if (!Array.isArray(address.address_components)) {
+            // console.log('address does not have address components array');
+            // console.log(typeof address.address_components);
+            return false;
+          }
+
+          // get the first address_component that is a postal code
+          var postalCodeComponents = address.address_components.filter(isPostalCode);
+          if (!postalCodeComponents.length) {
+            //console.log('address does not contain postal code');
+            return false;
+          }
+
+          //console.log('address has postal code');
+          return true;
+        }
+
+        function isPostalCode(component) {
+          return component.types.indexOf('postal_code') !== -1;
+        }
+
+        function getPostalCode (address) {
+          if (!Array.isArray(address.address_components)) {
+            return null;
+          }
+
+          // get the first address_component that is a postal code
+          var postalCodeComponents = address.address_components.filter(isPostalCode);
+          if (!postalCodeComponents.length) {
+            return null;
+          }
+
+          var postalCodeComponent = postalCodeComponents[0];
+
+          return postalCodeComponent.long_name;
+        }
+
+
+
+
+
+
+
+
+
+
+        //called on fail and also if geolocation unavailable
+        function displayGeolocateError() {
+          self._setMessage(self.cannotGeolocateMessage);
+        }
+
+      };
 
 
 
