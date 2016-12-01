@@ -990,8 +990,6 @@
         function geolocateSuccess(data) {
 
           var addresses = data.results.filter(hasPostalCode);
-          // console.log(data.results);
-          // console.log(addresses);
           var address = addresses[0];
           console.log(getPostalCode(address));
 
@@ -1003,23 +1001,8 @@
         }
 
         function hasPostalCode(address) {
-          // console.log('filtering address');
-          // console.dir(address);
-          if (!Array.isArray(address.address_components)) {
-            // console.log('address does not have address components array');
-            // console.log(typeof address.address_components);
-            return false;
-          }
-
-          // get the first address_component that is a postal code
-          var postalCodeComponents = address.address_components.filter(isPostalCode);
-          if (!postalCodeComponents.length) {
-            //console.log('address does not contain postal code');
-            return false;
-          }
-
-          //console.log('address has postal code');
-          return true;
+          //uses the same checks as getPostalCode but returns true if it has a postal code
+          return getPostalCode(address) !== null;
         }
 
         function isPostalCode(component) {
@@ -1041,15 +1024,6 @@
 
           return postalCodeComponent.long_name;
         }
-
-
-
-
-
-
-
-
-
 
         //called on fail and also if geolocation unavailable
         function displayGeolocateError() {
