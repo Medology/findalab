@@ -960,7 +960,6 @@
          * @param  {object} a the geolocation object
          * @param  {string} a.coords.latitude
          * @param  {string} a.coords.longitude
-         * @private
          */
         function searchByZipcode(a){
 
@@ -968,14 +967,13 @@
           var long = a.coords.longitude;
 
           $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
-          .success(geolocateSuccess)
-          .fail(displayGeolocateError);
+            .success(geolocateSuccess)
+            .fail(displayGeolocateError);
         }
 
         /**
          * called on ajax success, submits zipcode into input field
          * @param  {object} data ajax results from google api
-         * @private
          */
         function geolocateSuccess(data) {
 
@@ -990,9 +988,9 @@
         }
 
         /**
-         * uses the same checks as getPostalCode but returns a boolean
+         * Determines if an address has a postal code address component.
          * @param  {array}  addresses the array of addresses
-         * @return {Boolean} returns true if it has a postal code
+         * @return {boolean} returns true if it has a postal code
          */
         function hasPostalCode(addresses) {
           return getPostalCode(addresses) !== null;
@@ -1001,16 +999,18 @@
         /**
          * check if an address component is a postal code
          * @param  {array}  component.types address components
-         * @return {Boolean} return true is component array contains type 'postal_code'
+         * @return {boolean} true if the address has a postal code. false if not.
          */
         function isPostalCode(component) {
           return component.types.indexOf('postal_code') !== -1;
         }
 
         /**
-         * get the zipcode
-         * @param  {array} address all the addresses that have a postal code
-         * @return {string} return zipcode as a string
+         * Gets the postal code of an address.
+         *
+         * @param {object} address the address to analyze.
+         * @param {array} address.address_components
+         * @return {string} the postal code, or null if the address does not have a postal code.
          */
         function getPostalCode (address) {
           if (!Array.isArray(address.address_components)) {
@@ -1029,8 +1029,7 @@
         }
 
         /**
-         * called on fail and also if geolocation unavailable
-         * @private
+         * sets the text of the error message that is displayed to the user
          */
         function displayGeolocateError() {
           self._setMessage(self.cannotGeolocateMessage);
