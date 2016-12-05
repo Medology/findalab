@@ -440,10 +440,10 @@
        *
        * @param  {object} userLocationObject user location settings
        */
-      _constructUserLocation = function(userLocationObject) {
+      var _constructUserLocation = function(userLocationObject) {
         self.find('[data-findalab-user-location]').html('<i aria-hidden="true"></i> ' + userLocationObject.msg);
         self.find('[data-findalab-user-location] i').addClass(userLocationObject.icon);
-        self.find('[data-findalab-user-location]').on('click', _onFindLocationSubmit);
+        self.on('click', '[data-findalab-user-location]', _onFindLocationSubmit);
       };
 
 
@@ -943,7 +943,7 @@
        * @param {event} event
        * @private
        */
-      _onFindLocationSubmit = function(event) {
+      var _onFindLocationSubmit = function(event) {
 
         event.preventDefault();
 
@@ -966,7 +966,6 @@
          * @param  {string} geo.coords.longitude the longitude of the geolocation
          */
         function _searchByCoords(geo) {
-        //function searchByZipcode(a){
 
           var lat = geo.coords.latitude;
           var long = geo.coords.longitude;
