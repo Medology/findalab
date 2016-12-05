@@ -964,7 +964,6 @@
          * @param  {object} geo                  the geolocation object
          * @param  {string} geo.coords.latitude  the latitude of the geolocation
          * @param  {string} geo.coords.longitude the longitude of the geolocation
-         * @private
          */
         function _searchByCoords(geo) {
         //function searchByZipcode(a){
