@@ -1,6 +1,8 @@
 /*global google*/
 (function($) {
 
+  "use strict";
+
   $.fn.extend({
 
     /**
