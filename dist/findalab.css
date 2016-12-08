@@ -192,9 +192,8 @@
   margin-top: 0.5rem;
   padding: 0;
   text-decoration: underline; }
-
-button:hover {
-  cursor: pointer; }
+  .findalab__search__user-location:hover {
+    cursor: pointer; }
 
 @keyframes fadeInOpacity {
   0% {

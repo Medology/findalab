@@ -72,6 +72,10 @@ $findalab-loading-height-mobile: 356px !default;
 /// @type Color
 $findlab-user-location-color: #3398db !default;
 
+/// Font Weight for the user location button
+/// @type number
+$findalab-user-location-font-weight: 500 !default;
+
 // Styles
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -316,14 +320,12 @@ $findlab-user-location-color: #3398db !default;
   background: transparent;
   border: 0;
   color: $findlab-user-location-color;
-  font-weight: 500;
+  font-weight: $findalab-user-location-font-weight;
   line-height: 1;
   margin-top: 0.5rem;
   padding: 0;
   text-decoration: underline;
-}
 
-button {
   &:hover {
     cursor: pointer;
   }
