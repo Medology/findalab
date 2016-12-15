@@ -123,6 +123,8 @@
 
       this.labs = [];
 
+      this.bounds;
+
       this.myLab;
 
       /**
@@ -253,6 +255,7 @@
        * @param {float} long  The longitude to center to.
        */
       this.centerMap = function(lat, long) {
+        console.log(howManyLabs, self.settings.googleMaps.map.getCenter());
         self.settings.googleMaps.map.setCenter(this._buildLatLong(lat, long));
         /**
          * Handles the response from Google's GeoCoding service.
@@ -695,6 +698,8 @@
 
         self.settings.googleMaps.markers.push(vMarker);
 
+        this.bounds.extend(location);
+
         var infoWindowContent =
               '<h6>' + lab.lab_title + '</h6>' +
               '<p>' +
@@ -751,13 +756,17 @@
        * @return {boolean} Whether any labs were rendered.
        * @private
        */
+      var howManyLabs;
       this._renderLabs = function(labs) {
         var $resultsList = this.find('[data-findalab-result-list]');
         var $resultTemplate = this.find('[data-findalab-result][data-template]');
         var pluralLabs = labs.length > 1 ? 's' : '';
 
         $resultsList.empty();
+        this.bounds = new google.maps.LatLngBounds();
 
+
+        howManyLabs = labs.length;
         this.find('[data-findalab-total]').html(labs.length + ' Result' + pluralLabs);
 
         /**
@@ -831,8 +840,9 @@
         labs.map($.proxy(this._showMarker, this));
 
         if (labs[0]) {
-          this.centerMap(labs[0].center_latitude, labs[0].center_longitude);
-          self.settings.googleMaps.map.setZoom(self.settings.googleMaps.resultsZoom);
+          //this.centerMap(labs[0].center_latitude, labs[0].center_longitude);
+          self.settings.googleMaps.map.fitBounds(this.bounds);
+          //self.settings.googleMaps.map.setZoom(self.settings.googleMaps.resultsZoom);
           self.labs = labs;
           return true;
         }
