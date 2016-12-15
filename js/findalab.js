@@ -299,11 +299,11 @@
        * Can be overridden with custom behavior for the particular page that the
        * map is embedded into.
        *
-       * @param {[]}    labs  The labs that were returned from the server.
-       * @param {float} lat   The latitude used for the search.
-       * @param {float} long  The longitude used for the search.
+       * @todo improve docs. Provide full structure info on these array of objects
+       * @param {Array} labs
+       * @param {Array} phlebotomists
        */
-      this.onSearchSuccess = function(labs, lat, long) {
+      this.onSearchSuccess = function(labs, phlebotomists) {
         // override me!
       };
 
@@ -559,30 +559,25 @@
       /**
        * Search the collection centers.
        *
-       * @param {[{latitude:float, longitude:float, countryCode:string}]} result
-       * @param {string} searchValueCountry The country value
+       * @param {object} geocode             The geocode to search near
+       * @param {float}  geocode.latitude    The latitude of the geocode
+       * @param {float}  geocode.longitude   The longitude of the geocode
+       * @param {string} geocode.countryCode The country code of the geocode
+       * @param {string} country             The country value
        */
-      this._searchCollectionCenters = function(result, searchValueCountry) {
-        if (result.length == 0) {
-          self._setMessage(self.noResultsMessage);
-        }
-
-        var searchLabs = self._searchNearCoords(
-          self.settings.searchURL.labs, searchValueCountry, result
-        );
-        var searchPhlebotomists = self._searchNearCoords(
-          self.settings.searchURL.phlebotomists, searchValueCountry, result
+      this._searchCollectionCenters = function(geocode, country) {
+        var labsPromise = self._searchNearCoords(
+          self.settings.searchURL.labs, country, geocode
         );
 
-        $.when(searchLabs, searchPhlebotomists).done(
-            function(resultsLabs, resultsPhlebotomists) {
-              var noLabs = !self._renderLabs(resultsLabs[0].labs);
-              var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0]);
-              if (noLabs && noPhlebotomists) {
-                self._setMessage(self.noResultsMessage);
-              }
-            }
-          ).fail(self._onSearchError).always($.proxy(self._onSearchComplete, self));
+        var phlebotomistsPromise = self._searchNearCoords(
+          self.settings.searchURL.phlebotomists, country, geocode
+        );
+
+        $.when(labsPromise, phlebotomistsPromise).
+          done(self._onSearchSuccess).
+          fail(self._onSearchError).
+          always($.proxy(self._onSearchComplete, self));
       };
 
       /**
@@ -596,18 +591,27 @@
           url: self.settings.baseURL + '/geocode',
           dataType: 'json',
           data: { zip: searchValue, countryCode: searchValueCountry }
-        }).done(self._searchCollectionCenters).fail(self._onSearchError);
+        }).done(function(results) {
+            if (!results.length) {
+                self._setMessage(self.noResultsMessage);
+            }
+
+            self._searchCollectionCenters(results[0])
+        }).fail(self._onSearchError);
       };
 
       /**
        * Finds nearby collection centers from the country and geocode given.
        *
-       * @param  {string} collectionCenter The type of collection center
-       * @param  {string} country          The country of the search
-       * @param  {object} result           The ajax result of the geocode
-       * @return {ajax}                    The collection center results from the ajax request
+       * @param  {string} collectionCenter    The type of collection center
+       * @param  {string} country             The country of the search
+       * @param  {object} geocode             The geocode to search near
+       * @param  {float}  geocode.latitude    The latitude of the geocode
+       * @param  {float}  geocode.longitude   The longitude of the geocode
+       * @param  {string} geocode.countryCode The country code of the geocode
+       * @return {ajax}   The collection center results from the ajax request
        */
-      this._searchNearCoords = function(collectionCenter, country, result) {
+      this._searchNearCoords = function(collectionCenter, country, geocode) {
         return $.ajax({
           url: self.settings.baseURL + '/' + collectionCenter + '/nearCoords',
           dataType: 'json',
@@ -616,7 +620,7 @@
             filterNetwork: self.settings.searchFunction.excludeNetworks,
             labCount: self.settings.searchFunction.limit,
             network: self.settings.searchFunction.onlyNetwork
-          }, result[0])
+          }, geocode)
         });
       };
 
@@ -1051,32 +1055,19 @@
       /**
        * Private event handler for when a search is successful.
        *
-       * @param {{
-       *  labs:[{
-       *    center_id:int,
-       *    center_address:string,
-       *    center_city:string,
-       *    center_state:string,
-       *    center_zip:string,
-       *    center_hours:string,
-       *    center_network:string,
-       *    center_distance:float,
-       *    lab_title:string,
-       *    network:string,
-       *    fax_number:string,
-       *    structured_hours:object
-       *   }],
-       *   latitude:float,
-       *   longitude:float
-       * }}    response
+       * @todo improve docs. Provide full structure info on these array of objects
+       * @param {Array} resultsLabs
+       * @param {Array} resultsPhlebotomists
        * @private
        */
-      this._onSearchSuccess = function(response) {
-        if (response.labs.length == 0) {
-          self._onSearchErrorString(self.noResultsMessage);
-        } else {
-          self.onSearchSuccess(response.labs, response.latitude, response.longitude);
-        }
+      this._onSearchSuccess = function(resultsLabs, resultsPhlebotomists) {
+          var noLabs = !self._renderLabs(resultsLabs[0].labs);
+          var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0]);
+          if (noLabs && noPhlebotomists) {
+              self._setMessage(self.noResultsMessage);
+          }
+
+          self.onSearchSuccess(resultsLabs, resultsPhlebotomists);
       };
 
       /**
