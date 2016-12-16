@@ -716,7 +716,7 @@
             'data-address="' + lab.center_address + '" ' +
             'data-city="' + lab.center_city + '" ' +
             'data-state="' + lab.center_state + '" ' +
-            'data-zip="' + lab.center_zip + '" ' +
+            'data-zipcode="' + lab.center_zip + '" ' +
             'data-network="' + lab.network + '" ' +
             'data-title="' + lab.lab_title + '" ' +
             'data-country="' + lab.center_country + '"' +
@@ -804,7 +804,7 @@
               .attr('data-address', lab.center_address)
               .attr('data-city', lab.center_city)
               .attr('data-state', lab.center_state)
-              .attr('data-zip', lab.center_zip)
+              .attr('data-zipcode', lab.center_zip)
               .attr('data-network', lab.network)
               .attr('data-title', lab.lab_title)
               .attr('data-fax_number', lab.fax_number)
