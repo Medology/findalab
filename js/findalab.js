@@ -30,8 +30,9 @@
           map: null,
           markers: [],
           resultsZoom: 10, // The zoom level for when there are search results
-          mapMarkerFillColor: '#3398db',
-          mapMarkerHoverFillColor: '#eb4d4c'
+          labMarkerFillColor: '#3398db',
+          ihcMarkerFillColor: '#73c6eb',
+          markerHoverFillColor: '#eb4d4c'
         },
         searchFunction: {
           excludeNetworks: undefined,
@@ -110,16 +111,18 @@
           ' 0 -3.88184,-0.74368 -5.36921,-2.23105c-1.48973,-1.48974 -2.23342,-3.24474' +
           ' -2.23342,-5.36921c0,-2.07474 0.74369,-3.82737 2.23342,-5.31711c1.48737,-1.48737' +
           ' 3.29448,-2.23105 5.36921,-2.23105l0,0z',
-          fillColor: self.settings.googleMaps.mapMarkerFillColor,
+          fillColor: self.settings.googleMaps.labMarkerFillColor,
           fillOpacity: 1,
           scale: 1,
           strokeColor: 'white',
           strokeWeight: 2
         };
 
-      this.mapMarkerHover = $.extend(true, {}, this.mapMarker);
+      this.ihcMapMarker = $.extend(true, {}, this.mapMarker);
+      this.ihcMapMarker.fillColor = self.settings.googleMaps.ihcMarkerFillColor;
 
-      this.mapMarkerHover.fillColor = self.settings.googleMaps.mapMarkerHoverFillColor;
+      this.mapMarkerHover = $.extend(true, {}, this.mapMarker);
+      this.mapMarkerHover.fillColor = self.settings.googleMaps.markerHoverFillColor;
 
       this.labs = [];
 
@@ -159,10 +162,9 @@
         // Capture lab selection events
         this.on('click', '[data-findalab-result-button]', $.proxy(onLabSelectClick, this));
         this.on('mouseenter','[data-findalab-result]', $.proxy(onLabHover, this));
-        this.on('mouseleave','[data-findalab-result]', $.proxy(onLabUnhover, this));
-
+        this.on('mouseleave','[data-findalab-result]', $.proxy(onLabMarkerUnhover, this));
         this.on('mouseenter','[data-findalab-ihc]', $.proxy(onPhlebotomistsHover, this));
-        this.on('mouseleave','[data-findalab-ihc]', $.proxy(onLabUnhover, this));
+        this.on('mouseleave','[data-findalab-ihc]', $.proxy(onIhcMarkerUnhover, this));
 
         /**
          * Prevents submission of the form on key down.
@@ -212,64 +214,63 @@
         /**
          * Is called when user hovers on a result and causes the corresponding map pin to change
          *
-         * @param  {event} event the mouseenter event
+         * @param   {event}   event the mouseenter event
          * @returns {boolean} Always false to prevent bubbling.
          */
         function onLabHover(event) {
-
           var id;
-
           if (event.target.tagName == 'LI') {
             id = $(event.target).data('id');
           } else {
             id = $(event.target).parents('li').data('id');
           }
-
           this.myLab = this.labs[id];
-
           this.myLab.marker.setIcon(this.mapMarkerHover);
-
           this.myLab.marker.setAnimation(google.maps.Animation.BOUNCE);
-
           return false;
         }
 
 
-
-
+        /**
+         * Is called when user hovers on a result and causes the corresponding map pin to change
+         *
+         * @param   {event}   event the mouseenter event
+         * @returns {boolean} Always false to prevent bubbling.
+         */
         function onPhlebotomistsHover(event) {
-
           var id;
-
           if (event.target.tagName == 'LI') {
             id = $(event.target).data('id');
           } else {
             id = $(event.target).parents('li').data('id');
           }
-
           this.myLab = this.phlebotomists;
-
           this.myLab.marker.setIcon(this.mapMarkerHover);
-
           this.myLab.marker.setAnimation(google.maps.Animation.BOUNCE);
-
           return false;
         }
 
         /**
          * Is called when user unhovers on a result and causes the corresponding map pin to go back to normal
          *
-         * @param  {event} event the mouseleave event
+         * @param   {event}   event the mouseleave event
          * @returns {boolean} Always false to prevent bubbling.
          */
-        function onLabUnhover(event) {
-
+        function onLabMarkerUnhover(event) {
           this.myLab.marker.setIcon(this.mapMarker);
-
-          // change back to phlebotomist color
-
           this.myLab.marker.setAnimation(null);
+          return false;
+        }
 
+        /**
+         * Is called when user unhovers on a result and causes the corresponding map pin to go back to normal
+         *
+         * @param   {event}   event the mouseleave event
+         * @returns {boolean} Always false to prevent bubbling.
+         */
+        function onIhcMarkerUnhover(event) {
+          this.myLab.marker.setIcon(this.ihcMapMarker);
+          this.myLab.marker.setAnimation(null);
           return false;
         }
 
@@ -768,6 +769,54 @@
         lab.marker = vMarker;
       };
 
+
+      /**
+       * Shows the in-home collection marker on the Google Map
+       *
+       * @param geocode {object}
+       */
+      this._showIhcMarker = function(geocode) {
+        var location = this._buildLatLong(geocode.latitude, geocode.longitude);
+        var vMarker;
+
+        vMarker = new google.maps.Marker({
+          map: self.settings.googleMaps.map,
+          icon: this.mapMarker,
+          position: location
+        });
+
+        vMarker.icon.fillColor = self.settings.googleMaps.ihcMarkerFillColor;
+
+        self.settings.googleMaps.markers.push(vMarker);
+
+        this.bounds.extend(location);
+
+        var infoWindowContent =
+          '<h6>' + self.settings.inHomeCollection.title + '</h6>' +
+          '<p style="max-width: 200px">' + self.settings.inHomeCollection.description + '</p>';
+
+        if (self.settings.lab.hasButton) {
+          infoWindowContent +=
+            '<button type="button" data-findalab-ihc-button class="' +
+            self.settings.inHomeCollection.buttonClass +
+            '">' +
+            self.settings.inHomeCollection.button
+            '</button>'
+        };
+
+        google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
+          self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
+
+          // noinspection JSUnresolvedFunction
+          self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
+        }, this));
+
+        geocode.marker = vMarker;
+        this.phlebotomists = geocode;
+
+      };
+
+
       /**
        * This function will handle rendering labs.
        * @param {[{
@@ -865,6 +914,14 @@
 
         this._initShowStructuredHours();
 
+        var mapMarkerDetails = {
+          markerColor: '#3398db',
+          infoWindow: {
+            title: this.title,
+            buttonText: self.settings.lab.buttonText,
+          }
+        };
+
         labs.map($.proxy(this._showMarker, this));
 
         if (labs[0]) {
@@ -883,63 +940,12 @@
        * @return {boolean} whether the in-home collections modal was rendered.
        */
       this._renderPhlebotomists = function(phlebotomists, geocode) {
-        console.log(geocode);
         var $resultsList = this.find('[data-findalab-result-list]');
         var $inHomeCollection = this.find('[data-findalab-ihc][data-template]').clone().removeAttr('data-template');
-
         if (self.settings.inHomeCollection.showComponent && phlebotomists.hasPhlebotomists) {
           $inHomeCollection.prependTo($resultsList);
         }
-
-
-
-
-
-        // render the phelbotomist map pin
-        var location = this._buildLatLong(geocode.latitude, geocode.longitude);
-        var vMarker;
-
-        vMarker = new google.maps.Marker({
-          map: self.settings.googleMaps.map,
-          icon: this.mapMarker,
-          position: location
-        });
-
-        vMarker.icon.fillColor = 'yellow';
-
-        self.settings.googleMaps.markers.push(vMarker);
-
-        this.bounds.extend(location);
-
-        var infoWindowContent =
-          '<h6>In-Home Collection</h6>' +
-          '<p>Get the lab to come to you. Schedule an in-home appointment with a Lab Collection Specialist</p>';
-
-        if (self.settings.lab.hasButton) {
-          infoWindowContent +=
-            '<a ' +
-            'data-findalab-result-button ' +
-            'class="' + self.settings.lab.buttonClass + '" ' +
-            'href="#" ' +
-            '>' +
-            'select and continue' +
-            '</a>';
-        };
-
-        google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
-          self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
-
-          // noinspection JSUnresolvedFunction
-          self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
-        }, this));
-
-        geocode.marker = vMarker;
-        this.phlebotomists = geocode;
-
-
-
-
-
+        self._showIhcMarker(geocode);
         return phlebotomists.hasPhlebotomists;
       };
 
