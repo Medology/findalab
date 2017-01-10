@@ -161,6 +161,9 @@
         this.on('mouseenter','[data-findalab-result]', $.proxy(onLabHover, this));
         this.on('mouseleave','[data-findalab-result]', $.proxy(onLabUnhover, this));
 
+        this.on('mouseenter','[data-findalab-ihc]', $.proxy(onPhlebotomistsHover, this));
+        this.on('mouseleave','[data-findalab-ihc]', $.proxy(onLabUnhover, this));
+
         /**
          * Prevents submission of the form on key down.
          *
@@ -231,6 +234,28 @@
           return false;
         }
 
+
+
+
+        function onPhlebotomistsHover(event) {
+
+          var id;
+
+          if (event.target.tagName == 'LI') {
+            id = $(event.target).data('id');
+          } else {
+            id = $(event.target).parents('li').data('id');
+          }
+
+          this.myLab = this.phlebotomists;
+
+          this.myLab.marker.setIcon(this.mapMarkerHover);
+
+          this.myLab.marker.setAnimation(google.maps.Animation.BOUNCE);
+
+          return false;
+        }
+
         /**
          * Is called when user unhovers on a result and causes the corresponding map pin to go back to normal
          *
@@ -240,6 +265,8 @@
         function onLabUnhover(event) {
 
           this.myLab.marker.setIcon(this.mapMarker);
+
+          // change back to phlebotomist color
 
           this.myLab.marker.setAnimation(null);
 
@@ -577,7 +604,7 @@
           self.settings.searchURL.phlebotomists, country, geocode
         );
 
-        $.when(labsPromise, phlebotomistsPromise).
+        $.when(labsPromise, phlebotomistsPromise, geocode).
           done(self._onSearchSuccess).
           fail(self._onSearchError).
           always($.proxy(self._onSearchComplete, self));
@@ -855,13 +882,63 @@
        * @param  {json} phlebotomists Response from api
        * @return {boolean} whether the in-home collections modal was rendered.
        */
-      this._renderPhlebotomists = function(phlebotomists) {
+      this._renderPhlebotomists = function(phlebotomists, geocode) {
+        console.log(geocode);
         var $resultsList = this.find('[data-findalab-result-list]');
         var $inHomeCollection = this.find('[data-findalab-ihc][data-template]').clone().removeAttr('data-template');
 
         if (self.settings.inHomeCollection.showComponent && phlebotomists.hasPhlebotomists) {
           $inHomeCollection.prependTo($resultsList);
         }
+
+
+
+
+
+        // render the phelbotomist map pin
+        var location = this._buildLatLong(geocode.latitude, geocode.longitude);
+        var vMarker;
+
+        vMarker = new google.maps.Marker({
+          map: self.settings.googleMaps.map,
+          icon: this.mapMarker,
+          position: location
+        });
+
+        vMarker.icon.fillColor = 'yellow';
+
+        self.settings.googleMaps.markers.push(vMarker);
+
+        this.bounds.extend(location);
+
+        var infoWindowContent =
+          '<h6>In-Home Collection</h6>' +
+          '<p>Get the lab to come to you. Schedule an in-home appointment with a Lab Collection Specialist</p>';
+
+        if (self.settings.lab.hasButton) {
+          infoWindowContent +=
+            '<a ' +
+            'data-findalab-result-button ' +
+            'class="' + self.settings.lab.buttonClass + '" ' +
+            'href="#" ' +
+            '>' +
+            'select and continue' +
+            '</a>';
+        };
+
+        google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
+          self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
+
+          // noinspection JSUnresolvedFunction
+          self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
+        }, this));
+
+        geocode.marker = vMarker;
+        this.phlebotomists = geocode;
+
+
+
+
 
         return phlebotomists.hasPhlebotomists;
       };
@@ -1065,9 +1142,9 @@
        * @param {Array} resultsPhlebotomists
        * @private
        */
-      this._onSearchSuccess = function(resultsLabs, resultsPhlebotomists) {
+      this._onSearchSuccess = function(resultsLabs, resultsPhlebotomists, geocode) {
           var noLabs = !self._renderLabs(resultsLabs[0].labs);
-          var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0]);
+          var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0], geocode);
           if (noLabs && noPhlebotomists) {
               self._setMessage(self.noResultsMessage);
           }
