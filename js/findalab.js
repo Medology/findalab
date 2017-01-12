@@ -452,6 +452,17 @@
         googleMapsObject.map = new google.maps.Map(document.getElementById('findalab-map'), mapOptions);
         googleMapsObject.geoCoder = new google.maps.Geocoder();
         googleMapsObject.infoWindow = new google.maps.InfoWindow();
+
+        var zoomChangeBoundsListener;
+        google.maps.event.addListener(googleMapsObject.map, 'zoom_changed', function() {
+          zoomChangeBoundsListener =
+            google.maps.event.addListener(googleMapsObject.map, 'bounds_changed', function(event) {
+              if (this.getZoom() > 15) {
+                // Change max/min zoom here
+                this.setZoom(15);
+              }
+            });
+        });
       };
 
       /**
