@@ -944,8 +944,8 @@
         var $inHomeCollection = this.find('[data-findalab-ihc][data-template]').clone().removeAttr('data-template');
         if (self.settings.inHomeCollection.showComponent && phlebotomists.hasPhlebotomists) {
           $inHomeCollection.prependTo($resultsList);
+          self._showIhcMarker(geocode);
         }
-        self._showIhcMarker(geocode);
         return phlebotomists.hasPhlebotomists;
       };
 
