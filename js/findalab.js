@@ -842,7 +842,6 @@
         var pluralLabs = labs.length > 1 ? 's' : '';
 
         $resultsList.empty();
-        this.bounds = new google.maps.LatLngBounds();
 
         this.find('[data-findalab-total]').html(labs.length + ' Result' + pluralLabs);
 
@@ -925,7 +924,6 @@
         labs.map($.proxy(this._showMarker, this));
 
         if (labs[0]) {
-          self.settings.googleMaps.map.fitBounds(this.bounds);
           self.labs = labs;
           return true;
         }
@@ -1149,12 +1147,13 @@
        * @private
        */
       this._onSearchSuccess = function(resultsLabs, resultsPhlebotomists, geocode) {
+          self.bounds = new google.maps.LatLngBounds();
           var noLabs = !self._renderLabs(resultsLabs[0].labs);
           var noPhlebotomists = !self._renderPhlebotomists(resultsPhlebotomists[0], geocode);
           if (noLabs && noPhlebotomists) {
               self._setMessage(self.noResultsMessage);
           }
-
+          self.settings.googleMaps.map.fitBounds(self.bounds);
           self.onSearchSuccess(resultsLabs, resultsPhlebotomists);
       };
 
