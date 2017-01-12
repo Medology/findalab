@@ -924,14 +924,6 @@
 
         this._initShowStructuredHours();
 
-        var mapMarkerDetails = {
-          markerColor: '#3398db',
-          infoWindow: {
-            title: this.title,
-            buttonText: self.settings.lab.buttonText,
-          }
-        };
-
         labs.map($.proxy(this._showMarker, this));
 
         if (labs[0]) {
@@ -1032,12 +1024,9 @@
        */
       this._onSearchSubmit = function(event) {
         event.preventDefault();
-
         $('[data-findalab-search-button]').html(this.settings.search.buttonLoadingText);
         $('[data-findalab-result-list]').scrollTop(0);
-
         var searchValue = this.find('[data-findalab-search-field]').val();
-
         if (!searchValue.length) {
           self._setMessage('Please do not leave the search field blank. Enter a value and try searching again.');
         } else {
