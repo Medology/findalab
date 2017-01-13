@@ -371,26 +371,58 @@
       };
 
       /**
-       * Resets the lab finder to its default state.
+       * Empties the search field input.
        */
-      this.reset = function() {
-        this.find('.findalab__results li').remove();
+      this.resetSearchField = function() {
         this.find('[data-findalab-search-field]').val('');
+      }
+
+      /**
+       * Replaces the results and total count with no results.
+       */
+      this.resetResults = function() {
+        this.find('.findalab__results li').remove();
         this.find('[data-findalab-total]').html('No Results');
         self._setMessage(self.emptyResultsMessage);
+      }
 
+      /*
+       * Clears out all of the markes on the map.
+       */
+      this.resetMapMarkers = function() {
+        var markersLength = self.settings.googleMaps.markers.length;
+        for (var i = 0; i < markersLength; i++) {
+          self.settings.googleMaps.markers[i].setMap(null);
+        }
+        self.settings.googleMaps.markers = [];
+      }
+
+      /*
+       * Centers and resets the zoom of the map back to default position.
+       */
+      this.resetMapView = function() {
         self.settings.googleMaps.map.setCenter(this._buildLatLong(
           self.settings.googleMaps.defaultLat, self.settings.googleMaps.defaultLong
         ));
         self.settings.googleMaps.map.setZoom(self.settings.googleMaps.initialZoom);
         self.settings.googleMaps.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+      }
 
-        var markersLength = self.settings.googleMaps.markers.length;
-        for (var i = 0; i < markersLength; i++) {
-          self.settings.googleMaps.markers[i].setMap(null);
-        }
+      /**
+       * Resets the map's zoom and position, and clears the markers.
+       */
+      this.resetMap = function() {
+        self.resetMapMarkers();
+        self.resetMapView();
+      }
 
-        self.settings.googleMaps.markers = [];
+      /**
+       * Resets the lab finder to its default state.
+       */
+      this.reset = function() {
+        self.resetSearchField();
+        self.resetResults();
+        self.resetMap();
       };
 
       /**
