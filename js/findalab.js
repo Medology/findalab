@@ -792,11 +792,9 @@
 
         vMarker = new google.maps.Marker({
           map: self.settings.googleMaps.map,
-          icon: this.mapMarker,
+          icon: this.ihcMapMarker,
           position: location
         });
-
-        vMarker.icon.fillColor = self.settings.googleMaps.ihcMarkerFillColor;
 
         self.settings.googleMaps.markers.push(vMarker);
 
