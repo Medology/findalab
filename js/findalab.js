@@ -375,7 +375,7 @@
        */
       this.resetSearchField = function() {
         this.find('[data-findalab-search-field]').val('');
-      }
+      };
 
       /**
        * Replaces the results and total count with no results.
@@ -384,7 +384,7 @@
         this.find('.findalab__results li').remove();
         this.find('[data-findalab-total]').html('No Results');
         self._setMessage(self.emptyResultsMessage);
-      }
+      };
 
       /*
        * Clears out all of the markes on the map.
@@ -395,7 +395,7 @@
           self.settings.googleMaps.markers[i].setMap(null);
         }
         self.settings.googleMaps.markers = [];
-      }
+      };
 
       /*
        * Centers and resets the zoom of the map back to default position.
