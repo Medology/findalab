@@ -8,6 +8,7 @@ Feature: Google Maps API
      And I fill in "Enter your zip" with "77057"
      And I press "Search"
     Then I should see "LabCorp"
+     And I should not see "In-Home Collection"
      And there should be 25 pins on the map
      And I should see "25 Results"
 
