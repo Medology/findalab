@@ -41,7 +41,7 @@
          var findalab;
          $('#findalab').load('/template/findalab.html', function() {
              findalab = $(this).find('.findalab').findalab({
-                 baseURL: 'http://findalab.local/fixtures/simple-mockups'
+                 baseURL: 'http://findalab.local/fixtures/labs-results'
              });
          });
          $('#findalab-reset').on('click', function() {
