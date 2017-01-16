@@ -880,11 +880,8 @@
       this._renderLabs = function(labs) {
         var $resultsList = this.find('[data-findalab-result-list]');
         var $resultTemplate = this.find('[data-findalab-result][data-template]');
-        var pluralLabs = labs.length > 1 ? 's' : '';
 
         $resultsList.empty();
-
-        this.find('[data-findalab-total]').html(labs.length + ' Result' + pluralLabs);
 
         /**
          * @param {int} index
@@ -978,6 +975,20 @@
           self._showIhcMarker(geocode);
         }
         return phlebotomists.hasPhlebotomists;
+      };
+
+      /**
+       * Counts, adds together and displays the results and phlebotomist combined total.
+       *
+       * @param {Array} resultsLabs
+       * @param {Array} resultsPhlebotomists
+       * @private
+       */
+      this._renderResultsTotal = function(resultsLabs, resultsPhlebotomists) {
+        var totalResults = resultsLabs[0].labs.length;
+        totalResults += resultsPhlebotomists[0].hasPhlebotomists === true ? 1 : 0;
+        var pluralLabs = totalResults > 1 ? 's' : '';
+        self.find('[data-findalab-total]').html(totalResults + ' Result' + pluralLabs);
       };
 
       /**
@@ -1186,6 +1197,7 @@
               self._setMessage(self.noResultsMessage);
           }
           self.settings.googleMaps.map.fitBounds(self.bounds);
+          self._renderResultsTotal(resultsLabs, resultsPhlebotomists);
           self.onSearchSuccess(resultsLabs, resultsPhlebotomists);
       };
 
