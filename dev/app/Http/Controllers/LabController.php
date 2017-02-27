@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LabController extends Controller
 {
-    const LAB_FIXTURE = '/html/fixtures/base/labs.json';
+    const LAB_FIXTURE = 'html/fixtures/base/labs.json';
 
     /** @var array Default labs */
     protected $labs;
@@ -68,7 +68,7 @@ class LabController extends Controller
      */
     protected function loadLabs()
     {
-        $content = file_get_contents(base_path() . self::LAB_FIXTURE);
+        $content = file_get_contents(base_path(self::LAB_FIXTURE));
 
         return json_decode($content);
     }

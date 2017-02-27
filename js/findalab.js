@@ -1432,9 +1432,9 @@
 /**
  * Define the GeoCode result type.
  * @typedef {Object} Geocode
- * @property {string} countryCode
- * @property {float}  latitude
- * @property {float} longitude
+ * @property {string}             countryCode
+ * @property {float}              latitude
+ * @property {float}              longitude
  * @property {google.maps.Marker} marker
  */
 
