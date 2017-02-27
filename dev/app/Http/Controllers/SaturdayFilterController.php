@@ -29,11 +29,11 @@ class SaturdayFilterController extends LabController
     {
         if ($dayOnly = $request->get('dayOnly')) {
             $labsResult = array_filter($this->labs, function ($lab) use ($dayOnly) {
-                return isset($lab['structured_hours'][$this->dayMapping[$dayOnly]]);
+                return isset($lab->structured_hours) && isset($lab->structured_hours->{$this->dayMapping[$dayOnly]});
             });
 
             return response()->json(array_merge([
-                'labs'        => $labsResult,
+                'labs'        => array_values($labsResult),
                 'resultCount' => count($this->labs),
             ], $this->coord));
         }
