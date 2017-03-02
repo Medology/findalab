@@ -264,7 +264,7 @@
         if (settings.dayOfWeekFilter.showOption) {
           self._constructDayOfWeekFilter(settings.dayOfWeekFilter);
         } else {
-          $('[data-day-of-week-filter]').remove();
+          $('[data-findalab-day-filter]').remove();
         }
 
         this.fadeIntoView();
@@ -650,7 +650,7 @@
        * @private
        */
       this._constructDayOfWeekFilter = function (dayOfWeekObject) {
-        var container = this.find('[data-day-of-week-filter]');
+        var container = this.find('[data-findalab-day-filter]');
         container.append('<label><input type="radio" name="day-of-week-filter" value="" checked>'
           + dayOfWeekObject.radioAllText + '</label>');
         for (var day in dayOfWeekObject.radioDaysText) {
@@ -659,7 +659,7 @@
             + dayOfWeekObject.radioDaysText[day] + '</label>');
           }
         }
-        this.find('[name=day-of-week-filter]').on('change', this._onSaturdayHoursFilterChanged);
+        this.find('[data-findalab-day-filter]').on('change', this._onDayOfWeekFilterChanged);
       };
 
       /**
@@ -1324,7 +1324,7 @@
        * @listens document#event:generic
        * @private
        */
-      this._onSaturdayHoursFilterChanged = function(event) {
+      this._onDayOfWeekFilterChanged = function(event) {
         self.settings.dayOfWeekFilter.dayOnly = $(event.target).val();
         var searchValue = self.find('[data-findalab-search-field]').val();
         if (searchValue.length) {
