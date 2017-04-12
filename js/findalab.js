@@ -1148,22 +1148,26 @@
          * @param  {string} geo.coords.longitude the longitude of the geolocation
          */
         function _searchByCoords(geo) {
-
-          var lat = geo.coords.latitude;
-          var long = geo.coords.longitude;
-
-          $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long)
-            .success(_geolocateSuccess)
-            .fail(_displayGeolocateError);
+          self.settings.googleMaps.geoCoder.geocode({
+            location: {
+              lat: geo.coords.latitude,
+              lng: geo.coords.longitude
+            }
+          }, function(results, status) {
+            if (status === 'OK') {
+              _geolocateSuccess(results);
+            } else {
+              _displayGeolocateError();
+            }
+          });
         }
 
         /**
          * called on ajax success, submits zipcode into input field
          * @param  {{results[]}} data ajax results from google api
          */
-        function _geolocateSuccess(data) {
-
-          var addresses = data.results.filter(_hasPostalCode);
+        function _geolocateSuccess(results) {
+          var addresses = results.filter(_hasPostalCode);
           var address = addresses[0];
           var zip = _getPostalCode(address);
 
