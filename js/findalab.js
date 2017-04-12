@@ -161,7 +161,11 @@
         userLocation: {
           showOption: false,
           icon: 'fa fa-map-marker',
-          msg: 'Or use current location'
+          msg: 'Or use current location',
+          loading: {
+            icon: 'fa fa-spin fa-spinner',
+            msg: 'Searching current location...'
+          }
         },
         emptyResultsMessage: '',
         noResultsMessage: '',
@@ -615,7 +619,9 @@
        * @private
        */
       var _constructUserLocation = function(userLocationObject) {
-        self.find('[data-findalab-user-location]').html('<i aria-hidden="true"></i> ' + userLocationObject.msg);
+        self.find('[data-findalab-user-location]').html(
+          '<i aria-hidden="true"></i> <span>' + userLocationObject.msg + '</span>'
+        );
         self.find('[data-findalab-user-location] i').addClass(userLocationObject.icon);
         self.on('click', '[data-findalab-user-location]', _onFindLocationSubmit);
       };
@@ -1126,10 +1132,8 @@
        * @private
        */
       var _onFindLocationSubmit = function(event) {
-
         event.preventDefault();
-
-        $('[data-findalab-user-location]').html(self.settings.userLocation.buttonLoadingText);
+        _loadingUserLocationUI();
 
         if(!navigator.geolocation) {
           _displayGeolocateError();
@@ -1175,6 +1179,7 @@
             $('[data-findalab-search-field]').val(zip);
             $('[data-findalab-search-button]').click();
           }
+          _resetUserLocationUI();
         }
 
         /**
@@ -1222,8 +1227,18 @@
          */
         function _displayGeolocateError() {
           self._setMessage(self.cannotGeolocateMessage);
+          _resetUserLocationUI();
         }
 
+        function _loadingUserLocationUI() {
+          $('[data-findalab-user-location] i').removeClass().addClass(settings.userLocation.loading.icon);
+          $('[data-findalab-user-location] span').html(settings.userLocation.loading.msg);
+        }
+
+        function _resetUserLocationUI() {
+          $('[data-findalab-user-location] i').removeClass().addClass(settings.userLocation.icon);
+          $('[data-findalab-user-location] span').html(settings.userLocation.msg);
+        }
       };
 
       /**
