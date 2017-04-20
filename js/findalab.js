@@ -1028,18 +1028,12 @@
       /**
        * Check if the lab network is recommended.
        *
-       * @param   {string} network_name  The lab network
-       * @returns {bool}   isRecommended True/False if the lab belongs to a recommended network.
+       * @param   {string}  network_name  The lab network
+       * @returns {boolean} isRecommended True/False if the lab belongs to a recommended network.
        * @private
        */
       this._isRecommended = function (network_name) {
-          var isRecommended = false;
-          self.settings.searchFunction.recommendedNetworks.forEach(function(recommended_name) {
-              if (network_name === recommended_name) {
-                  isRecommended = true;
-              }
-          });
-          return isRecommended;
+          return self.settings.searchFunction.recommendedNetworks.indexOf(network_name) !== -1;
       };
 
       /**
