@@ -56,6 +56,14 @@ $findalab-background: #f9f9f9 !default;
 /// @type Color
 $findalab-results-background: #fff !default;
 
+/// Border and badge color for recommended labs
+/// @type Color
+$findalab-recommended-color: #ffa500 !default;
+
+/// Recommended result border witdh
+/// @type Number
+$findalab-recommended-border-width: 3px !default;
+
 /// Background color for total area.
 /// @type Color
 $findalab-total-background: #f9f9f9 !default;
@@ -261,6 +269,20 @@ $findalab-user-location-font-weight: 500 !default;
   &:last-of-type {
     border-bottom: 0;
   }
+}
+
+.findalab__result--recommended {
+  border-width: $findalab-recommended-border-width;
+  border-color: $findalab-recommended-color;
+  border-style: solid;
+  padding-top: $findalab-recommended-border-width;
+}
+
+.findalab__result__recommended {
+  background-color: $findalab-recommended-color;
+  color: #ffffff;
+  margin-left: -$findalab-padding;
+  padding: 3px 5px;
 }
 
 .findalab__nav {

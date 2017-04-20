@@ -39,17 +39,18 @@
          * Setting for the google maps API.
          *
          * @typedef {object} GoogleMapsSetting
-         * @property {float}                  defaultLat           Default latitude.
-         * @property {float}                  defaultLong          Default longitude.
-         * @property {google.maps.Geocoder}   geoCoder             Define the Geocoder to be used.
-         * @property {google.maps.InfoWindow} infoWindow           Define the Info Window to be attached.
-         * @property {string}                 ihcMarkerFillColor   Define the fill color of In-home collection marker.
-         * @property {int}                    initialZoom          Define the initial zooming level.
-         * @property {string}                 labMarkerFillColor   Define the fill color of lab marker.
-         * @property {google.maps.Map}        map                  Define the Map to be used.
-         * @property {string}                 markerHoverFillColor Define the fill color when lab/ihc is hovered.
-         * @property {google.maps.Marker[]}   markers              The initial Markers.
-         * @property {string}                 resultsZoom          The zoom level for when there are search results.
+         * @property {float}                  defaultLat                 Default latitude.
+         * @property {float}                  defaultLong                Default longitude.
+         * @property {google.maps.Geocoder}   geoCoder                   Define the Geocoder to be used.
+         * @property {google.maps.InfoWindow} infoWindow                 Define the Info Window to be attached.
+         * @property {string}                 ihcMarkerFillColor         Define the fill color of In-home collection marker.
+         * @property {int}                    initialZoom                Define the initial zooming level.
+         * @property {string}                 labMarkerFillColor         Define the fill color of lab marker.
+         * @property {google.maps.Map}        map                        Define the Map to be used.
+         * @property {string}                 markerHoverFillColor       Define the fill color when lab/ihc is hovered.
+         * @property {google.maps.Marker[]}   markers                    The initial Markers.
+         * @property {string}                 recommendedMarkerFillColor Define the fill color of recommended lab marker.
+         * @property {string}                 resultsZoom                The zoom level for when there are search results.
          */
         googleMaps: {
           defaultLat: 39.97712, // TODO: Address Canada's default lat
@@ -62,20 +63,23 @@
           resultsZoom: 10,
           labMarkerFillColor: '#3398db',
           ihcMarkerFillColor: '#73c6eb',
+          recommendedMarkerFillColor: '#ffa500',
           markerHoverFillColor: '#eb4d4c'
         },
         /**
          * Setting for the search function.
          *
          * @typedef {object} SearchFunctionSetting
-         * @property {string} excludeNetworks The lab network to be excluded (black-list).
-         * @property {string} limit           Limit the number of search result.
-         * @property {string} onlyNetwork     The lab network to be included (white-list).
+         * @property {string} excludeNetworks       The lab network to be excluded (black-list).
+         * @property {string} limit                 Limit the number of search result.
+         * @property {string} onlyNetwork           The lab network to be included (white-list).
+         * @property {array}  recommendedNetworks   List of networks that are recommended.
          */
         searchFunction: {
           excludeNetworks: undefined,
           limit: undefined,
-          onlyNetwork: undefined
+          onlyNetwork: undefined,
+          recommendedNetworks: []
         },
         /**
          * Setting for the lab item in the search result.
@@ -235,6 +239,9 @@
       this.mapMarkerHover = $.extend(true, {}, this.mapMarker);
       this.mapMarkerHover.fillColor = self.settings.googleMaps.markerHoverFillColor;
 
+      this.recommendedMapMarker = $.extend(true, {}, this.mapMarker);
+      this.recommendedMapMarker.fillColor = self.settings.googleMaps.recommendedMarkerFillColor;
+
       this.labs = [];
 
       this.bounds = null;
@@ -370,12 +377,24 @@
         /**
          * Is called when user unhovers on a result and causes the corresponding map pin to go back to normal
          *
-         * @this    {Findalab}             The find a lab instance.
+         * @this    {Findalab}               The find a lab instance.
+         * @param   {document#event:generic} event the mouseenter event
          * @listens document#event:generic
          * @returns {boolean} Always false to prevent bubbling.
          */
-        function onLabMarkerUnhover() {
-          this.myLab.marker.setIcon(this.mapMarker);
+        function onLabMarkerUnhover(event) {
+          var id;
+          var iconMarker;
+
+          if (event.target.tagName == 'LI') {
+              id = $(event.target).data('id');
+          } else {
+              id = $(event.target).parents('li').data('id');
+          }
+
+          this.myLab = this.labs[id];
+          iconMarker = this._buildIconMarkerNetwork(this.myLab.network);
+          this.myLab.marker.setIcon(iconMarker);
           this.myLab.marker.setAnimation(null);
 
           return false;
@@ -586,6 +605,21 @@
         long = long !== undefined ? long : self.settings.googleMaps.defaultLong;
 
         return new google.maps.LatLng(lat, long);
+      };
+
+      /**
+       * Builds a Map Marker Icon depending on the lab network.
+       *
+       * @param   {string} network_name  The network_name to determine the respective Map Marker.
+       * @return  {array}
+       * @private
+       */
+      this._buildIconMarkerNetwork = function(network_name) {
+          if (this._isRecommended(network_name)) {
+              return this.recommendedMapMarker;
+          } else {
+              return this.mapMarker;
+          }
       };
 
       /**
@@ -895,11 +929,12 @@
        */
       this._showMarker = function(lab) {
         var location = this._buildLatLong(lab.center_latitude, lab.center_longitude);
+        var iconMarker = this._buildIconMarkerNetwork(lab.network);
         var vMarker;
 
         vMarker = new google.maps.Marker({
           map: self.settings.googleMaps.map,
-          icon: this.mapMarker,
+          icon: iconMarker,
           position: location
         });
 
@@ -990,6 +1025,39 @@
 
       };
 
+      /**
+       * Check if the lab network is recommended.
+       *
+       * @param   {string} network_name  The lab network
+       * @returns {bool}   isRecommended True/False if the lab belongs to a recommended network.
+       * @private
+       */
+      this._isRecommended = function (network_name) {
+          var isRecommended = false;
+          self.settings.searchFunction.recommendedNetworks.forEach(function(recommended_name) {
+              if (network_name === recommended_name) {
+                  isRecommended = true;
+              }
+          });
+          return isRecommended;
+      };
+
+      /**
+       * Adds the css class and text for recommended lab.
+       *
+       * @param   {string} network_name  The lab network
+       * @param   {array}  result        Array with the view attributes from findalab template
+       * @private
+       */
+      this._recommendedUI = function (network_name, result) {
+          var text = result.find('[data-findalab-result-recommended]');
+          if (this._isRecommended(network_name)) {
+              result.addClass('findalab__result--recommended');
+              text.text('Recommended');
+          } else {
+              text.hide();
+          }
+      };
 
       /**
        * This function will handle rendering labs.
@@ -1010,6 +1078,9 @@
         $.each(labs, $.proxy(function(index, lab) {
           var $result = $resultTemplate.clone().removeAttr('data-template');
           $result.data('id', index);
+
+          this._recommendedUI(lab.network, $result);
+
           if (lab.lab_title) {
             $result.find('[data-findalab-result-title]').html(lab.lab_title);
           } else {
