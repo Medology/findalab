@@ -248,6 +248,8 @@
 
       this.myLab = null;
 
+      this.checkRecommended = false;
+
       /**
        * Initializes the map and sets the default viewport lat / long.
        *
@@ -259,6 +261,8 @@
         self._constructInHomeCollection(settings.inHomeCollection);
 
         self._constructSearch(settings.search, settings.inputGroup);
+
+        self._setRecommendedSearch(settings.searchFunction.recommendedNetworks);
 
         this.find('[data-findalab-search-field]')
             .keydown($.proxy(onSearchKeyDown, this))
@@ -285,7 +289,7 @@
         // Capture lab selection events
         this.on('click', '[data-findalab-result-button]', $.proxy(onLabSelectClick, this));
         this.on('mouseenter','[data-findalab-result]', $.proxy(onLabHover, this));
-        this.on('mouseleave','[data-findalab-result]', $.proxy(onLabMarkerUnhover, this));
+        this.on('mouseleave','[data-findalab-result]', $.proxy(onLabUnhover, this));
         this.on('mouseenter','[data-findalab-ihc]', $.proxy(onPhlebotomistsHover, this));
         this.on('mouseleave','[data-findalab-ihc]', $.proxy(onIhcMarkerUnhover, this));
 
@@ -345,20 +349,33 @@
          * @listens document#event:generic
          * @returns {boolean} Always false to prevent bubbling.
          */
+        function setLabFromResultsList(event) {
+            var id;
+            if (event.target.tagName == 'LI') {
+                id = $(event.target).data('id');
+            } else {
+                id = $(event.target).parents('li').data('id');
+            }
+            self.myLab = self.labs[id];
+
+            return false;
+        }
+
+        /**
+         * Is called when user hovers on a result and causes the corresponding map pin to change
+         *
+         * @this    {Findalab}               The find a lab instance.
+         * @param   {document#event:generic} event the mouseenter event
+         * @listens document#event:generic
+         * @returns {boolean} Always false to prevent bubbling.
+         */
         function onLabHover(event) {
-          var id;
-          if (event.target.tagName == 'LI') {
-            id = $(event.target).data('id');
-          } else {
-            id = $(event.target).parents('li').data('id');
-          }
-          this.myLab = this.labs[id];
+          setLabFromResultsList(event);
           this.myLab.marker.setIcon(this.mapMarkerHover);
           this.myLab.marker.setAnimation(google.maps.Animation.BOUNCE);
 
           return false;
         }
-
 
         /**
          * Is called when user hovers on a result and causes the corresponding map pin to change
@@ -382,17 +399,10 @@
          * @listens document#event:generic
          * @returns {boolean} Always false to prevent bubbling.
          */
-        function onLabMarkerUnhover(event) {
-          var id;
+        function onLabUnhover(event) {
           var iconMarker;
+          setLabFromResultsList(event);
 
-          if (event.target.tagName == 'LI') {
-              id = $(event.target).data('id');
-          } else {
-              id = $(event.target).parents('li').data('id');
-          }
-
-          this.myLab = this.labs[id];
           iconMarker = this._buildIconMarkerNetwork(this.myLab.network);
           this.myLab.marker.setIcon(iconMarker);
           this.myLab.marker.setAnimation(null);
@@ -620,6 +630,48 @@
           } else {
               return this.mapMarker;
           }
+      };
+
+      /**
+       * Builds a map info window marker content for a lab.
+       *
+       * @param   {Lab} lab                  The lab to create the info window content.
+       * @return  {string} infoWindowContent The string with the content for the info window marker
+       * @private
+       */
+      this._buildInfoWindowMarkerContent = function(lab) {
+          var infoWindowContent = '';
+          if (this.checkRecommended && this._isRecommended(lab.network)) {
+              infoWindowContent += '<span class="findalab__infowindow--recommended__label">Recommended</span>';
+          }
+
+          infoWindowContent +=
+              '<h6>' + lab.lab_title + '</h6>' +
+              '<p>' + lab.center_address + '<br>' +
+              lab.center_city + ', ' + lab.center_state + ' ' + lab.center_zip +
+              '</p>';
+
+          if (self.settings.lab.hasButton) {
+              infoWindowContent +=
+                  '<a ' +
+                  'data-findalab-result-button ' +
+                  'class="' + self.settings.lab.buttonClass + '" ' +
+                  'href="#" ' +
+                  'data-id="' + lab.center_id + '" ' +
+                  'data-address="' + lab.center_address + '" ' +
+                  'data-city="' + lab.center_city + '" ' +
+                  'data-state="' + lab.center_state + '" ' +
+                  'data-zipcode="' + lab.center_zip + '" ' +
+                  'data-network="' + lab.network + '" ' +
+                  'data-title="' + lab.lab_title + '" ' +
+                  'data-country="' + lab.center_country + '" ' +
+                  'data-fax_number="' + lab.fax_number + '"' +
+                  '>' +
+                  self.settings.lab.buttonText +
+                  '</a>';
+          }
+          
+          return infoWindowContent;
       };
 
       /**
@@ -912,6 +964,18 @@
       };
 
       /**
+       * Displays the specified message to the user.
+       *
+       * @param {array} networks This is the message that will be shown.
+       * @private
+       */
+      this._setRecommendedSearch = function(networks) {
+         if(networks.length > 0) {
+           this.checkRecommended = true;
+         }
+      };
+
+      /**
        * Sets the placeholder text for the search input.
        *
        * @param {string} message the placeholder message
@@ -942,32 +1006,7 @@
 
         this.bounds.extend(location);
 
-        var infoWindowContent =
-              '<h6>' + lab.lab_title + '</h6>' +
-              '<p>' +
-              lab.center_address + '<br>' +
-              lab.center_city + ', ' + lab.center_state + ' ' + lab.center_zip +
-              '</p>';
-
-        if (self.settings.lab.hasButton) {
-          infoWindowContent +=
-            '<a ' +
-            'data-findalab-result-button ' +
-            'class="' + self.settings.lab.buttonClass + '" ' +
-            'href="#" ' +
-            'data-id="' + lab.center_id + '" ' +
-            'data-address="' + lab.center_address + '" ' +
-            'data-city="' + lab.center_city + '" ' +
-            'data-state="' + lab.center_state + '" ' +
-            'data-zipcode="' + lab.center_zip + '" ' +
-            'data-network="' + lab.network + '" ' +
-            'data-title="' + lab.lab_title + '" ' +
-            'data-country="' + lab.center_country + '" ' +
-            'data-fax_number="' + lab.fax_number + '"' +
-            '>' +
-            self.settings.lab.buttonText +
-            '</a>';
-        }
+        var infoWindowContent = this._buildInfoWindowMarkerContent(lab);
 
         google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
           self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
@@ -1044,12 +1083,10 @@
        * @private
        */
       this._recommendedUI = function (network_name, result) {
-          var text = result.find('[data-findalab-result-recommended]');
+          var label = '<span class="findalab__result--recommended__label" ' +
+              'data-findalab-result-recommended>Recommended</span>';
           if (this._isRecommended(network_name)) {
-              result.addClass('findalab__result--recommended');
-              text.text('Recommended');
-          } else {
-              text.hide();
+              result.addClass('findalab__result--recommended').prepend(label);
           }
       };
 
@@ -1073,7 +1110,9 @@
           var $result = $resultTemplate.clone().removeAttr('data-template');
           $result.data('id', index);
 
-          this._recommendedUI(lab.network, $result);
+          if(this.checkRecommended) {
+            this._recommendedUI(lab.network, $result);
+          }
 
           if (lab.lab_title) {
             $result.find('[data-findalab-result-title]').html(lab.lab_title);

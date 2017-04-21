@@ -144,11 +144,17 @@
   border-style: solid;
   padding-top: 3px; }
 
-.findalab__result__recommended {
+.findalab__result--recommended__label {
   background-color: #ffa500;
   color: #ffffff;
   margin-left: -16px;
   padding: 3px 5px; }
+
+.findalab__infowindow--recommended__label {
+  background-color: #ffa500;
+  color: #ffffff;
+  padding: 3px 5px;
+  font-size: 10px; }
 
 .findalab__nav {
   border: 2px solid #3398db;
