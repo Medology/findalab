@@ -21,7 +21,7 @@ echo "Installing Composer dependencies..."
 exitCheck $?
 
 echo "Installing NPM dependencies..."
-"$DIR"/bin/npm install
+"$DIR"/bin/yarn
 exitCheck $?
 
 echo "Installing bower dependencies..."
