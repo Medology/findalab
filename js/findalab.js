@@ -657,7 +657,7 @@
                   'data-findalab-result-button ' +
                   'class="' + self.settings.lab.buttonClass + '" ' +
                   'href="#" ' +
-                  'data-id="' + lab.number + '" ' +
+                  'data-id="' + (typeof lab.id === 'undefined' ? lab.number : lab.id) + '" ' +
                   'data-address="' + lab.address + '" ' +
                   'data-city="' + lab.city + '" ' +
                   'data-state="' + lab.state + '" ' +
@@ -1012,7 +1012,7 @@
 
         google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
           self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
-          var labDiv = $('[data-lab-number=' + lab.number + ']');
+          var labDiv = $('[data-lab-id=' + (typeof lab.id === 'undefined' ? lab.number : lab.id) + ']');
           var currentScrollYCoordinate = resultsDiv.scrollTop();
           var labYCoordinate = labDiv.position().top;
           var resultsDivYCoordinate = resultsDiv.position().top;
@@ -1115,7 +1115,7 @@
          */
         $.each(labs, $.proxy(function(index, lab) {
           var $result = $resultTemplate.clone().removeAttr('data-template');
-          $result.attr('data-lab-number', lab.number);
+          $result.attr('data-lab-id', (typeof lab.id === 'undefined' ? lab.number : lab.id));
           $result.data('id', index);
 
           if(this.checkRecommended) {
@@ -1138,7 +1138,7 @@
 
           if (self.settings.lab.hasButton) {
             $result.find('[data-findalab-result-button]')
-              .attr('data-id', lab.number)
+              .attr('data-id', (typeof lab.id === 'undefined' ? lab.number : lab.id))
               .attr('data-address', lab.address)
               .attr('data-city', lab.city)
               .attr('data-state', lab.state)
@@ -1519,6 +1519,7 @@
  * @property {string} fax_number
  * @property {string} geocode_address
  * @property {string} hours
+ * @property {string} id
  * @property {string} import_hash
  * @property {string} imported_hours
  * @property {string} is_northeast
