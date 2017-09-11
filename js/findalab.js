@@ -646,10 +646,10 @@
           }
 
           infoWindowContent +=
-              '<h6>' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '</h6>' +
+              '<h6>' + lab.title + '</h6>' +
               '<p>' + lab.address + '<br>' +
-              (typeof lab.address_2 === 'undefined' ? '' : lab.address_2 + '<br>') +
-              lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) +
+              (lab.address_2 !== '' ? lab.address_2 + '<br>' : '') +
+              lab.city + ', ' + lab.state + ' ' + lab.zip_code +
               '</p>';
 
           if (self.settings.lab.hasButton) {
@@ -658,14 +658,14 @@
                   'data-findalab-result-button ' +
                   'class="' + self.settings.lab.buttonClass + '" ' +
                   'href="#" ' +
-                  'data-id="' + (typeof lab.id === 'undefined' ? lab.number : lab.id) + '" ' +
+                  'data-id="' + lab.id + '" ' +
                   'data-address="' + lab.address + '" ' +
-                  'data-address_2="' + (typeof lab.address_2 === 'undefined' ? '' : lab.address_2) + '" ' +
+                  'data-address_2="' + lab.address_2 + '" ' +
                   'data-city="' + lab.city + '" ' +
                   'data-state="' + lab.state + '" ' +
-                  'data-zip_code="' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) + '" ' +
+                  'data-zip_code="' + lab.zip_code + '" ' +
                   'data-network="' + lab.network + '" ' +
-                  'data-title="' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '" ' +
+                  'data-title="' + lab.title  + '" ' +
                   'data-country="' + lab.country + '" ' +
                   'data-fax_number="' + lab.fax_number + '"' +
                   '>' +
@@ -1002,7 +1002,7 @@
           map: self.settings.googleMaps.map,
           icon: iconMarker,
           position: location,
-          title: (typeof lab.title === "undefined" ? lab.lab_title : lab.title)
+          title: lab.title
         });
 
         self.settings.googleMaps.markers.push(vMarker);
@@ -1014,7 +1014,7 @@
 
         google.maps.event.addListener(vMarker, 'click', $.proxy(function() {
           self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
-          var labDiv = $('[data-lab-id=' + (typeof lab.id === 'undefined' ? lab.number : lab.id) + ']');
+          var labDiv = $('[data-lab-id=' +  lab.id + ']');
           var currentScrollYCoordinate = resultsDiv.scrollTop();
           var labYCoordinate = labDiv.position().top;
           var resultsDivYCoordinate = resultsDiv.position().top;
@@ -1084,6 +1084,19 @@
           return self.settings.searchFunction.recommendedNetworks.indexOf(network_name) !== -1;
       };
 
+        /**
+         * Sets new property names.
+         *
+         * @param   {Lab}  lab  The lab network
+         * @private
+         */
+      this._fixLab = function (lab) {
+          if (!lab.id && lab.number) lab.id = lab.number;
+          if (!lab.title && lab.lab_title) lab.title = lab.lab_title;
+          if (!lab.zip_code && lab.zipcode) lab.zip_code = lab.zipcode;
+          if (!lab.address_2) lab.address_2 = '';
+      };
+
       /**
        * Adds the css class and text for recommended lab.
        *
@@ -1116,24 +1129,25 @@
          * @param {Lab} lab
          */
         $.each(labs, $.proxy(function(index, lab) {
+          this._fixLab(lab);
           var $result = $resultTemplate.clone().removeAttr('data-template');
-          $result.attr('data-lab-id', (typeof lab.id === 'undefined' ? lab.number : lab.id));
+          $result.attr('data-lab-id', lab.id);
           $result.data('id', index);
 
           if(this.checkRecommended) {
             this._recommendedUI(lab.network, $result);
           }
 
-          if (lab.title || lab.lab_title) {
-            $result.find('[data-findalab-result-title]').html((typeof lab.title === "undefined" ? lab.lab_title : lab.title));
+          if (lab.title) {
+            $result.find('[data-findalab-result-title]').html(lab.title);
           } else {
             $result.find('[data-findalab-result-title]').remove();
           }
 
           $result.find('[data-findalab-result-address]').html(
             lab.address + '<br>' +
-            (typeof lab.address_2 === 'undefined' ? '' : lab.address_2 + '<br>') +
-            lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code)
+            (!lab.address_2 ? '' : lab.address_2 + '<br>') +
+            lab.city + ', ' + lab.state + ' ' + lab.zip_code
           );
           $result.find('[data-findalab-result-distance]').html(
             '<strong>Distance:</strong> ' + this._parseDistance(lab)
@@ -1141,14 +1155,14 @@
 
           if (self.settings.lab.hasButton) {
             $result.find('[data-findalab-result-button]')
-              .attr('data-id', (typeof lab.id === 'undefined' ? lab.number : lab.id))
+              .attr('data-id', lab.id)
               .attr('data-address', lab.address)
-              .attr('data-address_2', (typeof lab.address_2 === 'undefined' ? '' : lab.address_2))
+              .attr('data-address_2', lab.address_2)
               .attr('data-city', lab.city)
               .attr('data-state', lab.state)
-              .attr('data-zip_code', (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code))
+              .attr('data-zip_code', lab.zip_code)
               .attr('data-network', lab.network)
-              .attr('data-title', (typeof lab.title === "undefined" ? lab.lab_title : lab.title))
+              .attr('data-title', lab.title)
               .attr('data-fax_number', lab.fax_number)
               .addClass(self.settings.lab.buttonClass)
               .html(self.settings.lab.buttonText);
