@@ -648,6 +648,7 @@
           infoWindowContent +=
               '<h6>' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '</h6>' +
               '<p>' + lab.address + '<br>' +
+              (typeof lab.address_2 === 'undefined' ? '' : lab.address_2 + '<br>') +
               lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) +
               '</p>';
 
@@ -659,6 +660,7 @@
                   'href="#" ' +
                   'data-id="' + (typeof lab.id === 'undefined' ? lab.number : lab.id) + '" ' +
                   'data-address="' + lab.address + '" ' +
+                  'data-address_2="' + (typeof lab.address_2 === 'undefined' ? '' : lab.address_2) + '" ' +
                   'data-city="' + lab.city + '" ' +
                   'data-state="' + lab.state + '" ' +
                   'data-zip_code="' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) + '" ' +
@@ -1130,6 +1132,7 @@
 
           $result.find('[data-findalab-result-address]').html(
             lab.address + '<br>' +
+            (typeof lab.address_2 === 'undefined' ? '' : lab.address_2 + '<br>') +
             lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code)
           );
           $result.find('[data-findalab-result-distance]').html(
@@ -1140,6 +1143,7 @@
             $result.find('[data-findalab-result-button]')
               .attr('data-id', (typeof lab.id === 'undefined' ? lab.number : lab.id))
               .attr('data-address', lab.address)
+              .attr('data-address_2', (typeof lab.address_2 === 'undefined' ? '' : lab.address_2))
               .attr('data-city', lab.city)
               .attr('data-state', lab.state)
               .attr('data-zip_code', (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code))
@@ -1512,6 +1516,7 @@
  *
  * @typedef {Object} Lab
  * @property {string} address
+ * @property {string} address_2
  * @property {string} city
  * @property {string} country
  * @property {string} deleted_at
