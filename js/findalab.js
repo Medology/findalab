@@ -648,7 +648,7 @@
           infoWindowContent +=
               '<h6>' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '</h6>' +
               '<p>' + lab.address + '<br>' +
-              lab.city + ', ' + lab.state + ' ' + lab.zipcode +
+              lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) +
               '</p>';
 
           if (self.settings.lab.hasButton) {
@@ -661,7 +661,7 @@
                   'data-address="' + lab.address + '" ' +
                   'data-city="' + lab.city + '" ' +
                   'data-state="' + lab.state + '" ' +
-                  'data-zipcode="' + lab.zipcode + '" ' +
+                  'data-zip_code="' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code) + '" ' +
                   'data-network="' + lab.network + '" ' +
                   'data-title="' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '" ' +
                   'data-country="' + lab.country + '" ' +
@@ -1130,7 +1130,7 @@
 
           $result.find('[data-findalab-result-address]').html(
             lab.address + '<br>' +
-            lab.city + ', ' + lab.state + ' ' + lab.zipcode
+            lab.city + ', ' + lab.state + ' ' + (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code)
           );
           $result.find('[data-findalab-result-distance]').html(
             '<strong>Distance:</strong> ' + this._parseDistance(lab)
@@ -1142,7 +1142,7 @@
               .attr('data-address', lab.address)
               .attr('data-city', lab.city)
               .attr('data-state', lab.state)
-              .attr('data-zipcode', lab.zipcode)
+              .attr('data-zip_code', (typeof lab.zip_code === 'undefined' ? lab.zipcode : lab.zip_code))
               .attr('data-network', lab.network)
               .attr('data-title', (typeof lab.title === "undefined" ? lab.lab_title : lab.title))
               .attr('data-fax_number', lab.fax_number)
@@ -1325,7 +1325,7 @@
         }
 
         /**
-         * called on ajax success, submits zipcode into input field
+         * called on ajax success, submits zip code into input field
          * @param  {{results[]}} data ajax results from google api
          */
         function _geolocateSuccess(results) {
@@ -1536,6 +1536,7 @@
  * @property {string} title
  * @property {string} type
  * @property {string} zipcode
+ * @property {string} zip_code
  */
 
 /**
