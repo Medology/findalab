@@ -646,7 +646,7 @@
           }
 
           infoWindowContent +=
-              '<h6>' + lab.lab_title + '</h6>' +
+              '<h6>' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '</h6>' +
               '<p>' + lab.address + '<br>' +
               lab.city + ', ' + lab.state + ' ' + lab.zipcode +
               '</p>';
@@ -663,7 +663,7 @@
                   'data-state="' + lab.state + '" ' +
                   'data-zipcode="' + lab.zipcode + '" ' +
                   'data-network="' + lab.network + '" ' +
-                  'data-title="' + lab.lab_title + '" ' +
+                  'data-title="' + (typeof lab.title === "undefined" ? lab.lab_title : lab.title) + '" ' +
                   'data-country="' + lab.country + '" ' +
                   'data-fax_number="' + lab.fax_number + '"' +
                   '>' +
@@ -1000,7 +1000,7 @@
           map: self.settings.googleMaps.map,
           icon: iconMarker,
           position: location,
-          title: lab.lab_title
+          title: (typeof lab.title === "undefined" ? lab.lab_title : lab.title)
         });
 
         self.settings.googleMaps.markers.push(vMarker);
@@ -1122,8 +1122,8 @@
             this._recommendedUI(lab.network, $result);
           }
 
-          if (lab.lab_title) {
-            $result.find('[data-findalab-result-title]').html(lab.lab_title);
+          if (lab.title || lab.lab_title) {
+            $result.find('[data-findalab-result-title]').html((typeof lab.title === "undefined" ? lab.lab_title : lab.title));
           } else {
             $result.find('[data-findalab-result-title]').remove();
           }
@@ -1144,7 +1144,7 @@
               .attr('data-state', lab.state)
               .attr('data-zipcode', lab.zipcode)
               .attr('data-network', lab.network)
-              .attr('data-title', lab.lab_title)
+              .attr('data-title', (typeof lab.title === "undefined" ? lab.lab_title : lab.title))
               .attr('data-fax_number', lab.fax_number)
               .addClass(self.settings.lab.buttonClass)
               .html(self.settings.lab.buttonText);
@@ -1532,6 +1532,7 @@
  * @property {string} phoneNumber
  * @property {string} state
  * @property {Days}   structured_hours
+ * @property {string} title
  * @property {string} type
  * @property {string} zipcode
  */
