@@ -1084,17 +1084,25 @@
           return self.settings.searchFunction.recommendedNetworks.indexOf(network_name) !== -1;
       };
 
-        /**
-         * Sets new property names.
-         *
-         * @param   {Lab}  lab  The lab network
-         * @private
-         */
+      /**
+       * Sets new property names.
+       *
+       * @param   {Lab}  lab  The lab network
+       * @private
+       */
       this._fixLab = function (lab) {
-          if (!lab.id && lab.number) lab.id = lab.number;
-          if (!lab.title && lab.lab_title) lab.title = lab.lab_title;
-          if (!lab.zip_code && lab.zipcode) lab.zip_code = lab.zipcode;
-          if (!lab.address_2) lab.address_2 = '';
+          if (!lab.id && lab.number) {
+            lab.id = lab.number;
+          }
+          if (!lab.title && lab.lab_title) {
+            lab.title = lab.lab_title;
+          }
+          if (!lab.zip_code && lab.zipcode) {
+            lab.zip_code = lab.zipcode;
+          }
+          if (!lab.address_2) {
+            lab.address_2 = '';
+          }
       };
 
       /**
