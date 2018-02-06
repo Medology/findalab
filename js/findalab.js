@@ -169,6 +169,16 @@
         invalidPostalCodeMessage: ''
       };
 
+      this.dayMapping = {
+          1: 'Monday',
+          2: 'Tuesday',
+          3: 'Wednesday',
+          4: 'Thursday',
+          5: 'Friday',
+          6 : 'Saturday',
+          7 : 'Sunday'
+      };
+
       this.settings = $.extend(true, this.settings, settings);
 
       this.emptyResultsMessage = 'Please "' + this.settings.search.placeholder + '" above and press "' +
@@ -1108,6 +1118,9 @@
        */
       this._buildHoursDom = function(lab, $result) {
         var $table = $result.find('[data-findalab-structured-hours-body]');
+        var date = new Date();
+        var time = ( date.getHours() * 100 ) + date.getMinutes();
+        var nowOpen = false;
 
         $.each(lab.structured_hours, function(/**string*/ day, /**Day*/ hours) {
           var $row = $result.find('[data-findalab-structured-hours-row][data-template]')
@@ -1116,8 +1129,18 @@
           $row.find('[data-findalab-result-day]').html(day);
           $row.find('[data-findalab-result-hours]').html(hours.open + ' - ' + hours.close);
 
+          if (self.dayMapping[date.getDay()] === day && ( time > self._convertTime12to24(hours.open) &&
+              time < self._convertTime12to24(hours.close) )) {
+            nowOpen = true;
+          }
+
           if (hours.lunch_start) {
             $row.find('[data-findalab-result-hours-lunch]').html(hours.lunch_start + ' - ' + hours.lunch_stop);
+              if (self.dayMapping[date.getDay()] === day && (
+                  time > self._convertTime12to24(hours.lunch_start) &&
+                  time < self._convertTime12to24(hours.lunch_stop) )) {
+                nowOpen = false;
+              }
           } else {
             $row.find('[data-findalab-result-day-lunch]').remove();
             $row.find('[data-findalab-result-hours-lunch]').remove();
@@ -1125,6 +1148,31 @@
 
           $table.append($row);
         });
+
+        if (nowOpen) {
+            $result.find('[data-findlab-lab-hours-closed]').remove();
+        } else {
+            $result.find('[data-findlab-lab-hours-open]').remove();
+        }
+      };
+
+      /**
+       * Takes time from structure hours and converts it to a 24 hour time
+       *
+       * @param   {string} time
+       * @private
+       */
+      this._convertTime12to24 = function (time) {
+        var hours = parseInt(time.substr(0, 2));
+
+        if (time.indexOf('AM') !== -1 && hours <= 12) {
+          // in case the hour is under 10 we add the parseInt to remove the : at the end.
+          hours = parseInt((time.substr(0, 2)).replace('12', '0'));
+        } else {
+          hours += 12;
+        }
+
+        return ( hours * 100 ) + parseInt(time.substr(3, 2));
       };
 
       /**

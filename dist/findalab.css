@@ -223,6 +223,9 @@
 .findalab__hours__wrap {
   display: none; }
 
+.currently__open__lab {
+  color: #30dd2f; }
+
 @keyframes fadeInOpacity {
   0% {
     opacity: 0; }
