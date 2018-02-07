@@ -768,8 +768,27 @@
         $('[data-findalab-toggle-hours]').on('click', function(event) {
           event.preventDefault();
           var $link = $(this);
-          var $toggle = $link.siblings('.findalab__hours');
+          var $toggle = $link.parent().siblings('.findalab__hours');
           $link.text($toggle.is(':visible') ? 'Show ▼' : 'Hide ▲');
+          $toggle.slideToggle('300');
+        });
+      };
+
+      /**
+       * Initializes the "Show Hours" link for Open Now Labs.
+       *
+       * @private
+       */
+      this._initShowStructuredOpenHours = function() {
+        /**
+         * Hide/Show Hours
+         * @see https://css-tricks.com/snippets/jquery/toggle-text/
+         */
+        $('[data-findalab-toggle-open-hours]').on('click', function(event) {
+          event.preventDefault();
+          var $link = $(this);
+          var $toggle = $link.parent().siblings('.findalab__hours');
+          $link.text($toggle.is(':visible') ? 'Show Hours' : 'Hide Hours');
           $toggle.slideToggle('300');
         });
       };
@@ -1068,6 +1087,7 @@
         }, this));
 
         this._initShowStructuredHours();
+        this._initShowStructuredOpenHours();
 
         labs.map($.proxy(this._showMarker, this));
 
@@ -1166,7 +1186,7 @@
         var hours = parseInt(time.substr(0, 2));
 
         if (time.indexOf('AM') !== -1 && hours <= 12) {
-          // in case the hour is under 10 we add the parseInt to remove the : at the end.
+          // in case the hour is under 10 we add the parseInt to remove the : at the end
           hours = parseInt((time.substr(0, 2)).replace('12', '0'));
         } else {
           hours += 12;
