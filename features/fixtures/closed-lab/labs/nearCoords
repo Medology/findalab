@@ -1,52 +1,52 @@
 {
   "labs": [
     {
-      "number": "13",
-      "address": "201 KINGWOOD MEDICAL DR #A100",
-      "geocode_address": "201 KINGWOOD MEDICAL DR #A100",
-      "city": "KINGWOOD",
+      "number": "2530",
+      "address": "1213 Hermann Drive Suite 120",
+      "geocode_address": "",
+      "city": "Houston",
       "state": "TX",
-      "zipcode": "77339",
-      "hours": "M-Sun  0:00-11:59PM",
-      "latitude": "30.0470049000",
-      "longitude": "-95.2569061000",
-      "network": "Labcorp",
+      "zipcode": "77004",
+      "hours": "M-S 0:00am-0:01pm",
+      "latitude": "29.7232630000",
+      "longitude": "-95.3884430000",
+      "network": "National",
       "phoneNumber": "",
-      "fax_number": "2811111112",
+      "fax_number": "2811111113",
       "friendlyPhone": "",
       "twilio_sid": "",
-      "lab_title": "LabCorp",
+      "lab_title": "",
       "country": "US",
-      "distance": "2.2505084601543994",
+      "distance": "24.664887317525004",
       "max_distance": null,
       "structured_hours": {
         "Monday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Tuesday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Wednesday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Thursday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Friday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Saturday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         },
         "Sunday": {
           "open": "0:00 AM",
-          "close": "11:59 PM"
+          "close": "0:01 AM"
         }
       }
     }

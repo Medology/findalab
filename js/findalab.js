@@ -1078,7 +1078,7 @@
             );
           } else {
             $result.find('[data-findalab-result-simple-hours]').remove();
-            this._buildHoursDom(lab, $result);
+            this._labTimezone(lab, $result);
             $result.find('[data-findalab-structured-hours-row][data-template]').remove();
           }
 
@@ -1130,18 +1130,50 @@
       };
 
       /**
-       * Builds the structured hours DOM for a Lab entry.
+       * Gets the timezone of the Lab and buils the domHours
        *
-       * @param {Lab} lab
-       * @param {jQuery} $result The jQuery DOM that should be modified to show the hours.
+       * @param  {Lab} lab
+       * @param  {jQuery} $result The jQuery DOM that should be modified to show the hours.
        * @private
        */
-      this._buildHoursDom = function(lab, $result) {
-        var $table = $result.find('[data-findalab-structured-hours-body]');
+      this._labTimezone = function (lab, $result) {
+        var APIKey = $('#APIKey').data("api-key");
         var date = new Date();
+
+        console.log(date);
+        $.ajax({
+          url: 'https://maps.googleapis.com/maps/api/timezone/json?',
+          dataType: 'json',
+          data: {
+            location: lab.latitude + "," + lab.longitude,
+            sensor: 'false',
+            timestamp: (Math.round((new Date().getTime())/1000)).toString(),
+            key: APIKey
+          }
+        }).done (function(result) {
+          if (result !== null) {
+            date.setTime( date.getTime() + (1000 * ((date.getTimezoneOffset() * 60) + result.rawOffset )));
+          }
+
+          self._buildHoursDom(lab, $result, date);
+        }).fail(function (){
+          self._buildHoursDom(lab, $result, date);
+        });
+      };
+
+      /**
+       * Builds the structured hours DOM for a Lab entry.
+       *
+       * @param {Lab}    lab
+       * @param {jQuery} $result The jQuery DOM that should be modified to show the hours.
+       * @param {Date}   date the date object with the current date on the lab location
+       * @private
+       */
+      this._buildHoursDom = function(lab, $result, date) {
+        console.log(date);
+        var $table = $result.find('[data-findalab-structured-hours-body]');
         var time = ( date.getHours() * 100 ) + date.getMinutes();
         var nowOpen = false;
-
         $.each(lab.structured_hours, function(/**string*/ day, /**Day*/ hours) {
           var $row = $result.find('[data-findalab-structured-hours-row][data-template]')
                       .clone()

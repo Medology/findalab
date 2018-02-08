@@ -3,7 +3,7 @@ Feature: Currently Open Lab
   As an end user
   I need to see a open now text and allow users to see the hours.
 
-  Scenario: User is alerted when there are no results
+  Scenario: a Lab is currently Open
     Given I am on "/24-hour-lab.php"
      When I fill in "Enter your zip" with "77054"
       And I press "Search"
@@ -20,3 +20,21 @@ Feature: Currently Open Lab
        | Friday    | 0:00 AM - 11:59 PM |
        | Saturday  | 0:00 AM - 11:59 PM |
        | Sunday    | 0:00 AM - 11:59 PM |
+
+  Scenario: a Lab is currently closed
+    Given I am on "/closed-lab.php"
+     When I fill in "Enter your zip" with "77054"
+      And I press "Search"
+     Then I should see the following lab in the results:
+       | 1213 Hermann Drive Suite 120 |
+       | Houston, TX 77004            |
+     And I should not see "Open Now"
+     When I follow "Show ▼"
+     Then there should be a table on the page with the following information:
+       | Monday    | 0:00 AM - 0:01 AM |
+       | Tuesday   | 0:00 AM - 0:01 AM |
+       | Wednesday | 0:00 AM - 0:01 AM |
+       | Thursday  | 0:00 AM - 0:01 AM |
+       | Friday    | 0:00 AM - 0:01 AM |
+       | Saturday  | 0:00 AM - 0:01 AM |
+       | Sunday    | 0:00 AM - 0:01 AM |

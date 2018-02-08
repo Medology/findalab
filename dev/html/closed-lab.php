@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Findalab - 24 Hour Results</title>
+    <title>Findalab - Closed Lab</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/dist/findalab.css">
     <style>
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h1>Find A Lab - 24 Hour Results</h1>
+<h1>Find A Lab - Closed Lab</h1>
 <div id="findalab">
     <div class="findalab-loading">
         <div class="findalab-loading__content">
@@ -39,7 +39,7 @@
     function initMap() {
         $('#findalab').load('/template/findalab.html', function() {
             $(this).find('.findalab').findalab({
-                baseURL: 'http://findalab.local/fixtures/24-hour-results'
+                baseURL: 'http://findalab.local/fixtures/closed-lab'
             });
         });
     }
