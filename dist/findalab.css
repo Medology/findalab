@@ -223,10 +223,10 @@
 .findalab__hours__wrap {
   display: none; }
 
-.findalab__currently-open {
+.findalab__open {
   margin-right: 7px; }
 
-.findalab__open-dot {
+.findalab__open__dot {
   color: #30dd2f;
   font-size: 1.2em; }
 

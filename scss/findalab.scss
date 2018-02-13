@@ -387,11 +387,11 @@ $findalab-user-location-font-weight: 500 !default;
   display: none;
 }
 
-.findalab__currently-open {
+.findalab__open {
   margin-right: 7px;
 }
 
-.findalab__open-dot {
+.findalab__open__dot {
   color: $findalab-opennow-color;
   font-size: 1.2em;
 }
