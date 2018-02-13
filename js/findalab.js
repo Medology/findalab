@@ -170,13 +170,13 @@
       };
 
       this.dayMapping = {
+        0: 'Sunday',
         1: 'Monday',
         2: 'Tuesday',
         3: 'Wednesday',
         4: 'Thursday',
         5: 'Friday',
-        6: 'Saturday',
-        7: 'Sunday'
+        6: 'Saturday'
       };
 
       this.settings = $.extend(true, this.settings, settings);
@@ -1151,7 +1151,7 @@
       this._buildHoursDom = function(lab, $result, date) {
         var $table = $result.find('[data-findalab-structured-hours-body]');
         var time = ( date.getHours() * 100 ) + date.getMinutes();
-        var nowOpen = false;
+        var removeHours = 'open';
         $.each(lab.structured_hours, function(/**string*/ day, /**Day*/ hours) {
           var $row = $result.find('[data-findalab-structured-hours-row][data-template]')
                       .clone()
@@ -1161,7 +1161,7 @@
 
           if (self.dayMapping[date.getDay()] === day && ( time > self._convertTime12to24(hours.open) &&
               time < self._convertTime12to24(hours.close) )) {
-            nowOpen = true;
+              removeHours = 'closed';
           }
 
           if (hours.lunch_start) {
@@ -1169,7 +1169,7 @@
               if (self.dayMapping[date.getDay()] === day && (
                   time > self._convertTime12to24(hours.lunch_start) &&
                   time < self._convertTime12to24(hours.lunch_stop) )) {
-                nowOpen = false;
+                  removeHours = 'open';
               }
           } else {
             $row.find('[data-findalab-result-day-lunch]').remove();
@@ -1179,11 +1179,7 @@
           $table.append($row);
         });
 
-        if (nowOpen) {
-            $result.find('[data-findlab-lab-hours-closed]').remove();
-        } else {
-            $result.find('[data-findlab-lab-hours-open]').remove();
-        }
+        $result.find('[data-findlab-lab-hours-'+removeHours+']').remove();
       };
 
       /**
@@ -1193,16 +1189,14 @@
        * @private
        */
       this._convertTime12to24 = function (time) {
-        var hours = parseInt(time.substr(0, 2));
+        // remove the AM/PM from time and remove the ':' separating hours and minutes
+        var hours = parseInt(time.slice(0, -2).replace(':', ''));
 
-        if (time.indexOf('AM') !== -1 && hours <= 12) {
-          // in case the hour is under 10 we add the parseInt to remove the : at the end
-          hours = parseInt((time.substr(0, 2)).replace('12', '0'));
-        } else {
-          hours += 12;
+        if (time.indexOf('PM') !== -1) {
+          hours += 1200;
         }
 
-        return ( hours * 100 ) + parseInt(time.substr(3, 2));
+        return hours;
       };
 
       /**
