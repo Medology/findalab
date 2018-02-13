@@ -22,10 +22,10 @@
         <div class="findalab-loading__content">
             <h2>Loading Test Centers</h2>
             <img
-                    src="/three-dots.svg"
-                    alt="loading"
-                    width="50"
-                    onerror="this.src='/loading-gif.gif';this.onerror=null;" />
+                src="/three-dots.svg"
+                alt="loading"
+                width="50"
+                onerror="this.src='/loading-gif.gif';this.onerror=null;" />
         </div>
     </div>
 </div>

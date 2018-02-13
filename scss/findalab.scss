@@ -60,7 +60,6 @@ $findalab-results-background: #fff !default;
 /// @type Color
 $findalab-recommended-color: #ffa500 !default;
 
-/// Border and badge color for recommended labs
 /// @type Color
 $findalab-opennow-color: #30dd2f !default;
 
@@ -388,8 +387,13 @@ $findalab-user-location-font-weight: 500 !default;
   display: none;
 }
 
-.currently__open__lab {
+.findalab__currently-open {
+  margin-right: 7px;
+}
+
+.findalab__open-dot {
   color: $findalab-opennow-color;
+  font-size: 1.2em;
 }
 
 
