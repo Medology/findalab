@@ -1196,6 +1196,10 @@
           hours += 1200;
         }
 
+        if (time.indexOf('AM') !== -1 && hours === 1200) {
+            hours -= 1200;
+        }
+
         return hours;
       };
 
