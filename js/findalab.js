@@ -615,6 +615,7 @@
                   'data-title="' + lab.title  + '" ' +
                   'data-country="' + lab.country + '" ' +
                   'data-fax_number="' + lab.fax_number + '"' +
+                  'data-network_id="' + lab.network_id + '"' +
                   '>' +
                   self.settings.lab.buttonText +
                   '</a>';
@@ -1481,6 +1482,7 @@
  * @property {google.maps.Marker} marker
  * @property {string} max_distance
  * @property {string} network
+ * @property {integer} network_id
  * @property {string} number
  * @property {string} phoneNumber
  * @property {string} state
