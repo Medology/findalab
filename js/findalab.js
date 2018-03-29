@@ -1046,7 +1046,9 @@
               .attr('data-zip_code', lab.zip_code)
               .attr('data-network', lab.network)
               .attr('data-title', lab.title)
+              .attr('data-country', lab.country)
               .attr('data-fax_number', lab.fax_number)
+              .attr('data-network_id', lab.network_id)
               .addClass(self.settings.lab.buttonClass)
               .html(self.settings.lab.buttonText);
           } else {
