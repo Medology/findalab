@@ -2,6 +2,10 @@
 
 See the [release page] for authors, detailed dates, commit hashes and available downloads.
 
+## v2.8.7 - Minor CSS change
+
+- **Changes:** Set the width for findalab__box class and Will only overwrite it to auto in stdcheck manage page
+
 ## v2.8.6 - Minor CSS change
 
 - **Changes:** Don't set the width for findalab__box class since it will cover other element in small screen.
