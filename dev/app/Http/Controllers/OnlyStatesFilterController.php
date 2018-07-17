@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class OnlyStatesFilterController extends LabController
 {
-    const ONLY_STATES_LAB_FIXTURE = 'html/fixtures/only-states-mockups/labs.json';
+    const LAB_FIXTURE = 'html/fixtures/only-states-mockups/labs.json';
 
     /**
      * Filter lab results by specific states.
@@ -30,17 +30,5 @@ class OnlyStatesFilterController extends LabController
         }
 
         return parent::labsNearCoords($request);
-    }
-
-    /**
-     * Load and parse the default labs.
-     *
-     * @return array
-     */
-    protected function loadLabs()
-    {
-        $content = file_get_contents(base_path(self::ONLY_STATES_LAB_FIXTURE));
-
-        return json_decode($content);
     }
 }

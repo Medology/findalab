@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Findalab - Only States Fiter</title>
+    <title>Findalab - Only States Filter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/dist/findalab.css">
     <style>
@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <h1>Find A Lab - Only States Fiter</h1>
+    <h1>Find A Lab - Only States Filter</h1>
     <div id="findalab">
       <div class="findalab-loading">
         <div class="findalab-loading__content">
