@@ -193,7 +193,7 @@
       this.noResultsMessage = 'Oops! Sorry, we could not find any testing centers near that location. ' +
       'Please try your search again with a different or less specific address.';
 
-      this.cannotGeolocateMessage = 'We are unable to determine your location.<br />' + this.emptyResultsMessage;
+      this.cannotGeolocateMessage = 'We are unable to determine your location.<br/>' + this.emptyResultsMessage;
 
       this.invalidPostalCodeMessage = 'Oops! Invalid postal code: please enter a valid postal code and search again.';
 
