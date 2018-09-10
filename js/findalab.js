@@ -1386,7 +1386,7 @@
         }
 
         /**
-         * sets the text of the error message that is displayed to the user
+         * sets the text of the error message that is displayed to the user and remove the locate me button
          */
         function _displayGeolocateError() {
           $('[data-findalab-user-location]').remove();
