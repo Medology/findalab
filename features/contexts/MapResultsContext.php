@@ -1,5 +1,12 @@
 <?php namespace features\contexts;
 
+/*
+ * This file is part of the Find A Lab Project.
+ *
+ * Copyright © 2016-2019 FPK Services, LLC.
+ * All rights are reserved.
+ */
+
 use Behat\FlexibleMink\PseudoInterface\SpinnerContextInterface;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Element\NodeElement;

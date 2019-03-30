@@ -1,4 +1,9 @@
 /**
+ * This file is part of the Find A Lab Project.
+ *
+ * Copyright © 2016-2019 FPK Services, LLC.
+ * All rights are reserved.
+ *
  * @module medology/findalab
  */
 (function($) {

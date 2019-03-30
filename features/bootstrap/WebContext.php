@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of the Find A Lab Project.
+ *
+ * Copyright © 2016-2019 FPK Services, LLC.
+ * All rights are reserved.
+ */
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\FlexibleMink\Context\FlexibleContext;
