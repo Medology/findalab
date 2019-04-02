@@ -27,10 +27,10 @@ trait MapContext
     public function assertPinsOnMap($number = 1)
     {
         // This rather awkward xpath expression finds all the pins on the map.
-        $xpathString = '//*[contains(@class, "gmnoprint")]/img[@src="https://maps.gstatic.com/mapfiles/transparent.png"]/parent::*';
+        $xpathString = '//*[contains(@class, "findalab__map__embed")]//img[contains(@src, "lab-marker-icon")]';
 
         $pins = $this->getSession()->getPage()->findAll('xpath', $xpathString);
-        if (count($pins) != $number) {
+        if (count($pins) != ($number * 2)) {
             throw new ExpectationException("Expected $number pins, but found " . count($pins) . ', instead.', $this->getSession());
         }
     }
@@ -93,5 +93,25 @@ trait MapContext
         if ($zoom < $level) {
             throw new Exception("Expected zoom of $level or greater, but got $zoom");
         }
+    }
+
+    /**
+     * Sets the filter for the lab hours.
+     *
+     * @param string $label The lab hours option to select.
+     *
+     * @throws ExpectationException When the lab hours option is not found.
+     *
+     * @When I set the lab hours to :hours
+     */
+    public function setLabHours($label)
+    {
+        /** @var NodeElement $label */
+        $label = $this->getSession()->getPage()->find('xpath', "//label[text()=\"$label\"]");
+        if (is_null($label)) {
+            throw new ExpectationException('The lab hours option was not found on the page.', $this->getSession());
+        }
+
+        $label->click();
     }
 }

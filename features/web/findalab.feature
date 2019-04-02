@@ -44,7 +44,6 @@ Feature: Find Collection Centers
       And I press "Search"
      Then I should see the following lab in the results:
         | 23816 Hwy 59 North |
-        | Suite 200          |
         | Kingwood, TX 77339 |
 
   Scenario: View Lab information with 2nd address line
@@ -53,7 +52,6 @@ Feature: Find Collection Centers
       And I press "Search"
      Then I should see the following lab in the results:
         | 23816 Hwy 59 North |
-        | Suite 200          |
         | Kingwood, TX 77339 |
 
   Scenario: The Select a Lab Button Should Render Specified Lab Data
@@ -64,7 +62,6 @@ Feature: Find Collection Centers
       And the following lab data should be available for the lab selected:
         | data-id         |
         | data-address    |
-        | data-address_2  |
         | data-city       |
         | data-state      |
         | data-zip_code   |
