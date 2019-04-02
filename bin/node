@@ -14,5 +14,4 @@ docker run \
     -i${TTY} \
     ${RM} \
     -v $(pwd):/workdir \
-    ${NODE_OWNER}/${NODE_REPO}:${NODE_TAG} \
-    node "$@"
+    ${NODE_IMAGE} node "$@"
