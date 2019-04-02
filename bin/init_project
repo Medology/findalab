@@ -19,7 +19,6 @@ else
     echo "NOTE: Please review the .env.example file and ensure all required parameters are present in .env"
 fi
 
-
 echo "Installing Composer dependencies..."
 "$DIR"/bin/composer install
 exitCheck $?
@@ -29,5 +28,5 @@ echo "Installing NPM dependencies..."
 exitCheck $?
 
 echo "Compiling Gulp resources..."
-"$DIR"/bin/gulp sass
+"$DIR"/bin/gulp sass js
 exitCheck $?
