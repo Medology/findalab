@@ -20,8 +20,8 @@
 <div id="simple-findalab"></div>
 <button class="findalab-reset" type="button">Reset findalab</button>
 
-<script src="/bower_components/jquery/dist/jquery.js"></script>
-<script src="/bower_components/js-cookie/src/js.cookie.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/js.cookie.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?= env('GOOGLE_MAP_API_KEY'); ?>"></script>
 <script src="/js/findalab.js"></script>
 <script>
