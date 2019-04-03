@@ -659,7 +659,7 @@
 
           if (self.settings.lab.hasButton) {
               infoWindowContent +=
-                  '<a ' +
+                  '<button ' +
                   'data-findalab-result-button ' +
                   'class="' + self.settings.lab.buttonClass + '" ' +
                   'href="#" ' +
@@ -676,7 +676,7 @@
                   'data-network_id="' + lab.network_id + '"' +
                   '>' +
                   self.settings.lab.buttonText +
-                  '</a>';
+                  '</button>';
           }
 
           return infoWindowContent;

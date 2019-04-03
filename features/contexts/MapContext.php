@@ -42,14 +42,16 @@ trait MapContext
      */
     public function clickMarkerByTitle($title)
     {
-        /** @var NodeElement $marker */
-        $marker = $this->getSession()->getPage()->find('css', 'div[title="' . $title . '"]');
+        $this->waitFor(function () use ($title) {
+            /** @var NodeElement $marker */
+            $marker = $this->getSession()->getPage()->find('css', 'div[title="' . $title . '"]');
 
-        if (!$marker) {
-            throw new Exception("Marker \"$title\" not found on map");
-        }
+            if (!$marker) {
+                throw new Exception("Marker \"$title\" not found on map");
+            }
 
-        $marker->click();
+            $marker->click();
+        });
     }
 
     /**
