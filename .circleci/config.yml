@@ -20,6 +20,9 @@ commands:
       - run:
           name: Merge master
           command: git fetch origin && git merge origin/master --no-edit
+      - run:
+          name: Start containers
+          command: ./bin/containers up -d
   test:
     description: "Set up and run tests"
     steps:
