@@ -40,12 +40,12 @@
      function initMap() {
          var findalab;
          $('#findalab').load('/template/findalab.html', function() {
-             findalab = $(this).find('.findalab').findalab({
+             window.labfinder = $(this).find('.findalab').findalab({
                  baseURL: 'http://findalab.local/fixtures/auto-scroll'
              });
          });
          $('#findalab-reset').on('click', function() {
-             findalab.reset();
+             window.labfinder.reset();
          });
      }
     </script>

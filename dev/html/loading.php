@@ -37,7 +37,7 @@
     <script>
      function initMap() {
          setTimeout(function() {
-             $('#findalab').load('/template/findalab.html', function() {
+             window.labfinder = $('#findalab').load('/template/findalab.html', function() {
                  $(this).find('.findalab').findalab({
                      baseURL: 'http://findalab.local/fixtures/simple-mockups',
                      lab: {

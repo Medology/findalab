@@ -26,7 +26,7 @@
 <script src="/js/findalab.js"></script>
 <script>
     $('#simple-findalab').load('/template/findalab.html', function() {
-        var findalab = $(this).find('.findalab').findalab({
+        window.labfinder = $(this).find('.findalab').findalab({
             baseURL: 'http://findalab.local/fixtures/simple-mockups',
             googleMaps: {
                 mapMarkerFillColor: '#0000ee'
@@ -43,7 +43,7 @@
         var postalCode = Cookies.get('postalCode');
 
         if (postalCode) {
-            findalab.search(postalCode);
+            window.labfinder.search(postalCode);
         }
     });
 </script>

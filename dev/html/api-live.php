@@ -37,7 +37,7 @@
     <script>
      function initMap() {
          $('#findalab').load('/template/findalab.html', function() {
-             $(this).find('.findalab').findalab({
+             window.labfinder = $(this).find('.findalab').findalab({
                  baseURL: 'http://findalab.local/api'
              });
          });

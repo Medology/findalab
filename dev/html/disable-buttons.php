@@ -46,10 +46,10 @@
      function initMap() {
         var findalab;
         $('#findalab').load('/template/findalab.html', function() {
-            findalab = $(this).find('.findalab').findalab({
+            window.labfinder = findalab = $(this).find('.findalab').findalab({
                 baseURL: 'http://findalab.local/fixtures/simple-mockups'
             });
-            findalab.onLabSelect = function(){
+            window.labfinder.onLabSelect = function(){
                 testDisableEnable();
             };
 
@@ -63,10 +63,10 @@
         })
 
         function testDisableEnable() {
-            findalab.showDisabledState();
+            window.labfinder.showDisabledState();
             setTimeout(function() {
                 $('#findalab-success-msg').html('<h3>Success!</h3>');
-                findalab.removeDisabledState();
+                window.labfinder.removeDisabledState();
             }, 5000);
         }
      }

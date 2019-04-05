@@ -42,7 +42,7 @@
      function initMap() {
          var findalab;
          $('#findalab').load('/template/findalab.html', function() {
-            findalab = $(this).find('.findalab').findalab({
+             window.labfinder = $(this).find('.findalab').findalab({
               baseURL: '/fixtures/simple-mockups',
               userLocation : {
                 showOption: true,
@@ -56,7 +56,7 @@
           });
          });
          $('#findalab-reset').on('click', function() {
-             findalab.reset();
+             window.labfinder.reset();
          });
      }
     </script>
