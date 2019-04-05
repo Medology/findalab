@@ -5,18 +5,20 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 . "${ROOT}"/bin/lib/exitCheck.sh
 . "${ROOT}"/bin/lib/style.sh
 
-echo ${ROOT}
-
 "${ROOT}/bin/init/init_env.sh" docker
 
+println "${GREEN}Installing Composer..."
+"${ROOT}"/bin/init/install_composer.sh
+exitCheck $?
+
 println "${GREEN}Installing Composer dependencies..."
-composer install
+composer install --no-interaction --no-suggest
 exitCheck $?
 
 println "${GREEN}Installing NPM dependencies..."
-yarn
+"${ROOT}"/bin/yarn
 exitCheck $?
 
 println "${GREEN}Compiling Gulp resources..."
-gulp sass js
+"${ROOT}"/bin/gulp sass js
 exitCheck $?

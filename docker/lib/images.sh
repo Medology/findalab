@@ -13,3 +13,6 @@ export YARN_OWNER=medology
 export YARN_REPO=findalab-node
 export YARN_TAG=$(hashDir ${ROOT}/docker/node)
 export YARN_IMAGE=${YARN_OWNER}/${YARN_REPO}:${YARN_TAG}
+
+export SED_REPO=alpine
+export SED_TAG=3.8

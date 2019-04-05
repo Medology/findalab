@@ -22,7 +22,7 @@
   "autoload": {
     "psr-4": {
       "App\\": "dev/app/",
-      "features\\contexts\\": "features/contexts/"
+      "features\\": "features/"
     }
   },
   "config": {
