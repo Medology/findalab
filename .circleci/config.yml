@@ -32,7 +32,7 @@ commands:
             mkdir -p ./artifacts
             bin/init_project
       - run:
-          name: PHPUnit test
+          name: Behat tests
           command: behat --strict -vv -f pretty -o std -f junit -o ./artifacts
       - store_test_results:
           path: artifacts
@@ -41,7 +41,7 @@ commands:
 
 jobs:
   test:
-    working_directory: /tmp/geolocation
+    working_directory: /tmp/findalab
     parallelism: 1
     machine:
       enabled: true
