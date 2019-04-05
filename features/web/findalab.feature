@@ -26,7 +26,6 @@ Feature: Find Collection Centers
 
   Scenario: Use Current Location
     Given I am on "https://findalab.local/user-location.php"
-     When I wait 4 seconds
       And I press "Locate me"
      Then I should see "23816 Hwy 59 North"
 
