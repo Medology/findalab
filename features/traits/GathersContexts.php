@@ -12,7 +12,7 @@ use RuntimeException;
  *
  * @see http://behat-docs.readthedocs.io/en/mvp1.0/cookbooks/gathering_contexts_when_using_multiple_contexts.html
  */
-trait GathersContext
+trait GathersContexts
 {
     /**
      * Gets the environment in order to do gathersContexts.

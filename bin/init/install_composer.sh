@@ -48,4 +48,4 @@ if [ ! -d ~/.composer ]; then
     exitCheck $?
 fi
 
-println "${NC_BOLD}Composer {GREEN}v$${EXPECTED_VERSION} ${NC_BOLD}installation complete."
+println "${NC_BOLD}Composer ${GREEN}v${EXPECTED_VERSION} ${NC_BOLD}installation complete."

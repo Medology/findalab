@@ -1,7 +1,5 @@
 <?php namespace features\bootstrap;
 
-require_once __DIR__ . '/../traits/GathersContext.php';
-
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\FlexibleMink\Context\FlexibleContext;
