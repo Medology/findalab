@@ -8,9 +8,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 DIR="${ROOT}/${1}"
 
-println "${GREEN}Checking ${1}/.env file..."
+println "${GREEN}Checking ${DIR}/.env file..."
 if [ ! -e "${DIR}"/.env ]; then
-  println "${NC_BOLD}No ${1} .env file found. Creating from ${1} .env.example..."
+  println "${NC_BOLD}No ${1} .env file found. Creating from ${DIR}/.env.example..."
   cp "${DIR}"/.env.example "${DIR}"/.env
   exitCheck $?
   println "${NC_BOLD}NOTE: Please review the .env file and configure any required parameters."

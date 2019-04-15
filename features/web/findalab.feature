@@ -25,7 +25,8 @@ Feature: Find Collection Centers
       And I should not see "Choose This Location"
 
   Scenario: Use Current Location
-    Given I am on "https://findalab.local/user-location.php"
+    Given I am on "/user-location.php"
+     When I set my geolocation to "29.6990,-95.5862"
       And I press "Locate me"
      Then I should see "23816 Hwy 59 North"
 

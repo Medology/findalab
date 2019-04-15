@@ -50,6 +50,7 @@
                 $('#map-show').on('click', function() {
                     $('#hidden').show();
                     window.labfinder.resize();
+                    $(this).hide();
                 });
                 $('#map-ready').text('Map Ready');
             };

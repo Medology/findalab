@@ -6,6 +6,7 @@ use Behat\FlexibleMink\Context\FlexibleContext;
 use Behat\FlexibleMink\Context\ScreenShotContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Testwork\Tester\Result\TestResult;
@@ -14,6 +15,8 @@ use features\contexts\ArtifactContext;
 use features\contexts\ContextHelper;
 use features\interfaces\GathersContexts;
 use features\traits\GathersContexts as GathersContextsTrait;
+use features\traits\TracksWarnings;
+use WebDriver\Exception\UnknownError;
 
 /**
  * Defines application features from the context of a Web Page.
@@ -22,12 +25,17 @@ class WebContext extends FlexibleContext implements GathersContexts
 {
     use GathersContextsTrait;
     use ScreenShotContext;
+    use TracksWarnings;
 
     /** @var ArtifactContext */
     protected $artifacts;
 
     /** @var int The last set width of the browser. */
     protected $browser_width;
+
+    const WARN_CANNOT_RESIZE = 'Could not resize window. Driver does not support it.';
+    const WARN_CANNOT_CHECK_VISIBLE = 'Could not determine element visibility. Driver does not support it.';
+    const ERROR_WEBDRIVER_HEADLESS = 'unknown error: failed to change window state to maximized, current state is normal';
 
     /**
      * {@inheritdoc}
@@ -37,6 +45,40 @@ class WebContext extends FlexibleContext implements GathersContexts
         $env = $this->getEnvironment($scope);
 
         $this->artifacts = $env->getContext(ArtifactContext::class);
+    }
+
+    /**
+     * Initializes the window size.
+     *
+     * @throws DriverException
+     *
+     * @BeforeScenario
+     */
+    public function initWindowSize()
+    {
+        $this->fullScreenWindow();
+    }
+
+    /**
+     * @throws DriverException
+     */
+    protected function fullScreenWindow()
+    {
+        try {
+            $this->getSession()->getDriver()->maximizeWindow();
+
+            $this->browser_width = env('WEBDRIVER_WIDTH');
+        } catch (UnknownError $e) {
+            if (strpos($e->getMessage(), self::ERROR_WEBDRIVER_HEADLESS) !== 0) {
+                throw new DriverException('Failed to maximise window', $e);
+            }
+
+            // We caught an exception that indicates we're running in headless mode, and therefore cannot maximize.
+            // We'll set our window size the the default width and height instead.
+            $this->resizeWindow(env('WEBDRIVER_WIDTH'), env('WEBDRIVER_HEIGHT'));
+        } catch (UnsupportedDriverActionException $e) {
+            self::$warnings[self::WARN_CANNOT_RESIZE] = true;
+        }
     }
 
     /**
@@ -78,7 +120,7 @@ class WebContext extends FlexibleContext implements GathersContexts
     }
 
     /**
-     * Captures screenshots of failed scenarios.
+     * Asserts that the page has been loaded.
      *
      * @AfterStep
      *
@@ -214,5 +256,21 @@ JS
         } catch (UnsupportedDriverActionException $e) {
             self::$warnings[self::WARN_CANNOT_RESIZE] = true;
         }
+    }
+
+    /**
+     * @When I set my geolocation to ":x,:y"
+     *
+     * @param $x
+     * @param $y
+     *
+     * @throws UnsupportedDriverActionException
+     * @throws DriverException
+     */
+    public function setGeoLocation($x, $y)
+    {
+        $this->getSession()->getDriver()->executeScript('window.navigator.geolocation.getCurrentPosition=' .
+            "function(success){var position = {\"coords\" : {\"latitude\": $x,\"longitude\": $y}};" .
+            'success(position);}');
     }
 }

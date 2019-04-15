@@ -7,6 +7,8 @@ commands:
       - checkout
       - restore_cache:
           key: composer-{{ checksum "composer.lock" }}
+      - restore_cache:
+          key: v1-yarn-{{ checksum "yarn.lock" }}
       - run:
           name: Configure the CircleCI git user
           command: |
@@ -23,6 +25,14 @@ commands:
       - run:
           name: Start containers
           command: ./bin/containers up -d
+      - save_cache:
+          key: composer-{{ checksum "composer.lock" }}
+          paths:
+            - ~/.composer/cache
+      - save_cache:
+          key: v1-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
   test:
     description: "Set up and run tests"
     steps:
@@ -45,6 +55,7 @@ jobs:
     parallelism: 1
     machine:
       enabled: true
+      docker_layer_caching: true
     environment:
       - PATH: /opt/circleci/.pyenv/shims:./bin:./node_modules/.bin:./vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

@@ -7,6 +7,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 . "${ROOT}"/docker/lib/images.sh
 
 "${ROOT}/bin/init/init_env.sh" docker
+"${ROOT}/bin/init/init_env.sh" dev
 
 docker-compose -p ${PROJECT_NAME} \
     -f "${ROOT}"/docker/docker-compose.yml \

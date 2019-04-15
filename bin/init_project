@@ -20,5 +20,5 @@ println "${GREEN}Installing NPM dependencies..."
 exitCheck $?
 
 println "${GREEN}Compiling Gulp resources..."
-"${ROOT}"/bin/gulp sass js
+gulp sass js
 exitCheck $?
