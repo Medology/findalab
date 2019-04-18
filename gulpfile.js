@@ -17,6 +17,4 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['sass'], function() {
-  gulp.watch(['scss/findalab.scss'], ['sass']);
-});
+gulp.task('default', ['sass', 'js']);
