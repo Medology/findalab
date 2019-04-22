@@ -1,10 +1,5 @@
 # Changelog
 
-See the [release page] for authors, detailed dates, commit hashes and available downloads.
-## v2.8.20  - Added CI
-
-- **Changes:** Added project to CircleCI
-
 ## v2.8.22  - Added CI
 
 - **Changes:** Added project to CircleCI
