@@ -6,6 +6,7 @@ use Behat\FlexibleMink\Context\SpinnerContext;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ExpectationException;
+use Exception;
 use features\bootstrap\WebContext;
 use features\interfaces\GathersContexts;
 use features\traits\GathersContexts as GatherContextTrait;
@@ -36,9 +37,9 @@ class MapResultsContext implements Context, GathersContexts
      *
      * @Then I should see the following lab in the results:
      *
-     * @param  TableNode            $table
-     * @throws ExpectationException
-     * @throws \Exception
+     * @param  TableNode            $table Representation of the expected attributes of the lab.
+     * @throws ExpectationException If the expected lab is not visible in the search results.
+     * @throws Exception            If the spinner function throws an exception.
      */
     public function iShouldSeeTheFollowingLabInTheResults(TableNode $table)
     {
