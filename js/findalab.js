@@ -1543,35 +1543,36 @@
 /**
  * Define the lab type
  *
- * @typedef {Object} Lab
- * @property {string} address
- * @property {string} address2
- * @property {string} city
- * @property {string} country
- * @property {string} deleted_at
- * @property {string} distance
- * @property {string} fax_number
- * @property {string} geocode_address
- * @property {string} hours
- * @property {string} id
- * @property {string} import_hash
- * @property {string} imported_hours
- * @property {string} is_northeast
- * @property {string} lab_title
- * @property {string} latitude
- * @property {string} longitude
+ * @typedef {Object}              Lab
+ * @property {string}             address
+ * @property {string}             address2
+ * @property {string}             city
+ * @property {string}             country
+ * @property {string}             deleted_at
+ * @property {string}             distance
+ * @property {boolean}            does_drugs
+ * @property {string}             fax_number
+ * @property {string}             geocode_address
+ * @property {string}             hours
+ * @property {string}             id
+ * @property {string}             import_hash
+ * @property {string}             imported_hours
+ * @property {string}             is_northeast
+ * @property {string}             lab_title
+ * @property {string}             latitude
+ * @property {string}             longitude
  * @property {google.maps.Marker} marker
- * @property {string} max_distance
- * @property {string} network
- * @property {integer} network_id
- * @property {string} number
- * @property {string} phoneNumber
- * @property {string} state
- * @property {Days}   structured_hours
- * @property {string} title
- * @property {string} type
- * @property {string} zipcode
- * @property {string} zip_code
+ * @property {string}             max_distance
+ * @property {string}             network
+ * @property {integer}            network_id
+ * @property {string}             number
+ * @property {string}             phoneNumber
+ * @property {string}             state
+ * @property {Days}               structured_hours
+ * @property {string}             title
+ * @property {string}             type
+ * @property {string}             zipcode
+ * @property {string}             zip_code
  */
 
 /**
