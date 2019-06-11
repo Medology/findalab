@@ -674,6 +674,7 @@
                   'data-country="' + lab.country + '" ' +
                   'data-fax_number="' + lab.fax_number + '" ' +
                   'data-network_id="' + lab.network_id + '"' +
+                  'data-does_drugs="' + lab.does_drugs + '"' +
                   '>' +
                   self.settings.lab.buttonText +
                   '</button>';
@@ -1116,6 +1117,7 @@
               .attr('data-country', lab.country)
               .attr('data-fax_number', lab.fax_number)
               .attr('data-network_id', lab.network_id)
+              .attr('data-does_drugs', lab.does_drugs)
               .addClass(self.settings.lab.buttonClass)
               .html(self.settings.lab.buttonText);
           } else {
