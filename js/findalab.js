@@ -193,6 +193,7 @@
       this.settings.search.buttonText + '" to see results.';
 
       this.noResultsMessage = 'Oops! Sorry, we could not find any testing centers near that location. ' +
+      'Please check that the entered data is correct. ' +
       'Please try your search again with a different or less specific address.';
 
       this.cannotGeolocateMessage = 'We are unable to determine your location.<br/>' + this.emptyResultsMessage;
