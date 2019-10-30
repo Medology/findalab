@@ -21,7 +21,7 @@
   <button class="findalab-reset" type="button">Reset findalab</button>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=<?= env('GOOGLE_MAP_API_KEY'); ?>"></script>
-  <script src="/js/samples/<?php echo basename(__file__, '.php') ?>.js"></script>
+  <script src="/js/samples/<?php echo basename(__FILE__, '.php') ?>.js"></script>
 
   </body>
 </html>
