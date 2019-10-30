@@ -5,3 +5,4 @@ vendor
 .env
 src/js/lib/
 bin/composer
+dev/html/js/
