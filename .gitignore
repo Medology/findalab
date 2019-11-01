@@ -7,3 +7,4 @@ src/js/lib/
 bin/composer
 dev/html/js/
 dev/html/css/
+dist/mix-manifest.json
