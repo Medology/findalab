@@ -5,6 +5,7 @@ Feature: Labs with Saturday Hours Filter
 
   Scenario: Search result refreshed when change filter
     When I am on "/saturday-only.php"
+     And I wait 5 seconds
      And I fill in "Enter your zip" with "77057"
      And I press "Search"
     Then I should see "Choose This Location"
