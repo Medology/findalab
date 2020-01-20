@@ -28,7 +28,7 @@ class MapContext implements Context, GathersContexts
      */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
-        $env               = $this->getEnvironment($scope);
+        $env = $this->getEnvironment($scope);
         $this->web_context = $env->getContext(WebContext::class);
     }
 

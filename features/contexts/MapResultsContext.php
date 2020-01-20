@@ -30,7 +30,7 @@ class MapResultsContext implements Context, GathersContexts
      */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
-        $env               = $this->getEnvironment($scope);
+        $env = $this->getEnvironment($scope);
         $this->web_context = $env->getContext(WebContext::class);
     }
 
@@ -74,7 +74,7 @@ class MapResultsContext implements Context, GathersContexts
      */
     public function assertLabDataAvailable(TableNode $expectedData)
     {
-        $button            = $this->assertLabSelectButton();
+        $button = $this->assertLabSelectButton();
         $expectedDataArray = $expectedData->getColumn(0);
 
         array_map(function ($expectedAttribute) use ($button) {
