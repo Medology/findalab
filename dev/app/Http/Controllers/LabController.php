@@ -58,8 +58,6 @@ class LabController extends Controller
      * Return the phlebotomist search result.
      *
      * @param Request $request http request
-     *
-     * @return mixed
      */
     public function phlebotomistsNearCoords(Request $request)
     {

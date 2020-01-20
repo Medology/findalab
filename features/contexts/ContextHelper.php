@@ -94,8 +94,6 @@ abstract class ContextHelper
      *
      * @throws InvalidArgumentException When Key is null
      * @throws OutOfBoundsException     when Key does not exist
-     *
-     * @return mixed
      */
     public static function array_get_value($array, $key)
     {
