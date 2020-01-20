@@ -26,8 +26,6 @@ interface GathersContexts
      * @BeforeScenario
      *
      * @throws RuntimeException if the current environment is not initialized
-     *
-     * @return void
      */
     public function gatherContexts(BeforeScenarioScope $scope);
 }
