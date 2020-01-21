@@ -29,7 +29,7 @@ trait GathersContexts
     {
         $environment = $scope->getEnvironment();
         if (!($environment instanceof InitializedContextEnvironment)) {
-            throw new RuntimeException('Expected Environment to be '.InitializedContextEnvironment::class.', but got '.get_class($environment));
+            throw new RuntimeException('Expected Environment to be ' . InitializedContextEnvironment::class . ', but got ' . get_class($environment));
         }
 
         return $environment;

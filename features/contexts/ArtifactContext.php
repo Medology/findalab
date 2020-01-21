@@ -24,7 +24,7 @@ class ArtifactContext implements Context
      */
     public function __construct()
     {
-        if (!$dir = realpath(__DIR__.'/../../artifacts')) {
+        if (!$dir = realpath(__DIR__ . '/../../artifacts')) {
             throw new FileNotFoundException("Could not find artifacts directory: $dir");
         }
 
@@ -40,7 +40,7 @@ class ArtifactContext implements Context
      */
     public function getStepPath(AfterStepScope $scope)
     {
-        $fileName = $scope->getFeature()->getTitle().'-'.$scope->getStep()->getText();
+        $fileName = $scope->getFeature()->getTitle() . '-' . $scope->getStep()->getText();
 
         return $this->cleanFilename($fileName);
     }
@@ -54,7 +54,7 @@ class ArtifactContext implements Context
      */
     public function getScenarioPath(AfterScenarioScope $scope)
     {
-        $fileName = $scope->getFeature()->getTitle().'-'.$scope->getScenario()->getTitle();
+        $fileName = $scope->getFeature()->getTitle() . '-' . $scope->getScenario()->getTitle();
 
         return $this->cleanFilename($fileName);
     }
@@ -68,7 +68,7 @@ class ArtifactContext implements Context
      */
     public function getPath($filename = '')
     {
-        return realpath(__DIR__.'/../../artifacts').DIRECTORY_SEPARATOR.$filename;
+        return realpath(__DIR__ . '/../../artifacts') . DIRECTORY_SEPARATOR . $filename;
     }
 
     /**

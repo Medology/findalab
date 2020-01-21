@@ -72,7 +72,7 @@ abstract class ContextHelper
         }
 
         if ($array != $expected) {
-            throw new InvalidArgumentException("Expected $key to be $expected, got ".$array);
+            throw new InvalidArgumentException("Expected $key to be $expected, got " . $array);
         }
     }
 
@@ -83,7 +83,7 @@ abstract class ContextHelper
      */
     public static function getArtifactsDir()
     {
-        return realpath(__DIR__.'/../../artifacts');
+        return realpath(__DIR__ . '/../../artifacts');
     }
 
     /**
@@ -107,7 +107,7 @@ abstract class ContextHelper
 
         foreach (explode('.', $key) as $segment) {
             if (!is_array($array) || !isset($array[$segment])) {
-                throw new OutOfBoundsException('Key '.$key.' does not Exists');
+                throw new OutOfBoundsException('Key ' . $key . ' does not Exists');
             }
 
             $array = $array[$segment];

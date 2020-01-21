@@ -163,9 +163,9 @@ JS
      */
     public function takeScreenShot($name = 'screenshot')
     {
-        $file = file_exists($this->artifacts->getPath($name).'.png')
-            ? $this->artifacts->getPath($name.'-'.uniqid('', true)).'.png'
-            : $this->artifacts->getPath($name).'.png';
+        $file = file_exists($this->artifacts->getPath($name) . '.png')
+            ? $this->artifacts->getPath($name . '-' . uniqid('', true)) . '.png'
+            : $this->artifacts->getPath($name) . '.png';
 
         file_put_contents($file, $this->getSession()->getDriver()->getScreenshot());
     }
@@ -200,7 +200,7 @@ JS
             return;
         }
 
-        $fileName = $this->artifacts->getStepPath($scope).'.source.txt';
+        $fileName = $this->artifacts->getStepPath($scope) . '.source.txt';
 
         file_put_contents(
             $this->artifacts->getPath($fileName),
@@ -246,8 +246,8 @@ JS
      */
     public function setGeoLocation($x, $y)
     {
-        $this->getSession()->getDriver()->executeScript('window.navigator.geolocation.getCurrentPosition='.
-            "function(success){var position = {\"coords\" : {\"latitude\": $x,\"longitude\": $y}};".
+        $this->getSession()->getDriver()->executeScript('window.navigator.geolocation.getCurrentPosition=' .
+            "function(success){var position = {\"coords\" : {\"latitude\": $x,\"longitude\": $y}};" .
             'success(position);}');
     }
 

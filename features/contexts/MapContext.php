@@ -54,7 +54,7 @@ class MapContext implements Context, GathersContexts
         );
 
         if ($num_of_pins != $number) {
-            throw new ExpectationException("Expected $number pins, but found ".$num_of_pins.', instead.', $this->web_context->getSession());
+            throw new ExpectationException("Expected $number pins, but found " . $num_of_pins . ', instead.', $this->web_context->getSession());
         }
     }
 
@@ -71,7 +71,7 @@ class MapContext implements Context, GathersContexts
     {
         $this->waitFor(function () use ($title) {
             /** @var NodeElement $marker */
-            $marker = $this->web_context->getSession()->getPage()->find('css', 'div[title="'.$title.'"]');
+            $marker = $this->web_context->getSession()->getPage()->find('css', 'div[title="' . $title . '"]');
 
             if (!$marker) {
                 throw new Exception("Marker \"$title\" not found on map");
