@@ -3,7 +3,12 @@ const mix = require('laravel-mix');
 
 //Create the distribution files for findalab.
 mix.js('src/js/findalab.js', 'dist')
-.sass('src/scss/findalab.scss', 'dist');
+.sass('src/scss/findalab.scss', 'dist').webpackConfig({
+  output: {
+    library: '',
+    libraryTarget: 'commonjs-module',
+  }
+});
 
 mix.copy('dist/findalab.css', 'dev/html/css/findalab.css');
 
