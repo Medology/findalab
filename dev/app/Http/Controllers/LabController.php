@@ -23,11 +23,11 @@ class LabController extends Controller
 
     /** @var array Default time zone information */
     protected $tzInfo = [
-        "dstOffset" => 3600,
-        "rawOffset" => -18000,
-        "status" => "OK",
-        "timeZoneId" => "America\/New_York",
-        "timeZoneName" => "Eastern Daylight Time",
+        'dstOffset' => 3600,
+        'rawOffset' => -18000,
+        'status' => 'OK',
+        'timeZoneId' => "America\/New_York",
+        'timeZoneName' => 'Eastern Daylight Time',
     ];
 
     public function __construct()
