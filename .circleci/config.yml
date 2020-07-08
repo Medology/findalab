@@ -20,6 +20,12 @@ commands:
             git config --global url.git@github.com:.insteadOf git://github.com/
             git config --global --add url.git@github.com:.insteadOf https://github.com/
       - run:
+          name: Add in submodules
+          command: git submodule update --init
+      - run:
+          name: Run style fixer
+          command: bin/ci-style-fixer
+      - run:
           name: Merge master
           command: git fetch origin && git merge origin/master --no-edit
       - run:
