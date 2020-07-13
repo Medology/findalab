@@ -20,5 +20,12 @@ export SELENIUM_REPO=standalone-chrome-debug
 export SELENIUM_TAG=3.14.0-dubnium
 export SELENIUM_IMAGE=${SELENIUM_HOST}/${SELENIUM_ACCOUNT}/${SELENIUM_REPO}:${SELENIUM_TAG}
 
+
+export PHP_HOST=registry.hub.docker.com
+export PHP_OWNER=chekote
+export PHP_REPO=php
+export PHP_TAG=7.0.33.c-laravel5.2
+export PHP_IMAGE=${PHP_HOST}/${PHP_OWNER}/${PHP_REPO}:${PHP_TAG}
+
 export SED_REPO=alpine
 export SED_TAG=3.8
