@@ -54,8 +54,6 @@ class WebContext extends FlexibleContext implements GathersContexts
 
     /**
      * Initializes the session.
-     *
-     * @BeforeScenario
      */
     public function initSession()
     {
@@ -267,6 +265,13 @@ JS
     }
 
     /**
+     * This function overrides the original method in FlexibleMink.
+     *
+     * The functions excludes code which seems to have a bug with the viewport size
+     * and the way on how attempt to detect if an element is or not in viewport
+     *
+     * This method, should be removed when the project is updated to use FlexibleMink 2
+     *
      * @ToDo Remove this function after FlexibleMink 2 is updated.
      *
      * {@inheritdoc}
@@ -284,7 +289,6 @@ JS
             }
         });
 
-        //$this->assertNodeElementVisibleInViewport($button);
         $button->press();
     }
 
