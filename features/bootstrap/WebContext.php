@@ -53,6 +53,18 @@ class WebContext extends FlexibleContext implements GathersContexts
     }
 
     /**
+     * Initializes the session.
+     *
+     * @BeforeScenario
+     */
+    public function initSession()
+    {
+        if (!$this->getSession()->isStarted()) {
+            $this->getSession()->start();
+        }
+    }
+
+    /**
      * Initializes the window size.
      *
      * @throws DriverException
@@ -61,10 +73,7 @@ class WebContext extends FlexibleContext implements GathersContexts
      */
     public function initWindowSize()
     {
-        if (!$this->getSession()->isStarted()) {
-            $this->getSession()->start();
-        }
-
+        $this->initSession();
         $this->fullScreenWindow();
     }
 
