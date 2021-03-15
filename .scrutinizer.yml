@@ -28,4 +28,4 @@ checks:
 build_failure_conditions:
   - 'elements.rating(< A).new.exists'            # No new classes/methods with a rating below A
   - 'issues.new.exists'                          # No new issues
-  - 'project.metric("scrutinizer.quality", < 8)' # Code Quality Rating drops below 8
+  - 'project.metric("scrutinizer.quality", < 3.21)' # Code Quality Rating drops below 8
