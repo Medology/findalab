@@ -1,5 +1,5 @@
 # medology/findalab-php
-FROM chekote/php:7.0.8
+FROM chekote/php:8.0.3
 
 RUN apt-get update && \
     # findalab dependencies
