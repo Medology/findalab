@@ -1,19 +1,31 @@
 build:
   nodes:
     analysis:
-      environment:
-        php:
-          version: 5.5.9
-      project_setup:
-        override:
-          - 'true'
       tests:
         override:
           - php-scrutinizer-run
+          - phpcs-run
+          - js-scrutinizer-run
+  environment:
+    php:
+      version: 7.0.33
+  dependencies:
+    override:
+      - git config --global url.git@github.com:.insteadOf git://github.com/
+      - composer install --ignore-platform-reqs --no-interaction --no-scripts
+
+filter:
+  excluded_paths:
+    - ".idea/"
+  dependency_paths:
+    - "dev/vendor/"
+    - "node_modules/"
+    -
 checks:
   php: true
-coding_style:
-  php:
-    spaces:
-      around_operators:
-        concatenation: true
+  javascript: true
+
+build_failure_conditions:
+  - 'elements.rating(< A).new.exists'            # No new classes/methods with a rating below A
+  - 'issues.new.exists'                          # No new issues
+  - 'project.metric("scrutinizer.quality", < 3.21)' # Code Quality Rating drops below 8
