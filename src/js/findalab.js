@@ -194,11 +194,24 @@ $.fn.extend({
       6: 'Saturday'
     };
     this.settings = $.extend(true, this.settings, settings);
-    this.emptyResultsMessage = 'Please "' + this.settings.search.placeholder + '" above and press "' + this.settings.search.buttonText + '" to see results.';
-    this.noResultsMessage = 'Oops! Sorry, we could not find any testing centers near that location. ' + 'Please try your search again with a different or less specific address.';
+    this.emptyResultsMessage =
+      'Please "' +
+      this.settings.search.placeholder +
+      '" above and press "' +
+      this.settings.search.buttonText +
+      '" to see results.';
+    this.noResultsMessage =
+      'Oops! Sorry, we could not find any testing centers near that location. ' +
+      'Please try your search again with a different or less specific address.';
     this.cannotGeolocateMessage = 'We are unable to determine your location.<br/>' + this.emptyResultsMessage;
     this.invalidPostalCodeMessage = 'Oops! Invalid postal code: please enter a valid postal code and search again.';
-    this.searchDesc = 'Please note that these ' + this.settings.search.title + ' do not accept payment. You must ' + 'place your order and submit payment over the phone or online before visiting any of the ' + this.settings.search.title + '.';
+    this.searchDesc =
+      'Please note that these ' +
+      this.settings.search.title +
+      ' do not accept payment. You must ' +
+      'place your order and submit payment over the phone or online before visiting any of the ' +
+      this.settings.search.title +
+      '.';
     this.mapMarker = makeMapMarker(self.settings.googleMaps.labMarkerFillColor, 'white');
     this.mapMarkerHover = makeMapMarker(self.settings.googleMaps.markerHoverFillColor, 'white');
     this.recommendedMapMarker = makeMapMarker(self.settings.googleMaps.recommendedMarkerFillColor, 'white');
@@ -211,7 +224,17 @@ $.fn.extend({
      */
 
     function makeMapMarker(fillColor, strokeColor) {
-      var svg = '<svg width="48" class="lab-marker-icon" height="54" xmlns="http://www.w3.org/2000/svg"><g><path stroke-width="1" ' + 'stroke="STROKE" fill="FILL" d="m24.047761,0.125001a23.915509,23.915509 0 0 0 -7.012079,' + '46.782843l7.273053,7.273053l7.568253,-7.572532a23.906953,23.906953 0 0 0 -7.829228,-46.483365z"/>' + '<path stroke-width="1" stroke="STROKE" fill="STROKE" d="m33.763704,37.093501a4.333884,4.333884 0 0 1 ' + '-3.683587,2.100629l-12.04332,0a4.321049,4.321049 0 0 1 -3.786266,-6.357504l5.42912,-10.199387l0,' + '-8.821785l-1.364767,0a1.711307,1.711307 0 0 1 0,-3.422613l11.422971,0a1.711307,1.711307 0 1 1 0,' + '3.422613l-1.317706,0l0,8.813229l5.450511,10.207944a4.338162,4.338162 0 0 1 -0.106957,4.256875zm-6.49013,' + '-10.597266l-6.447348,0a0.812871,0.812871 0 0 0 -0.718749,0.427827l-3.807657,7.127592a1.972281,1.972281 ' + '0 0 0 1.736976,2.900665l12.04332,0a1.972281,1.972281 0 0 0 1.711307,-2.900665l-3.799101,-7.123314' + 'a0.821427,0.821427 0 0 0 -0.718749,-0.432105z"/></g></svg>';
+      var svg =
+        '<svg width="48" class="lab-marker-icon" height="54" xmlns="http://www.w3.org/2000/svg"><g><path stroke-width="1" ' +
+        'stroke="STROKE" fill="FILL" d="m24.047761,0.125001a23.915509,23.915509 0 0 0 -7.012079,' +
+        '46.782843l7.273053,7.273053l7.568253,-7.572532a23.906953,23.906953 0 0 0 -7.829228,-46.483365z"/>' +
+        '<path stroke-width="1" stroke="STROKE" fill="STROKE" d="m33.763704,37.093501a4.333884,4.333884 0 0 1 ' +
+        '-3.683587,2.100629l-12.04332,0a4.321049,4.321049 0 0 1 -3.786266,-6.357504l5.42912,-10.199387l0,' +
+        '-8.821785l-1.364767,0a1.711307,1.711307 0 0 1 0,-3.422613l11.422971,0a1.711307,1.711307 0 1 1 0,' +
+        '3.422613l-1.317706,0l0,8.813229l5.450511,10.207944a4.338162,4.338162 0 0 1 -0.106957,4.256875zm-6.49013,' +
+        '-10.597266l-6.447348,0a0.812871,0.812871 0 0 0 -0.718749,0.427827l-3.807657,7.127592a1.972281,1.972281 ' +
+        '0 0 0 1.736976,2.900665l12.04332,0a1.972281,1.972281 0 0 0 1.711307,-2.900665l-3.799101,-7.123314' +
+        'a0.821427,0.821427 0 0 0 -0.718749,-0.432105z"/></g></svg>';
       var finalSvg = svg.replace(/STROKE/g, strokeColor).replace(/FILL/g, fillColor);
       return {
         anchor: new google.maps.Point(24, 54),
@@ -230,14 +253,16 @@ $.fn.extend({
      * @param {FindalabSettings} settings
      */
 
-    this.construct = function (settings) {
+    this.construct = function(settings) {
       self._setMessage(this.emptyResultsMessage);
 
       self._constructSearch(settings.search, settings.inputGroup);
 
       self._setRecommendedSearch(settings.searchFunction.recommendedNetworks);
 
-      this.find('[data-findalab-search-field]').keydown($.proxy(onSearchKeyDown, this)).keyup($.proxy(onSearchKeyUp, this));
+      this.find('[data-findalab-search-field]')
+        .keydown($.proxy(onSearchKeyDown, this))
+        .keyup($.proxy(onSearchKeyUp, this));
 
       self._constructGoogleMaps(settings.googleMaps);
 
@@ -283,7 +308,6 @@ $.fn.extend({
        * @returns {boolean} Always false to prevent bubbling.
        */
 
-
       function onSearchKeyUp(event) {
         event.preventDefault();
 
@@ -302,7 +326,6 @@ $.fn.extend({
        * @returns {boolean} Always false to prevent bubbling.
        */
 
-
       function onLabSelectClick(event) {
         event.preventDefault();
 
@@ -319,14 +342,15 @@ $.fn.extend({
        * @returns {boolean} Always false to prevent bubbling.
        */
 
-
       function setLabFromResultsList(event) {
         let id;
 
         if (event.target.tagName === 'LI') {
           id = $(event.target).data('id');
         } else {
-          id = $(event.target).parents('li').data('id');
+          id = $(event.target)
+            .parents('li')
+            .data('id');
         }
 
         self.myLab = self.labs[id];
@@ -340,7 +364,6 @@ $.fn.extend({
        * @listens document#event:generic
        * @returns {boolean} Always false to prevent bubbling.
        */
-
 
       function onLabHover(event) {
         setLabFromResultsList(event);
@@ -357,11 +380,12 @@ $.fn.extend({
        * @returns {boolean} Always false to prevent bubbling.
        */
 
-
       function onLabUnhover(event) {
         let iconMarker;
         setLabFromResultsList(event);
-        iconMarker = this._buildIconMarkerNetwork(this.myLab.network ? this.myLab.network.name ? this.myLab.network.name : this.myLab.network : '');
+        iconMarker = this._buildIconMarkerNetwork(
+          this.myLab.network ? (this.myLab.network.name ? this.myLab.network.name : this.myLab.network) : ''
+        );
         this.myLab.marker.setIcon(iconMarker);
         this.myLab.marker.setAnimation(null);
         return false;
@@ -374,8 +398,7 @@ $.fn.extend({
      * @param {float} long  The longitude to center to.
      */
 
-
-    this.centerMap = function (lat, _long) {
+    this.centerMap = function(lat, _long) {
       self.settings.googleMaps.map.setCenter(this._buildLatLong(lat, _long));
       /**
        * Handles the response from Google's GeoCoding service.
@@ -392,9 +415,12 @@ $.fn.extend({
         }
       };
 
-      self.settings.googleMaps.geoCoder.geocode({
-        address: lat + ',' + _long
-      }, handleGeoCodeResponse);
+      self.settings.googleMaps.geoCoder.geocode(
+        {
+          address: lat + ',' + _long
+        },
+        handleGeoCodeResponse
+      );
     };
     /**
      * Triggers the Google Maps resize event.
@@ -402,8 +428,7 @@ $.fn.extend({
      * Useful for when the map was hidden when it booted.
      */
 
-
-    this.resize = function () {
+    this.resize = function() {
       google.maps.event.trigger(self.settings.googleMaps.map, 'resize');
 
       if (self.bounds) {
@@ -414,16 +439,14 @@ $.fn.extend({
      * disables all form elements inside the findalab component
      */
 
-
-    this.showDisabledState = function () {
+    this.showDisabledState = function() {
       this.find(':input').prop('disabled', true);
     };
     /**
      * resets all form elements inside the findalab component to enabled
      */
 
-
-    this.removeDisabledState = function () {
+    this.removeDisabledState = function() {
       this.find(':input').prop('disabled', false);
     };
     /**
@@ -437,8 +460,8 @@ $.fn.extend({
      * @throws {string}  error message if the search cannot be performed for some reason.
      */
 
-
-    this.onSearchSubmit = function (zip) {// override me!
+    this.onSearchSubmit = function(zip) {
+      // override me!
     };
     /**
      * Event handler for when a search is successful.
@@ -449,8 +472,8 @@ $.fn.extend({
      * @param {LabResult[]} labs
      */
 
-
-    this.onSearchSuccess = function (labs) {// override me!
+    this.onSearchSuccess = function(labs) {
+      // override me!
     };
     /**
      * Event handler for when a search fails.
@@ -461,8 +484,8 @@ $.fn.extend({
      * @param {string} message The error message.
      */
 
-
-    this.onSearchError = function (message) {// override me!
+    this.onSearchError = function(message) {
+      // override me!
     };
     /**
      * Event handler for when a user selects a lab.
@@ -473,13 +496,12 @@ $.fn.extend({
      * @param {Lab} lab
      */
 
-
-    this.onLabSelect = function (lab) {// override me!
+    this.onLabSelect = function(lab) {
+      // override me!
     };
     /**
      * This function is an alternative way for Object.values() since Object.values() not supported in IE11.
      */
-
 
     function objectValues(obj) {
       var res = [];
@@ -498,10 +520,9 @@ $.fn.extend({
      * @return {boolean} true if the lab is open 24 hours 7 days. false if not.
      */
 
-
-    this.isOpenWholeDayAllWeek = function (component) {
+    this.isOpenWholeDayAllWeek = function(component) {
       var result = true;
-      objectValues(component).forEach(function (element) {
+      objectValues(component).forEach(function(element) {
         if (!self.isOpenWholeDay(element)) result = false;
       });
       return result;
@@ -512,9 +533,13 @@ $.fn.extend({
      * @return {boolean} true if the lab is open 24 hours. false if not.
      */
 
-
-    this.isOpenWholeDay = function (component) {
-      if (component.open == "0:00 AM" && component.close == "11:59 PM" && !component.lunch_start && !component.lunch_stop) {
+    this.isOpenWholeDay = function(component) {
+      if (
+        component.open == '0:00 AM' &&
+        component.close == '11:59 PM' &&
+        !component.lunch_start &&
+        !component.lunch_stop
+      ) {
         return true;
       } else {
         return false;
@@ -524,16 +549,14 @@ $.fn.extend({
      * Empties the search field input.
      */
 
-
-    this.resetSearchField = function () {
+    this.resetSearchField = function() {
       this.find('[data-findalab-search-field]').val('');
     };
     /**
      * Replaces the results and total count with no results.
      */
 
-
-    this.resetResults = function () {
+    this.resetResults = function() {
       this.find('.findalab__results li').remove();
       this.find('[data-findalab-total]').html('No Results');
 
@@ -543,8 +566,7 @@ $.fn.extend({
      * Clears out all of the markers on the map.
      */
 
-
-    this.resetMapMarkers = function () {
+    this.resetMapMarkers = function() {
       var markersLength = self.settings.googleMaps.markers.length;
 
       for (var i = 0; i < markersLength; i++) {
@@ -557,9 +579,10 @@ $.fn.extend({
      * Centers and resets the zoom of the map back to default position.
      */
 
-
-    this.resetMapView = function () {
-      self.settings.googleMaps.map.setCenter(this._buildLatLong(self.settings.googleMaps.defaultLat, self.settings.googleMaps.defaultLong));
+    this.resetMapView = function() {
+      self.settings.googleMaps.map.setCenter(
+        this._buildLatLong(self.settings.googleMaps.defaultLat, self.settings.googleMaps.defaultLong)
+      );
       self.settings.googleMaps.map.setZoom(self.settings.googleMaps.initialZoom);
       self.settings.googleMaps.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
     };
@@ -567,8 +590,7 @@ $.fn.extend({
      * Resets the map's zoom and position, and clears the markers.
      */
 
-
-    this.resetMap = function () {
+    this.resetMap = function() {
       self.resetMapMarkers();
       self.resetMapView();
     };
@@ -576,8 +598,7 @@ $.fn.extend({
      * Resets the lab finder to its default state.
      */
 
-
-    this.reset = function () {
+    this.reset = function() {
       self.resetSearchField();
       self.resetResults();
       self.resetMap();
@@ -589,8 +610,7 @@ $.fn.extend({
      * @param {string} searchValue
      */
 
-
-    this.search = function (searchValue) {
+    this.search = function(searchValue) {
       this.find('[data-findalab-search-field]').val(searchValue);
 
       try {
@@ -620,8 +640,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._buildLatLong = function (lat, _long2) {
+    this._buildLatLong = function(lat, _long2) {
       lat = lat !== undefined ? lat : self.settings.googleMaps.defaultLat;
       _long2 = _long2 !== undefined ? _long2 : self.settings.googleMaps.defaultLong;
       return new google.maps.LatLng(lat, _long2);
@@ -634,8 +653,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._buildIconMarkerNetwork = function (network_name) {
+    this._buildIconMarkerNetwork = function(network_name) {
       if (this._isRecommended(network_name)) {
         return this.recommendedMapMarker;
       } else {
@@ -650,19 +668,76 @@ $.fn.extend({
      * @private
      */
 
-
-    this._buildInfoWindowMarkerContent = function (lab) {
+    this._buildInfoWindowMarkerContent = function(lab) {
       var infoWindowContent = '<div class="findalab_marker_infobox">';
-      var network = lab.network ? lab.network.name ? lab.network.name : lab.network : '';
+      var network = lab.network ? (lab.network.name ? lab.network.name : lab.network) : '';
 
       if (this.checkRecommended && this._isRecommended(network)) {
         infoWindowContent += '<span class="findalab__infowindow--recommended__label">Recommended</span>';
       }
 
-      infoWindowContent += '<h6>' + lab.title + '</h6>' + '<p>' + lab.address + '<br>' + (lab.address2 !== '' ? lab.address2 + '<br>' : '') + lab.city + ', ' + lab.state + ' ' + lab.zip_code + '</p>';
+      infoWindowContent +=
+        '<h6>' +
+        lab.title +
+        '</h6>' +
+        '<p>' +
+        lab.address +
+        '<br>' +
+        (lab.address2 !== '' ? lab.address2 + '<br>' : '') +
+        lab.city +
+        ', ' +
+        lab.state +
+        ' ' +
+        lab.zip_code +
+        '</p>';
 
       if (self.settings.lab.hasButton) {
-        infoWindowContent += '<button ' + 'data-findalab-result-button ' + 'class="' + self.settings.lab.buttonClass + '" ' + 'href="#" ' + 'data-id="' + lab.id + '" ' + 'data-address="' + lab.address + '" ' + 'data-address2="' + lab.address2 + '" ' + 'data-city="' + lab.city + '" ' + 'data-state="' + lab.state + '" ' + 'data-zip_code="' + lab.zip_code + '" ' + 'data-network="' + network + '" ' + 'data-title="' + lab.title + '" ' + 'data-country="' + lab.country + '" ' + 'data-fax_number="' + lab.fax_number + '" ' + 'data-network_id="' + lab.network_id + '" ' + 'data-does_drugs="' + lab.does_drugs + '"' + '>' + self.settings.lab.buttonText + '</button>';
+        infoWindowContent +=
+          '<button ' +
+          'data-findalab-result-button ' +
+          'class="' +
+          self.settings.lab.buttonClass +
+          '" ' +
+          'href="#" ' +
+          'data-id="' +
+          lab.id +
+          '" ' +
+          'data-address="' +
+          lab.address +
+          '" ' +
+          'data-address2="' +
+          lab.address2 +
+          '" ' +
+          'data-city="' +
+          lab.city +
+          '" ' +
+          'data-state="' +
+          lab.state +
+          '" ' +
+          'data-zip_code="' +
+          lab.zip_code +
+          '" ' +
+          'data-network="' +
+          network +
+          '" ' +
+          'data-title="' +
+          lab.title +
+          '" ' +
+          'data-country="' +
+          lab.country +
+          '" ' +
+          'data-fax_number="' +
+          lab.fax_number +
+          '" ' +
+          'data-network_id="' +
+          lab.network_id +
+          '" ' +
+          'data-does_drugs="' +
+          lab.does_drugs +
+          '"' +
+          '>' +
+          self.settings.lab.buttonText +
+          '</button>';
       }
 
       return infoWindowContent + '</div>';
@@ -674,10 +749,13 @@ $.fn.extend({
      * @private
      */
 
-
-    this._constructGoogleMaps = function (googleMapsObject) {
+    this._constructGoogleMaps = function(googleMapsObject) {
       if (typeof google === 'undefined') {
-        alert('Hey! The Google Maps script is missing or not properly called, please check ' + 'the Medology Find A Labs component documentation to make sure everything is ' + 'setup correctly.');
+        alert(
+          'Hey! The Google Maps script is missing or not properly called, please check ' +
+            'the Medology Find A Labs component documentation to make sure everything is ' +
+            'setup correctly.'
+        );
       }
 
       var mapOptions = {
@@ -709,9 +787,10 @@ $.fn.extend({
      * @private
      */
 
-
     var _constructUserLocation = function _constructUserLocation(userLocationObject) {
-      self.find('[data-findalab-user-location]').html('<i aria-hidden="true"></i> <span>' + userLocationObject.msg + '</span>');
+      self
+        .find('[data-findalab-user-location]')
+        .html('<i aria-hidden="true"></i> <span>' + userLocationObject.msg + '</span>');
       self.find('[data-findalab-user-location] i').addClass(userLocationObject.icon);
       self.on('click', '[data-findalab-user-location]', _onFindLocationSubmit);
     };
@@ -722,14 +801,29 @@ $.fn.extend({
      * @private
      */
 
-
-    this._constructDayOfWeekFilter = function (dayOfWeekObject) {
+    this._constructDayOfWeekFilter = function(dayOfWeekObject) {
       var container = this.find('[data-findalab-day-filter]');
-      container.append('<label class = "findalab__dayFilter" for="dow-all">' + '<input type="radio" name="day-of-week-filter" id="dow-all" value="" checked>' + dayOfWeekObject.radioAllText + '<div class="findalab__radioButton"></div></label>');
+      container.append(
+        '<label class = "findalab__dayFilter" for="dow-all">' +
+          '<input type="radio" name="day-of-week-filter" id="dow-all" value="" checked>' +
+          dayOfWeekObject.radioAllText +
+          '<div class="findalab__radioButton"></div></label>'
+      );
 
       for (var day in dayOfWeekObject.radioDaysText) {
         if (dayOfWeekObject.radioDaysText.hasOwnProperty(day)) {
-          container.append('<label class = "findalab__dayFilter" for="dow-' + day + '">' + '<input type="radio" name="day-of-week-filter" id="dow-' + day + '" value="' + day + '">' + dayOfWeekObject.radioDaysText[day] + '<div class="findalab__radioButton"></div></label>');
+          container.append(
+            '<label class = "findalab__dayFilter" for="dow-' +
+              day +
+              '">' +
+              '<input type="radio" name="day-of-week-filter" id="dow-' +
+              day +
+              '" value="' +
+              day +
+              '">' +
+              dayOfWeekObject.radioDaysText[day] +
+              '<div class="findalab__radioButton"></div></label>'
+          );
         }
       }
 
@@ -743,9 +837,10 @@ $.fn.extend({
      * @private
      */
 
-
-    this._constructSearch = function (searchObject, inputGroupObject) {
-      this.find('[data-findalab-search-button]').addClass(searchObject.buttonClass).html(searchObject.buttonText);
+    this._constructSearch = function(searchObject, inputGroupObject) {
+      this.find('[data-findalab-search-button]')
+        .addClass(searchObject.buttonClass)
+        .html(searchObject.buttonText);
 
       this._setPlaceholder(searchObject.placeholder);
 
@@ -767,9 +862,8 @@ $.fn.extend({
      * @private
      */
 
-
-    this._contentNav = function () {
-      $('[data-findalab-nav-item]').on('click', function () {
+    this._contentNav = function() {
+      $('[data-findalab-nav-item]').on('click', function() {
         var content = $(this).data('findalab-nav-item');
         $('[data-findalab-nav-item]').removeClass('is-active');
         $(this).addClass('is-active');
@@ -779,7 +873,7 @@ $.fn.extend({
       });
     };
 
-    this.fadeIntoView = function () {
+    this.fadeIntoView = function() {
       $(this).fadeIn(500);
     };
     /**
@@ -791,12 +885,11 @@ $.fn.extend({
      * @returns {string|null} The two character country code. Either PR or US.
      */
 
-
-    this.getPostalCodeCountry = function (postalCode) {
+    this.getPostalCodeCountry = function(postalCode) {
       // Check for Puerto Rico zips
       var intZip = parseInt(postalCode);
 
-      if (intZip >= 600 && intZip <= 799 || intZip >= 900 && intZip <= 999) {
+      if ((intZip >= 600 && intZip <= 799) || (intZip >= 900 && intZip <= 999)) {
         return 'PR';
       }
 
@@ -812,13 +905,12 @@ $.fn.extend({
      * @private
      */
 
-
-    this._initShowStructuredHours = function () {
+    this._initShowStructuredHours = function() {
       /**
        * Hide/Show Hours
        * @see https://css-tricks.com/snippets/jquery/toggle-text/
        */
-      $('[data-findalab-toggle-hours]').on('click', function (event) {
+      $('[data-findalab-toggle-hours]').on('click', function(event) {
         event.preventDefault();
         var $link = $(this);
         var $toggle = $link.siblings('.findalab__hours');
@@ -833,8 +925,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onLabSelect = function (lab) {
+    this._onLabSelect = function(lab) {
       this.onLabSelect(lab);
     };
 
@@ -845,7 +936,7 @@ $.fn.extend({
      * @param postalCode
      * @private
      */
-    this._searchNearPostalCode = function (country, postalCode) {
+    this._searchNearPostalCode = function(country, postalCode) {
       $.ajax({
         url: self.settings.baseURL + '/' + self.settings.searchURL.labs + '/nearPostalCode',
         dataType: 'json',
@@ -861,13 +952,15 @@ $.fn.extend({
           network: self.settings.searchFunction.onlyNetwork,
           dayOnly: self.settings.dayOfWeekFilter.showOption ? self.settings.dayOfWeekFilter.dayOnly : ''
         }
-      }).done(function (results) {
-        if (!results.labs.length) {
-          self._setMessage(self.noResultsMessage);
-        } else {
-          self._onSearchSuccess(results.labs, results.tzInfo);
-        }
-      }).fail(self._onSearchError)
+      })
+        .done(function(results) {
+          if (!results.labs.length) {
+            self._setMessage(self.noResultsMessage);
+          } else {
+            self._onSearchSuccess(results.labs, results.tzInfo);
+          }
+        })
+        .fail(self._onSearchError)
         .always($.proxy(self._onSearchComplete, self));
     };
     /**
@@ -877,8 +970,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._setInputType = function (theType) {
+    this._setInputType = function(theType) {
       this.find('[data-findalab-search-field]').attr('type', theType);
     };
     /**
@@ -888,8 +980,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._setLabSelectText = function (text) {
+    this._setLabSelectText = function(text) {
       this.find('[data-findalab-result-button]').html(text);
       self.settings.lab.buttonText = text;
     };
@@ -900,10 +991,11 @@ $.fn.extend({
      * @private
      */
 
-
-    this._setMessage = function (message) {
+    this._setMessage = function(message) {
       $('[data-findalab-result-list]').empty();
-      var $message = this.find('[data-findalab-message][data-template]').clone().removeAttr('data-template');
+      var $message = this.find('[data-findalab-message][data-template]')
+        .clone()
+        .removeAttr('data-template');
       $message.html(message).appendTo('[data-findalab-result-list]');
 
       self._onSearchComplete();
@@ -915,8 +1007,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._setRecommendedSearch = function (networks) {
+    this._setRecommendedSearch = function(networks) {
       if (networks.length > 0) {
         this.checkRecommended = true;
       }
@@ -928,8 +1019,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._setPlaceholder = function (message) {
+    this._setPlaceholder = function(message) {
       this.find('[data-findalab-search-field]').attr('placeholder', message);
     };
     /**
@@ -939,11 +1029,12 @@ $.fn.extend({
      * @private
      */
 
-
-    this._showMarker = function (lab) {
+    this._showMarker = function(lab) {
       var location = this._buildLatLong(lab.latitude, lab.longitude);
 
-      var iconMarker = this._buildIconMarkerNetwork(lab.network ? lab.network.name ? lab.network.name : lab.network : '');
+      var iconMarker = this._buildIconMarkerNetwork(
+        lab.network ? (lab.network.name ? lab.network.name : lab.network) : ''
+      );
 
       var vMarker;
       vMarker = new google.maps.Marker({
@@ -959,19 +1050,26 @@ $.fn.extend({
       var infoWindowContent = this._buildInfoWindowMarkerContent(lab);
 
       var resultsDiv = $('.findalab__results');
-      google.maps.event.addListener(vMarker, 'click', $.proxy(function () {
-        self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
-        var labDiv = $('[data-lab-id=' + lab.id + ']');
-        var currentScrollYCoordinate = resultsDiv.scrollTop();
-        var labYCoordinate = labDiv.position().top;
-        var resultsDivYCoordinate = resultsDiv.position().top;
-        var scrollOffset = currentScrollYCoordinate - resultsDivYCoordinate + labYCoordinate;
-        resultsDiv.animate({
-          scrollTop: scrollOffset
-        }, 1000); // noinspection JSUnresolvedFunction
+      google.maps.event.addListener(
+        vMarker,
+        'click',
+        $.proxy(function() {
+          self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
+          var labDiv = $('[data-lab-id=' + lab.id + ']');
+          var currentScrollYCoordinate = resultsDiv.scrollTop();
+          var labYCoordinate = labDiv.position().top;
+          var resultsDivYCoordinate = resultsDiv.position().top;
+          var scrollOffset = currentScrollYCoordinate - resultsDivYCoordinate + labYCoordinate;
+          resultsDiv.animate(
+            {
+              scrollTop: scrollOffset
+            },
+            1000
+          ); // noinspection JSUnresolvedFunction
 
-        self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
-      }, this));
+          self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
+        }, this)
+      );
       lab.marker = vMarker;
     };
     /**
@@ -982,8 +1080,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._isRecommended = function (network_name) {
+    this._isRecommended = function(network_name) {
       return self.settings.searchFunction.recommendedNetworks.indexOf(network_name) !== -1;
     };
     /**
@@ -993,8 +1090,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._fixLab = function (lab) {
+    this._fixLab = function(lab) {
       if (!lab.id && lab.number) {
         lab.id = lab.number;
       }
@@ -1019,9 +1115,9 @@ $.fn.extend({
      * @private
      */
 
-
-    this._recommendedUI = function (network_name, result) {
-      var label = '<span class="findalab__result--recommended__label" ' + 'data-findalab-result-recommended>Recommended</span>';
+    this._recommendedUI = function(network_name, result) {
+      var label =
+        '<span class="findalab__result--recommended__label" ' + 'data-findalab-result-recommended>Recommended</span>';
 
       if (this._isRecommended(network_name)) {
         result.addClass('findalab__result--recommended').prepend(label);
@@ -1035,8 +1131,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._renderLabs = function (labs, date) {
+    this._renderLabs = function(labs, date) {
       var $resultsList = this.find('[data-findalab-result-list]');
       var $resultTemplate = this.find('[data-findalab-result][data-template]');
       $resultsList.empty();
@@ -1045,47 +1140,78 @@ $.fn.extend({
        * @param {Lab} lab
        */
 
-      $.each(labs, $.proxy(function (index, lab) {
-        this._fixLab(lab);
+      $.each(
+        labs,
+        $.proxy(function(index, lab) {
+          this._fixLab(lab);
 
-        var $result = $resultTemplate.clone().removeAttr('data-template');
-        var network = lab.network ? lab.network.name ? lab.network.name : lab.network : '';
-        $result.attr('data-lab-id', lab.id);
-        $result.data('id', index);
+          var $result = $resultTemplate.clone().removeAttr('data-template');
+          var network = lab.network ? (lab.network.name ? lab.network.name : lab.network) : '';
+          $result.attr('data-lab-id', lab.id);
+          $result.data('id', index);
 
-        if (this.checkRecommended) {
-          this._recommendedUI(network, $result);
-        }
+          if (this.checkRecommended) {
+            this._recommendedUI(network, $result);
+          }
 
-        if (lab.title) {
-          $result.find('[data-findalab-result-title]').html(lab.title);
-        } else {
-          $result.find('[data-findalab-result-title]').remove();
-        }
+          if (lab.title) {
+            $result.find('[data-findalab-result-title]').html(lab.title);
+          } else {
+            $result.find('[data-findalab-result-title]').remove();
+          }
 
-        $result.find('[data-findalab-result-address]').html(lab.address + '<br>' + (!lab.address2 ? '' : lab.address2 + '<br>') + lab.city + ', ' + lab.state + ' ' + lab.zip_code);
-        $result.find('[data-findalab-result-distance]').html('<strong>Distance:</strong> ' + this._parseDistance(lab));
+          $result
+            .find('[data-findalab-result-address]')
+            .html(
+              lab.address +
+                '<br>' +
+                (!lab.address2 ? '' : lab.address2 + '<br>') +
+                lab.city +
+                ', ' +
+                lab.state +
+                ' ' +
+                lab.zip_code
+            );
+          $result
+            .find('[data-findalab-result-distance]')
+            .html('<strong>Distance:</strong> ' + this._parseDistance(lab));
 
-        if (self.settings.lab.hasButton) {
-          $result.find('[data-findalab-result-button]').attr('data-id', lab.id).attr('data-address', lab.address).attr('data-address2', lab.address2).attr('data-city', lab.city).attr('data-state', lab.state).attr('data-zip_code', lab.zip_code).attr('data-network', network).attr('data-title', lab.title).attr('data-country', lab.country).attr('data-fax_number', lab.fax_number).attr('data-network_id', lab.network_id).attr('data-does_drugs', lab.does_drugs).addClass(self.settings.lab.buttonClass).html(self.settings.lab.buttonText);
-        } else {
-          $result.find('[data-findalab-result-button]').remove();
-          $result.find('[data-findalab-break]').remove();
-        }
+          if (self.settings.lab.hasButton) {
+            $result
+              .find('[data-findalab-result-button]')
+              .attr('data-id', lab.id)
+              .attr('data-address', lab.address)
+              .attr('data-address2', lab.address2)
+              .attr('data-city', lab.city)
+              .attr('data-state', lab.state)
+              .attr('data-zip_code', lab.zip_code)
+              .attr('data-network', network)
+              .attr('data-title', lab.title)
+              .attr('data-country', lab.country)
+              .attr('data-fax_number', lab.fax_number)
+              .attr('data-network_id', lab.network_id)
+              .attr('data-does_drugs', lab.does_drugs)
+              .addClass(self.settings.lab.buttonClass)
+              .html(self.settings.lab.buttonText);
+          } else {
+            $result.find('[data-findalab-result-button]').remove();
+            $result.find('[data-findalab-break]').remove();
+          }
 
-        if (!lab.structured_hours) {
-          $result.find('[data-findalab-result-structured-hours]').remove();
-          $result.find('[data-findalab-result-simple-hours]').html('<strong>Hours:</strong> ' + lab.hours);
-        } else {
-          $result.find('[data-findalab-result-simple-hours]').remove();
+          if (!lab.structured_hours) {
+            $result.find('[data-findalab-result-structured-hours]').remove();
+            $result.find('[data-findalab-result-simple-hours]').html('<strong>Hours:</strong> ' + lab.hours);
+          } else {
+            $result.find('[data-findalab-result-simple-hours]').remove();
 
-          self._buildHoursDom(lab, $result, date);
+            self._buildHoursDom(lab, $result, date);
 
-          $result.find('[data-findalab-structured-hours-row][data-template]').remove();
-        }
+            $result.find('[data-findalab-structured-hours-row][data-template]').remove();
+          }
 
-        $result.appendTo($resultsList);
-      }, this));
+          $result.appendTo($resultsList);
+        }, this)
+      );
 
       this._initShowStructuredHours();
 
@@ -1105,8 +1231,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._renderResultsTotal = function (resultsLabs) {
+    this._renderResultsTotal = function(resultsLabs) {
       var totalResults = resultsLabs.length;
       var pluralLabs = totalResults > 1 ? 's' : '';
       self.find('[data-findalab-total]').html(totalResults + ' Result' + pluralLabs);
@@ -1119,8 +1244,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._parseDistance = function (labData) {
+    this._parseDistance = function(labData) {
       var parsedDistance = '';
 
       switch (labData.country) {
@@ -1142,11 +1266,10 @@ $.fn.extend({
      * @private
      */
 
-
-    this._buildHoursDom = function (lab, $result, date) {
+    this._buildHoursDom = function(lab, $result, date) {
       var $table = $result.find('[data-findalab-structured-hours-body]');
       var $toggleHours = $result.find('[data-findalab-toggle-hours]');
-      var $open24Hours = $("<strong>Open 24 Hours</strong>");
+      var $open24Hours = $('<strong>Open 24 Hours</strong>');
       $open24Hours.addClass('findalab__hours--24hours');
       var time = date.getHours() * 100 + date.getMinutes();
       var removeHours = 'open';
@@ -1155,12 +1278,16 @@ $.fn.extend({
         $toggleHours.replaceWith($open24Hours);
       }
 
-      $.each(lab.structured_hours, function (
+      $.each(lab.structured_hours, function(
         /**string*/
         day,
         /**Day*/
-        hours) {
-        var $row = $result.find('[data-findalab-structured-hours-row][data-template]').clone().removeAttr('data-template');
+        hours
+      ) {
+        var $row = $result
+          .find('[data-findalab-structured-hours-row][data-template]')
+          .clone()
+          .removeAttr('data-template');
         $row.find('[data-findalab-result-day]').html(day);
 
         if (self.isOpenWholeDay(hours)) {
@@ -1169,14 +1296,22 @@ $.fn.extend({
           $row.find('[data-findalab-result-hours]').html(hours.open + ' - ' + hours.close);
         }
 
-        if (self.dayMapping[date.getDay()] === day && time > self._convertTime12to24(hours.open) && time < self._convertTime12to24(hours.close)) {
+        if (
+          self.dayMapping[date.getDay()] === day &&
+          time > self._convertTime12to24(hours.open) &&
+          time < self._convertTime12to24(hours.close)
+        ) {
           removeHours = 'closed';
         }
 
         if (hours.lunch_start) {
           $row.find('[data-findalab-result-hours-lunch]').html(hours.lunch_start + ' - ' + hours.lunch_stop);
 
-          if (self.dayMapping[date.getDay()] === day && time > self._convertTime12to24(hours.lunch_start) && time < self._convertTime12to24(hours.lunch_stop)) {
+          if (
+            self.dayMapping[date.getDay()] === day &&
+            time > self._convertTime12to24(hours.lunch_start) &&
+            time < self._convertTime12to24(hours.lunch_stop)
+          ) {
             removeHours = 'open';
           }
         } else {
@@ -1195,8 +1330,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._convertTime12to24 = function (time) {
+    this._convertTime12to24 = function(time) {
       // remove the AM/PM from time and remove the ':' separating hours and minutes
       var hours = parseInt(time.slice(0, -2).replace(':', ''));
 
@@ -1218,8 +1352,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onSearchSubmit = function (event) {
+    this._onSearchSubmit = function(event) {
       event.preventDefault();
       self.resetResults();
       self.resetMapMarkers();
@@ -1240,7 +1373,6 @@ $.fn.extend({
      * @listens document#event:generic
      * @private
      */
-
 
     var _onFindLocationSubmit = function _onFindLocationSubmit(event) {
       event.preventDefault();
@@ -1265,26 +1397,27 @@ $.fn.extend({
        * @param  {string} geo.coords.longitude the longitude of the geolocation
        */
 
-
       function _searchByCoords(geo) {
-        self.settings.googleMaps.geoCoder.geocode({
-          location: {
-            lat: geo.coords.latitude,
-            lng: geo.coords.longitude
+        self.settings.googleMaps.geoCoder.geocode(
+          {
+            location: {
+              lat: geo.coords.latitude,
+              lng: geo.coords.longitude
+            }
+          },
+          function(results, status) {
+            if (status === 'OK') {
+              _geolocateSuccess(results);
+            } else {
+              _displayGeolocateError();
+            }
           }
-        }, function (results, status) {
-          if (status === 'OK') {
-            _geolocateSuccess(results);
-          } else {
-            _displayGeolocateError();
-          }
-        });
+        );
       }
       /**
        * called on ajax success, submits zip code into input field
        * @param  {{results[]}} data ajax results from google api
        */
-
 
       function _geolocateSuccess(results) {
         var addresses = results.filter(_hasPostalCode);
@@ -1305,7 +1438,6 @@ $.fn.extend({
        * @return {boolean} returns true if it has a postal code
        */
 
-
       function _hasPostalCode(addresses) {
         return _getPostalCode(addresses) !== null;
       }
@@ -1314,7 +1446,6 @@ $.fn.extend({
        * @param  {array}  component.types address components
        * @return {boolean} true if the address has a postal code. false if not.
        */
-
 
       function _isPostalCode(component) {
         return component.types.indexOf('postal_code') !== -1;
@@ -1326,12 +1457,10 @@ $.fn.extend({
        * @return {string|null} the postal code, or null if the address does not have a postal code.
        */
 
-
       function _getPostalCode(addresses) {
         if (!Array.isArray(addresses.address_components)) {
           return null;
         } // get the first address_component that is a postal code
-
 
         var postalCodeComponents = addresses.address_components.filter(_isPostalCode);
 
@@ -1346,7 +1475,6 @@ $.fn.extend({
        * sets the text of the error message that is displayed to the user and remove the locate me button
        */
 
-
       function _displayGeolocateError() {
         $('[data-findalab-user-location]').remove();
 
@@ -1356,12 +1484,16 @@ $.fn.extend({
       }
 
       function _loadingUserLocationUI() {
-        $('[data-findalab-user-location] i').removeClass().addClass(settings.userLocation.loading.icon);
+        $('[data-findalab-user-location] i')
+          .removeClass()
+          .addClass(settings.userLocation.loading.icon);
         $('[data-findalab-user-location] span').html(settings.userLocation.loading.msg);
       }
 
       function _resetUserLocationUI() {
-        $('[data-findalab-user-location] i').removeClass().addClass(settings.userLocation.icon);
+        $('[data-findalab-user-location] i')
+          .removeClass()
+          .addClass(settings.userLocation.icon);
         $('[data-findalab-user-location] span').html(settings.userLocation.msg);
       }
     };
@@ -1373,8 +1505,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onSearchSuccess = function (resultsLabs, tzInfo) {
+    this._onSearchSuccess = function(resultsLabs, tzInfo) {
       self.bounds = new google.maps.LatLngBounds();
       var date = new Date();
 
@@ -1392,8 +1523,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onGeocodeTimezoneFinish = function (resultsLabs, date) {
+    this._onGeocodeTimezoneFinish = function(resultsLabs, date) {
       var noLabs = !self._renderLabs(resultsLabs, date);
 
       if (noLabs) {
@@ -1413,8 +1543,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onSearchError = function (jqXhr) {
+    this._onSearchError = function(jqXhr) {
       self._onSearchErrorString(jqXhr.responseText);
     };
     /**
@@ -1424,8 +1553,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onSearchErrorString = function (message) {
+    this._onSearchErrorString = function(message) {
       this.find('[data-findalab-result-list]').html('<li class="findalab__result">There are no search results.</li>');
 
       self._setMessage(self.noResultsMessage);
@@ -1437,8 +1565,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onSearchComplete = function () {
+    this._onSearchComplete = function() {
       this.find('[data-findalab-search-button]').html(this.settings.search.buttonText);
     };
     /**
@@ -1449,8 +1576,7 @@ $.fn.extend({
      * @private
      */
 
-
-    this._onDayOfWeekFilterChanged = function (event) {
+    this._onDayOfWeekFilterChanged = function(event) {
       self.settings.dayOfWeekFilter.dayOnly = $(event.target).val();
       var searchValue = self.find('[data-findalab-search-field]').val();
 
