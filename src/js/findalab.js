@@ -1056,18 +1056,20 @@ $.fn.extend({
         $.proxy(function() {
           self.settings.googleMaps.infoWindow.setContent(infoWindowContent);
           var labDiv = $('[data-lab-id=' + lab.id + ']');
-          var currentScrollYCoordinate = resultsDiv.scrollTop();
-          var labYCoordinate = labDiv.position().top;
-          var resultsDivYCoordinate = resultsDiv.position().top;
-          var scrollOffset = currentScrollYCoordinate - resultsDivYCoordinate + labYCoordinate;
-          resultsDiv.animate(
-            {
-              scrollTop: scrollOffset
-            },
-            1000
-          ); // noinspection JSUnresolvedFunction
+          if (labDiv.position()) {
+            var currentScrollYCoordinate = resultsDiv.scrollTop();
+            var labYCoordinate = labDiv.position().top;
+            var resultsDivYCoordinate = resultsDiv.position().top;
+            var scrollOffset = currentScrollYCoordinate - resultsDivYCoordinate + labYCoordinate;
+            resultsDiv.animate(
+              {
+                scrollTop: scrollOffset
+              },
+              1000
+            ); // noinspection JSUnresolvedFunction
 
-          self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
+            self.settings.googleMaps.infoWindow.open(self.settings.googleMaps.map, vMarker);
+          }
         }, this)
       );
       lab.marker = vMarker;
