@@ -1,6 +1,6 @@
 {
   "name": "findalab",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Find a Lab plugin.",
   "main": "src/findalab.js",
   "scripts": {
